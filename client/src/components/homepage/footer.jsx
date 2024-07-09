@@ -3,7 +3,7 @@ import logo1 from "../../../public/images/telephoneicon.png";
 import logo2 from "../../../public/images/cardicon.png";
 function Footer() {
   return (
-    <div className="xl:w-screen xl:flex xl:justify-center">
+    <footer className="xl:w-screen xl:flex xl:justify-center font-prompt md:w-screen md:flex md:justify-center">
       <div className="w-[375px] h-[389px] bg-white flex-col justify-start items-start inline-flex lg:w-[1440px] lg:h-[193px] lg:relative lg:bg-white">
         <div className="self-stretch h-[273px] px-4 py-6 flex-col justify-start items-start gap-6 flex">
           <div className="justify-start items-center gap-[9.78px] inline-flex lg:left-[160px] lg:top-[46px] lg:absolute">
@@ -36,7 +36,7 @@ function Footer() {
           </div>
         </div>
         <div className="self-stretch h-[116px] p-4 bg-gray-100 flex-col justify-start items-center gap-4 flex lg:w-[1440px] lg:h-[42px] lg:left-0 lg:top-[151px] lg:flex-row-reverse">
-          <div className="self-stretch h-[50px] flex-col justify-center items-start gap-2 flex lg:left-[895px] lg:top-[13px] lg:flex-row lg:gap-6 lg:w-1/2">
+          <div className="self-stretch h-[50px] flex-col justify-center items-start gap-2 flex lg:left-[895px] lg:top-[13px] lg:flex-row lg:gap-6 lg:w-1/2 lg:h-[0px]">
             <div className="text-gray-500 text-sm font-normal  leading-[21px]">
               เงื่อนไขและข้อตกลงการใช้งานเว็บไซต์
             </div>
@@ -49,7 +49,7 @@ function Footer() {
           </div>
         </div>
       </div>
-    </div>
+    </footer>
   );
 }
 
