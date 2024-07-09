@@ -1,8 +1,8 @@
 import photo1 from "../../../public/images/image-hero.png";
 function Hero() {
   return (
-    <div className="xl:w-screen xl:flex xl:justify-center">
-      <div className="w-[375px] h-[704px] px-4 py-14 bg-indigo-50 justify-start items-start gap-[319px] inline-flex lg:w-[1440px] lg:h-[540px] lg:relative">
+    <section className="xl:w-screen xl:flex xl:justify-center font-prompt md:w-screen md:flex md:justify-center ">
+      <div className="w-[375px] h-[704px] px-4 py-14 bg-blue-100 justify-start items-start gap-[319px] inline-flex lg:w-[1440px] lg:h-[540px] relative">
         <div className="grow shrink basis-0 flex-col justify-start items-start gap-8 inline-flex lg:absolute lg:left-[162px] lg:top-[78px]">
           <div className="self-stretch h-[146px] flex-col justify-start items-start gap-4 flex lg:top-[0]">
             <div className="self-stretch text-blue-700 text-[40px] font-semibold  leading-[50px] lg:text-[64px] lg:leading-[96px]">
@@ -12,7 +12,7 @@ function Hero() {
               “สะดวก ราคาคุ้มค่า เชื่อถือได้“
             </div>
           </div>
-          <div className="self-stretch text-gray-500 text-lg font-medium  leading-[27px] lg:w-[515px] lg:text-2xl lg:top-[277px]">
+          <div className="self-stretch text-gray-700 text-lg font-medium  leading-[27px] lg:w-[515px] lg:text-2xl lg:top-[277px]">
             ซ่อมเครื่องใช้ไฟฟ้า ซ่อมแอร์ ทำความสะอาดบ้าน <br />
             โดยพนักงานแม่บ้าน และช่างมืออาชีพ
           </div>
@@ -28,7 +28,7 @@ function Hero() {
           alt="Example"
         />
       </div>
-    </div>
+    </section>
   );
 }
 

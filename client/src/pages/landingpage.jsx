@@ -4,12 +4,12 @@ import Contact from "../components/homepage/contact";
 import Footer from "../components/homepage/footer";
 function Homepage() {
   return (
-    <div>
+    <>
       <Hero />
       <Service />
       <Contact />
       <Footer />
-    </div>
+    </>
   );
 }
 
