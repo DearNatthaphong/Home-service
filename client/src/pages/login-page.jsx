@@ -1,6 +1,6 @@
-import React from "react";
-import NavComponent from "../components/homepage/navbar.jsx";
-import LoginForm from "../components/login-page/login-form.jsx";
+import React from 'react';
+import NavComponent from '../components/homepage/navbar.jsx';
+import LoginForm from '../components/login-page/login-form.jsx';
 
 //import RegisterPage from "../components/registration/registerPage.jsx";
 
