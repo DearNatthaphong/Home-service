@@ -112,6 +112,7 @@ function AuthProvider(props) {
 
   const register = async (data) => {
     try {
+      setState({ ...state, loading: true });
       const result = await axios.post(
         'http://localhost:4000/auth/register',
         data
@@ -120,6 +121,8 @@ function AuthProvider(props) {
       navigate('/login');
     } catch (error) {
       toast.error(error.response.data.message);
+    } finally {
+      setState({ ...state, loading: false });
     }
   };
 
