@@ -1,17 +1,11 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import AdminLogin from "./pages/AdminLogin";
+import AuthenticatedApp from "./route/authenticated-app";
+import UnauthenticatedApp from "./route/unauthenticated-app";
+import { useAuth } from "./context/authentication";
 
 function App() {
-  return (
-    <>
-      <Router>
-        <Routes>
-          <Route path="/admin" element={<AdminLogin />} />
-        </Routes>
-      </Router>
-    </>
-  );
+  const auth = useAuth();
+  return auth.isAuthenticated ? <AuthenticatedApp /> : <UnauthenticatedApp />;
 }
 
 export default App;

@@ -1,8 +1,8 @@
 import React from "react";
-import AdminLoginForm from "../components/AdminLoginForm";
-import houseIcon from "../../public/icons/houseIcon.png";
+import AdminLoginForm from "../components/admin-login-form";
+import houseIcon from "/icons/house-icon.png";
 
-function AdminLogin() {
+function AdminLoginPage() {
   return (
     <div className="w-screen h-screen bg-background flex items-center justify-center flex-col gap-[45px]">
       <div className="flex">
@@ -16,4 +16,4 @@ function AdminLogin() {
   );
 }
 
-export default AdminLogin;
+export default AdminLoginPage;
