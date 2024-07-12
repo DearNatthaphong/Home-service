@@ -126,14 +126,14 @@ export const register = async (req, res) => {
       [email, password]
     );
     let userId = result.rows[0].user_id;
+
     await connectionPool.query(
       'insert into user_profiles (user_id, full_name, phone_number, awareness) values ($1,$2,$3,$4)',
       [userId, fullName, phoneNumber, awareness]
     );
   } catch (error) {
-    console.log(error);
     return res.status(500).json({
-      message: '❌ Server could not create user because database connection'
+      message: '❌ ไม่สามารถลงทะเบียนได้เนื่องจากระบบขัดข้อง'
     });
   }
 
