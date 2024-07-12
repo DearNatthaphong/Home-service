@@ -1,5 +1,4 @@
-import isEmail from 'validator/lib/isEmail.js';
-import isMobilePhone from 'validator/lib/isMobilePhone.js';
+import validator from 'validator';
 
 export const validateRegistration = (req, res, next) => {
   const { email, password, fullName, phoneNumber, awareness } = req.body;
@@ -14,13 +13,13 @@ export const validateRegistration = (req, res, next) => {
     return res.status(400).json({ message: 'ข้อมูลไม่ครบหรือไม่ถูกต้อง' });
   }
 
-  if (!isEmail(email)) {
+  if (!validator.isEmail(email)) {
     return res.status(400).json({
       message: 'อีเมลไม่ถูกต้อง'
     });
   }
 
-  if (!isMobilePhone(phoneNumber, 'th-TH')) {
+  if (!validator.isMobilePhone(phoneNumber, 'th-TH')) {
     return res.status(400).json({
       message: 'เบอร์โทรศัพท์ไม่ถูกต้อง'
     });
