@@ -5,7 +5,6 @@ import { loginValidate } from "../../validations/login.validation";
 import { toast } from "react-toastify";
 
 function LoginForm() {
-
   const [data, setData] = useState({
     email: "",
     password: "",
@@ -16,7 +15,6 @@ function LoginForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
     const newErrors = loginValidate(data);
-    
 
     if (Object.keys(newErrors).length === 0) {
       login(data);
@@ -64,7 +62,7 @@ function LoginForm() {
           <p className="text-rose-700"></p>
           <button
             type="submit"
-            className="btn btn-active btn-primary px-6 py-2.5 rounded-lg justify-center items-center mt-6 inline-flex w-full lg:mt-9 mb-3"
+            className=" justify-center items-center px-6 py-2.5 font-medium text-center text-white whitespace-nowrap bg-blue-600 rounded-lg mb-3 mt-8 w-full"
           >
             เข้าสู่ระบบ
           </button>
@@ -73,7 +71,7 @@ function LoginForm() {
         <div className="flex gap-2 justify-center text-base leading-6 text-center">
           <div className="text-gray-700">ยังไม่มีบัญชีผู้ใช้ HomeService?</div>
           <div className="font-semibold text-blue-600 underline">
-            <Link to="/auth/register">ลงทะเบียน</Link>
+            <Link to="/register">ลงทะเบียน</Link>
           </div>
         </div>
       </div>
