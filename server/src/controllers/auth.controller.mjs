@@ -133,9 +133,9 @@ export const register = async (req, res) => {
     );
   } catch (error) {
     return res.status(500).json({
-      message: '❌ ไม่สามารถลงทะเบียนได้เนื่องจากระบบขัดข้อง'
+      message: 'พบข้อผิดพลาดภายในเซอร์เวอร์'
     });
   }
 
-  res.status(201).json({ message: '✅ การลงทะเบียนสำเร็จ' });
+  res.status(201).json({ message: 'การลงทะเบียนสำเร็จ' });
 };

@@ -1,9 +1,10 @@
 import RegisterForm from '../components/registration/register-form';
+import Header from '../components/homepage/header';
 
 function RegisterPage() {
   return (
     <>
-      <header>Header</header>
+      <Header />
       <RegisterForm />
     </>
   );

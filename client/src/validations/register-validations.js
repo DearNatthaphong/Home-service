@@ -27,7 +27,7 @@ export const registerValidate = (data) => {
   }
 
   if (password.length < 12) {
-    newErrors.password = 'หัสผ่านต้องมีอย่างน้อย 12 ตัว';
+    newErrors.password = 'รหัสผ่านต้องมีอย่างน้อย 12 ตัว';
     return newErrors;
   }
 
