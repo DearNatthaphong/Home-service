@@ -7,7 +7,10 @@ const authRouter = Router();
 authRouter.post(
   "/admin/login",
   [adminValidateLogin],
-  authController.adminLogin
-);
+  authController.adminLogin);
+
+
+
+authRouter.post('/login', [validateLogin], authController.login);
 
 export default authRouter;
