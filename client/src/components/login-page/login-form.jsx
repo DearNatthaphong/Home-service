@@ -26,7 +26,7 @@ function LoginForm() {
   const { email, password } = data;
 
   return (
-    <section className="bg-gray-300 w-screen h-screen flex flex-col justify-center items-center font-prompt">
+    <section className="bg-background border-gray-300 w-screen h-screen flex flex-col justify-center items-center font-prompt">
       <div className="flex flex-col px-4 py-8 text-base leading-8 bg-white rounded-lg border border-gray-300 border-solid max-w-[343px] gap-6 lg:max-w-[614px] lg:h-[511px]">
         <div className="text-xl lg:text-3xl font-bold text-center text-blue-950 lg:mt-3">
           เข้าสู่ระบบ
