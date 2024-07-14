@@ -1,7 +1,7 @@
 import React from "react";
-import facebookLogo from "../../../public/images/facebookLogo.svg";
-import NavComponent from "../homepage/Nav";
+import facebookLogo from "../../public/images/facebookLogo.svg";
 import { Link } from "react-router-dom";
+import NavComponent from "../components/homepage/Nav";
 function RegisterPage() {
   return (
     <>
@@ -130,7 +130,7 @@ function RegisterPage() {
         </div>
 
         <Link
-          to="/"
+          to="/auth/login"
           className="left-[237px] top-[763px] absolute text-blue-600 text-base font-semibold font-['Prompt'] underline leading-normal"
         >
           กลับไปหน้าเข้าสู่ระบบ
