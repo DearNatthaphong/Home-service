@@ -11,7 +11,7 @@ export const adminValidateLogin = (req, res, next) => {
 
   if (!isEmail(email.trim())) {
     return res.status(400).json({
-      message: "Email ไม่ถูกต้อง",
+      message: "อีเมลไม่ถูกต้อง",
     });
   }
 
