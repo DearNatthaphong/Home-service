@@ -11,11 +11,11 @@ export const adminValidateLogin = (req, res, next) => {
 
   if (!isEmail(email.trim())) {
     return res.status(400).json({
-      message: "Email ไม่ถูกต้อง",
+      message: "อีเมลไม่ถูกต้อง",
     });
   }
 
-  if (password.length < 12 || password.length >= 13) {
+  if (password.length < 12) {
     return res.status(400).json({
       message: "อีเมลหรือรหัสผ่านไม่ถูกต้อง",
     });

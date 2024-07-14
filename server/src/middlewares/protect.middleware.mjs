@@ -5,7 +5,7 @@ export const protect = async (req, res, next) => {
 
   if (!token || !token.startsWith(`Bearer `)) {
     return res.status(401).json({
-      message: "Token has invalid fromat",
+      message: "Token มีรูปแบบไม่ถูกต้อง",
     });
   }
 
@@ -14,7 +14,7 @@ export const protect = async (req, res, next) => {
   jwt.verify(tokenWithoutBearer, process.env.SECRET_KEY, (err, payload) => {
     if (err) {
       return res.status(401).json({
-        message: "Token is invalid",
+        message: "Token ไม่ถูกต้อง",
       });
     }
     req.user = payload;

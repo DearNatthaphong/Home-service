@@ -15,13 +15,13 @@ export const adminLogin = async (req, res) => {
   } catch (error) {
     console.log(error);
     return res.status(500).json({
-      message: 'Internal Server Error'
+      message: "พบข้อผิดพลาดภายในเซิร์ฟเวอร์",
     });
   }
 
   if (!user.rowCount) {
     return res.status(404).json({
-      message: 'คุณไม่ใช่ ADMIN!!!'
+      message: "ไม่สามารถเข้าสู่ระบบได้เนื่องจากคุณไม่ใช่ Admin",
     });
   }
 
@@ -54,8 +54,8 @@ export const adminLogin = async (req, res) => {
   );
 
   return res.status(200).json({
-    message: 'Login สำเร็จ',
-    token: token
+    message: "เข้าสู่ระบบสำเร็จ",
+    token: token,
   });
 };
 
