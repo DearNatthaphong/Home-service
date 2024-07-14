@@ -74,7 +74,7 @@ function AuthProvider(props) {
         loading: false,
       });
       toast.success(result.data.message);
-      navigate("/admin/home");
+      navigate("/home");
     } catch (error) {
       toast.error(error.response.data.message);
       setState({
