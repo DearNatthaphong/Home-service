@@ -9,7 +9,7 @@ export const adminLoginValidate = (email, password) => {
   }
 
   if (!isEmail(email)) {
-    newError.email = "Email ไม่ถูกต้อง";
+    newError.email = "อีเมลไม่ถูกต้อง";
     return newError;
   }
 
