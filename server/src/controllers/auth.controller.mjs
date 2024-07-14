@@ -58,3 +58,58 @@ export const adminLogin = async (req, res) => {
     token: token,
   });
 };
+
+export const login = async (req, res) => {
+  let { email, password } = req.body;
+  let result;
+
+  try {
+    result = await connectionPool.query(
+      "SELECT * FROM users WHERE email = $1",
+      [email]
+    );
+    console.log(result);
+    if (result.rows.length === 0) {
+      return res.status(404).json({
+        message: "ไม่พบผู้ใช้งานในระบบ",
+      });
+    }
+
+    const isValidPassword = await bcrypt.compare(
+      password,
+      result.rows[0].password
+    );
+
+    if (!isValidPassword) {
+      return res.status(400).json({
+        message: "อีเมลหรือรหัสผ่านไม่ถูกต้อง",
+      });
+    }
+
+    const userId = result.rows[0].user_id
+    const profile = await connectionPool.query(
+      "SELECT * FROM user_profiles WHERE user_id = $1",
+      [userId]
+    );
+    const token = jwt.sign(
+      {
+        id: result.rows[0].user_id,
+        email: result.rows[0].email,
+        role: result.rows[0].role,
+        fullName: profile.rows[0].full_name
+      },
+      process.env.SECRET_KEY,
+      {
+        expiresIn: "90000",
+      }
+    );
+
+    res.status(200).json({
+      message: "เข้าสู่ระบบสำเร็จ",
+      token: token,
+    });
+  } catch (error) {
+    console.error("Internal server error:", error);
+    return res.status(500).json({ message: "เกิดข้อผิดพลาดภายในเซิร์ฟเวอร์" });
+  }
+};

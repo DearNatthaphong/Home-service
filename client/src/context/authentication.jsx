@@ -60,6 +60,48 @@ function AuthProvider(props) {
     navigate("/admin/login");
   };
 
+  const login = async (userLoginData) => {
+    const data = {
+      email: userLoginData.email,
+      password: userLoginData.password,
+    };
+    try {
+      //setState({ ...state, loading: true });
+      const result = await axios.post("http://localhost:4000/auth/login", data);
+      console.log(result);
+      const token = result.data.token;
+      localStorage.setItem("token", token);
+      const userDataFromToken = jwtDecode(token);
+      setState({
+        ...state,
+        user: userDataFromToken,
+        loading: false,
+      });
+      toast.success(result.data.message);
+      navigate("/home");
+    } catch (error) {
+      toast.error(error.response.data.message);
+      setState({
+        ...state,
+        loading: false,
+      });
+      console.log(error);
+    } finally {
+      setState({
+        ...state,
+        loading: false,
+      });
+    }
+  };
+  const Logout = () => {
+    localStorage.removeItem("token");
+    setState({
+      ...state,
+      user: null,
+    });
+    navigate("/login");
+  };
+
   const isAuthenticated = Boolean(localStorage.getItem("token"));
   let isToken;
   if (isAuthenticated) {
@@ -68,7 +110,15 @@ function AuthProvider(props) {
 
   return (
     <AuthContext.Provider
-      value={{ state, adminLogin, adminLogout, isAuthenticated, isToken }}
+      value={{
+        state,
+        adminLogin,
+        adminLogout,
+        isAuthenticated,
+        isToken,
+        login,
+        Logout,
+      }}
     >
       {props.children}
     </AuthContext.Provider>
