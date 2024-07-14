@@ -36,7 +36,7 @@ function RegisterForm() {
   };
 
   return (
-    <section className="bg-background text-black w-screen flex flex-col justify-center items-center font-prompt">
+    <section className="bg-background h-screen text-black w-screen flex flex-col items-center font-prompt">
       <div className="flex flex-col px-4 py-8 mx-4 my-8 sm:mt-10 sm:mb-20 sm:px-20 text-base leading-6 bg-white rounded-xl border-[1px] border-gray-300 border-solid max-w-[614px]">
         <div className="text-xl sm:text-3xl  font-bold text-center text-blue-950">
           ลงทะเบียน
