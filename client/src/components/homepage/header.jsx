@@ -1,12 +1,25 @@
 import logo from "../../../public/images/house-icon.png";
 import { useAuth } from "../../context/authentication";
+import { useNavigate } from "react-router-dom";
 
 function Header() {
+  const navigate = useNavigate();
+  const goToLoginPage = () => {
+    navigate("/login");
+  };
+
+  const goToHomePage = () => {
+    navigate("/");
+  };
+
   const { state } = useAuth();
   return (
-    <section className="font-prompt w-full h-[53px] lg:h-[80px] flex justify-center lg:relative ">
+    <section className="font-prompt w-full h-[53px] lg:h-[80px] flex justify-center lg:relative bg-white">
       <div className="flex justify-center items-center h-[53px] gap-10 lg:h-[80px]  lg:justify-start lg:absolute lg:left-[150px] 2xl:w-[1130px] 2xl:static lg:w-[1100px] left-transition duration-300">
-        <div className="inline-flex items-center gap-[5px]">
+        <button
+          className="inline-flex items-center gap-[5px]"
+          onClick={goToHomePage}
+        >
           <img
             className="w-[26px] h-[25px] mb-1 lg:w-[32px] lg:h-[32px]"
             src={logo}
@@ -14,7 +27,7 @@ function Header() {
           <div className="text-blue-600 text-sm font-medium lg:text-2xl">
             HomeServices
           </div>
-        </div>
+        </button>
         <div className="inline-flex items-center gap-2 lg:gap-[400px] xl:gap-[600px] gap-transition duration-300">
           <div className="text-black text-sm font-normal leading-[21px] lg:text-base lg:font-medium lg:leading-normal  ">
             บริการของเรา
@@ -26,7 +39,10 @@ function Header() {
             {state.user ? (
               <h1> {state.user.fullName} </h1>
             ) : (
-              <button className="text-center text-blue-600 text-sm font-medium lg:text-base lg:font-medium">
+              <button
+                className="text-center text-blue-600 text-sm font-medium lg:text-base lg:font-medium"
+                onClick={goToLoginPage}
+              >
                 เข้าสู่ระบบ
               </button>
             )}

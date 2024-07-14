@@ -1,13 +1,13 @@
-import React from 'react';
-import NavComponent from '../components/homepage/navbar.jsx';
-import LoginForm from '../components/login-page/login-form.jsx';
+import React from "react";
+import LoginForm from "../components/login-page/login-form.jsx";
+import Header from "../components/homepage/header.jsx";
 
 //import RegisterPage from "../components/registration/registerPage.jsx";
 
 function LoginPage() {
   return (
     <div className="overflow-x-hidden">
-      <NavComponent />
+      <Header />
       <LoginForm />
     </div>
   );
