@@ -15,7 +15,7 @@ export const adminValidateLogin = (req, res, next) => {
     });
   }
 
-  if (password.length < 12 || password.length >= 13) {
+  if (password.length < 12) {
     return res.status(400).json({
       message: "อีเมลหรือรหัสผ่านไม่ถูกต้อง",
     });
