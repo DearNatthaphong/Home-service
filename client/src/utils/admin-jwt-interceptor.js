@@ -1,4 +1,5 @@
 import axios from "axios";
+import { toast } from "react-toastify";
 
 function adminJwtInterceptor() {
   axios.interceptors.request.use((req) => {
@@ -32,6 +33,7 @@ function adminJwtInterceptor() {
         window.location.replace("/admin/login");
       } else if (isWrongPassword) {
         window.localStorage.removeItem("token");
+        toast.error("อีเมลหรือรหัสผ่านไม่ถูกต้อง");
       }
       return Promise.reject(error);
     }

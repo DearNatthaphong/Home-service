@@ -13,7 +13,7 @@ export const adminLoginValidate = (email, password) => {
     return newError;
   }
 
-  if (password.length < 12 || password.length >= 13) {
+  if (password.length < 12) {
     newError.password = "อีเมลหรือรหัสผ่านไม่ถูกต้อง";
     return newError;
   }

@@ -11,8 +11,7 @@ function AuthProvider(props) {
   const navigate = useNavigate();
   const [state, setState] = useState({
     loading: null,
-    error: null,
-    user: null
+    user: null,
   });
 
   const adminLogin = async (userLoginData) => {
@@ -21,12 +20,12 @@ function AuthProvider(props) {
       password: userLoginData.password
     };
     try {
-      setState({ ...state, loading: true });
+      // setState({ ...state, loading: true });
       const result = await axios.post(
         'http://localhost:4000/auth/admin/login',
         data
       );
-      console.log(result);
+      setState({ loading: true });
       const token = result.data.token;
       localStorage.setItem('token', token);
       const userDataFromToken = jwtDecode(token);
@@ -39,15 +38,14 @@ function AuthProvider(props) {
       navigate('/admin/home');
     } catch (error) {
       console.log(error);
-      toast.error(error.response.data.message);
     } finally {
-      setState({
-        ...state,
-        loading: false,
-        error: error
-      });
+      setState({ ...state, loading: false });
     }
   };
+
+  if (state.loading === true) {
+    return <LoadingScreen />;
+  }
 
   const adminLogout = () => {
     localStorage.removeItem('token');
