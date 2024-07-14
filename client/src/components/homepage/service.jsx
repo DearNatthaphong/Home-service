@@ -30,7 +30,7 @@ function Service() {
     navigate("/servicelist");
   };
   return (
-    <section className="font-prompt flex justify-center">
+    <section className="font-prompt flex justify-center bg-[#f8f8f8]">
       <div className="w-[375px] h-[1316px] px-4 pt-10 pb-14 flex-col justify-center items-center gap-6 inline-flex lg:w-[1440px] lg:h-[790px] lg:relative ">
         <div className="self-stretch text-center text-blue-950 text-xl font-medium leading-[30px] lg:left-[574px] lg:top-[80px] lg:absolute lg:text-[32px] lg:leading-[48px]">
           บริการยอดฮิตของเรา
