@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../context/authentication";
 import { loginValidate } from "../../validations/login.validation";
+import { toast } from "react-toastify";
 
 function LoginForm() {
 
@@ -20,7 +21,7 @@ function LoginForm() {
     if (Object.keys(newErrors).length === 0) {
       login(data);
     } else {
-      alert(Object.values(newErrors)[0]);
+      toast.error(Object.values(newErrors)[0]);
     }
   };
 

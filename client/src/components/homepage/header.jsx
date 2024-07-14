@@ -1,5 +1,8 @@
 import logo from "../../../public/images/house-icon.png";
+import { useAuth } from "../../context/authentication";
+
 function Header() {
+  const { state } = useAuth();
   return (
     <section className="font-prompt w-full h-[53px] lg:h-[80px] flex justify-center lg:relative ">
       <div className="flex justify-center items-center h-[53px] gap-10 lg:h-[80px]  lg:justify-start lg:absolute lg:left-[150px] 2xl:w-[1130px] 2xl:static lg:w-[1100px] left-transition duration-300">
@@ -20,9 +23,13 @@ function Header() {
             className="w-[95px] h-[37px] px-4 py-2 rounded-lg border border-blue-600 justify-start items-start gap-2.5 inline-flex
           lg:w-[120px] lg:h-10 lg:px-6 lg:py-2"
           >
-            <button className="text-center text-blue-600 text-sm font-medium lg:text-base lg:font-medium">
-              เข้าสู่ระบบ
-            </button>
+            {state.user ? (
+              <h1> {state.user.fullName} </h1>
+            ) : (
+              <button className="text-center text-blue-600 text-sm font-medium lg:text-base lg:font-medium">
+                เข้าสู่ระบบ
+              </button>
+            )}
           </div>
         </div>
       </div>
