@@ -43,7 +43,7 @@ function LoginForm() {
             onChange={(e) => {
               setData({ ...data, email: e.target.value });
             }}
-            className="w-full px-4 py-2.5 mt-1 mb-6 bg-white rounded-lg border border-gray-300 border-solid placeholder-gray-700"
+            className="bg-transparent placeholder:text-gray-700 outline outline-gray-300 outline-[1px] focus:outline-blue-600 focus:outline-[1px] w-full px-4 py-2.5 mt-1 rounded-lg"
           />
           <p className="text-rose-700"></p>
           <label htmlFor="password" className="mt-6 font-medium text-gray-700">
@@ -57,7 +57,7 @@ function LoginForm() {
             onChange={(e) => {
               setData({ ...data, password: e.target.value });
             }}
-            className="w-full px-4 py-2.5 mt-1 bg-white rounded-lg border border-gray-300 border-solid placeholder-gray-700"
+            className="bg-transparent placeholder:text-gray-700 outline outline-gray-300 outline-[1px] focus:outline-blue-600 focus:outline-[1px] w-full px-4 py-2.5 mt-1 rounded-lg"
           />
           <p className="text-rose-700"></p>
           <button
