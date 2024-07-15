@@ -1,5 +1,5 @@
 import React from "react";
-import AdminLoginForm from "../components/admin-login-form";
+import AdminLoginForm from "../components/admin-login-page/admin-login-form";
 import houseIcon from "/icons/house-icon.png";
 
 function AdminLoginPage() {

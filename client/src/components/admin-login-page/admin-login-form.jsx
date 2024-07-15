@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { useAuth } from "../context/authentication";
-import { adminLoginValidate } from "../validations/admin-login-validations";
+import { useAuth } from "../../context/authentication";
+import { adminLoginValidate } from "../../validations/admin-login-validations";
 import { toast } from "react-toastify";
 
 function AdminLoginForm() {
@@ -26,9 +26,9 @@ function AdminLoginForm() {
 
   const css = {
     styleTextLabel: "font-prompt text-[16px] font-medium text-black",
-    styleTestLabelStar: "font-prompt text-[16px] font-medium text-red",
+    styleTextLabelStar: "font-prompt text-[16px] font-medium text-red",
     styleInputBox:
-      "w-[440px] h-[44px] bg-white border-[1px] border-gray-300 rounded-[8px] text-black pl-[10px]",
+      "w-[440px] h-[44px] bg-white border-[1px] border-gray-300 rounded-[8px] text-black pl-[10px] focus:border-blue-600 outline-none text-[16px] font-prompt",
   };
 
   return (
@@ -47,7 +47,7 @@ function AdminLoginForm() {
         <section className="flex flex-col gap-[4px]">
           <label htmlFor="" className={css.styleTextLabel}>
             Email
-            <span className={css.styleTestLabelStar}>*</span>
+            <span className={css.styleTextLabelStar}>*</span>
           </label>
           <input
             type="text"
@@ -65,7 +65,7 @@ function AdminLoginForm() {
         <section className="flex flex-col gap-[4px]">
           <label htmlFor="" className={css.styleTextLabel}>
             Password
-            <span className={css.styleTestLabelStar}>*</span>
+            <span className={css.styleTextLabelStar}>*</span>
           </label>
           <input
             type="password"
