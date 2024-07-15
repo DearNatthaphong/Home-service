@@ -2,11 +2,10 @@ import Hero from "../components/homepage/hero";
 import Service from "../components/homepage/service";
 import Contact from "../components/homepage/contact";
 import Footer from "../components/homepage/footer";
-import Header from "../components/homepage/header";
+import Header from "../components/header";
 function Homepage() {
   return (
     <div className="overflow-x-hidden">
-        <h1>User Homepage</h1>
       <Header />
       <Hero />
       <Service />

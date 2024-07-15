@@ -1,5 +1,5 @@
 import RegisterForm from '../components/registration/register-form';
-import Header from '../components/homepage/header';
+import Header from '../components/header.jsx';
 
 function RegisterPage() {
   return (
