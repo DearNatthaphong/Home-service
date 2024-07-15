@@ -49,7 +49,7 @@ function RegisterForm() {
             ชื่อ - นามสกุล<span className="text-rose-700">*</span>
           </label>
           <input
-            className="w-full px-4 py-2.5 mt-1 placeholder-gray-700 bg-white rounded-lg border border-gray-300 border-solid"
+            className="bg-transparent placeholder:text-gray-700 outline outline-gray-300 outline-[1px] focus:outline-blue-600 focus:outline-[1px] w-full px-4 py-2.5 mt-1 rounded-lg"
             placeholder="กรุณากรอกชื่อ นามสกุล"
             id="fullName"
             name="fullName"
@@ -64,7 +64,7 @@ function RegisterForm() {
             เบอร์โทรศัพท์<span className="text-rose-700">*</span>
           </label>
           <input
-            className="w-full px-4 py-2.5 mt-1 placeholder-gray-700 bg-white rounded-lg border border-gray-300 border-solid"
+            className="bg-transparent placeholder:text-gray-700 outline outline-gray-300 outline-[1px] focus:outline-blue-600 focus:outline-[1px] w-full px-4 py-2.5 mt-1 rounded-lg"
             placeholder="กรุณากรอกเบอร์โทรศัพท์"
             id="phoneNumber"
             name="phoneNumber"
@@ -76,7 +76,7 @@ function RegisterForm() {
             อีเมล<span className="text-rose-700">*</span>
           </label>
           <input
-            className="w-full px-4 py-2.5 mt-1 placeholder-gray-700 bg-white rounded-lg border border-gray-300 border-solid"
+            className="bg-transparent placeholder:text-gray-700 outline outline-gray-300 outline-[1px] focus:outline-blue-600 focus:outline-[1px] w-full px-4 py-2.5 mt-1 rounded-lg"
             placeholder="กรุณากรอกอีเมล"
             id="email"
             name="email"
@@ -91,7 +91,7 @@ function RegisterForm() {
             รหัสผ่าน<span className="text-rose-700">*</span>
           </label>
           <input
-            className="w-full px-4 py-2.5 mt-1 placeholder-gray-700 bg-white rounded-lg border border-gray-300 border-solid"
+            className="bg-transparent placeholder:text-gray-700 outline outline-gray-300 outline-[1px] focus:outline-blue-600 focus:outline-[1px] w-full px-4 py-2.5 mt-1 rounded-lg"
             placeholder="กรุณากรอกรหัสผ่าน"
             id="password"
             name="password"
@@ -102,7 +102,7 @@ function RegisterForm() {
           <div className="flex justify-center gap-3 my-10">
             <input
               type="checkbox"
-              className="checkbox border-gray-300"
+              className="checkbox hover:outline-blue-600 focus:checkbox-primary"
               id="awareness"
               name="awareness"
               onChange={handleChange}
