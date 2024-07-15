@@ -58,7 +58,7 @@ function Header() {
                 </div>
                 <ul
                   tabIndex={0}
-                  className="dropdown-content menu bg-base-100 rounded-box z-[1] w-[210px] shadow p-0 text-gray-800  "
+                  className="bg-white dropdown-content menu rounded-box z-[1] w-[210px] shadow p-0 text-gray-800  "
                 >
                   <li className="w-full">
                     <a className=" group">
