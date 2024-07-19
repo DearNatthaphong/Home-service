@@ -1,5 +1,5 @@
-import photo from "../../../public/images/construction-worker.png";
-import houselogo from "../../../public/images/house.png";
+import photo from "/images/construction-worker.png";
+import houselogo from "/images/house.png";
 function Contact() {
   return (
     <section className="font-prompt bg-blue-700 flex justify-center">

@@ -1,7 +1,7 @@
-import photo from "../../../public/images/image-air.png";
-import photo1 from "../../../public/images/image-clean.png";
-import photo2 from "../../../public/images/image-wash.png";
-import photo3 from "../../../public/images/label.png";
+import photo from "/images/image-air.png";
+import photo1 from "/images/image-clean.png";
+import photo2 from "/images/image-wash.png";
+import photo3 from "/images/label.png";
 import { useNavigate } from "react-router-dom";
 const services = [
   {

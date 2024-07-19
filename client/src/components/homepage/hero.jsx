@@ -1,4 +1,4 @@
-import photo1 from "../../../public/images/image-hero.png";
+import photo1 from "/images/image-hero.png";
 import { useNavigate } from "react-router-dom";
 function Hero() {
   const navigate = useNavigate();

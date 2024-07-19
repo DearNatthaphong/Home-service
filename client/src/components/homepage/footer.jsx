@@ -1,6 +1,6 @@
-import logo from "../../../public/images/house-icon.png";
-import logo1 from "../../../public/images/telephone-icon.png";
-import logo2 from "../../../public/images/card-icon.png";
+import logo from "/images/house-icon.png";
+import logo1 from "/images/telephone-icon.png";
+import logo2 from "/images/card-icon.png";
 function Footer() {
   return (
     <footer className="font-prompt">
