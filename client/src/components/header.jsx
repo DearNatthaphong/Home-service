@@ -1,27 +1,29 @@
-import logo from "/public/images/house-icon.png";
-import { useAuth } from "../context/authentication";
-import { useNavigate } from "react-router-dom";
-import userImage from "/public/images/image-user.png";
-import bellImage from "/public/images/image-bell.svg";
+import logo from '/public/images/house-icon.png';
+import { useAuth } from '../context/authentication';
+import { useNavigate } from 'react-router-dom';
+import userImage from '/public/images/image-user.png';
+import bellImage from '/public/images/image-bell.svg';
 import {
   orderIcon,
   userIcon,
   historyIcon,
-  logoutIcon,
-} from "../assets/icons/icon-user";
+  logoutIcon
+} from '../assets/icons/icon-user';
 
 function Header() {
   const navigate = useNavigate();
   const goToLoginPage = () => {
-    navigate("/login");
+    navigate('/login');
   };
 
   const goToHomePage = () => {
-    navigate("/");
+    navigate('/');
   };
-  const { logout } = useAuth();
 
-  const { state } = useAuth();
+  /* แก้จาก 2 บรรทัดให้เหลือ บรรทัดเดียว (start) */
+  const { state, logout } = useAuth();
+  /* แก้จาก 2 บรรทัดให้เหลือ บรรทัดเดียว (end) */
+
   return (
     <section className="font-prompt h-[53px] lg:h-[80px] flex justify-center lg:relative bg-white">
       <div className="flex justify-center items-center h-[53px] gap-10 lg:h-[80px]  lg:justify-start lg:absolute lg:left-[150px] 2xl:w-[1130px] 2xl:static lg:w-[1100px] left-transition duration-300">
@@ -91,10 +93,7 @@ function Header() {
                   <hr className="w-full" />
 
                   <li className="w-full ">
-                    <a
-                      className="group"
-                      onClick={() => logout()}
-                    >
+                    <a className="group" onClick={() => logout()}>
                       <span className="text-gray-500 group-hover:text-gray-950 ">
                         {logoutIcon}
                       </span>

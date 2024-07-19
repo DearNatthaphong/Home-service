@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
 import axios from 'axios';
@@ -13,6 +13,28 @@ function AuthProvider(props) {
     loading: null,
     user: null
   });
+
+  {
+    /* เก็บ state user จาก token หลังจาก refresh หน้าที่อยู่ใน route authen (start) */
+  }
+  const setUserFromToken = () => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      const userDataFromToken = jwtDecode(token);
+      setState({
+        ...state,
+        user: userDataFromToken
+        // loading: false
+      });
+    }
+  };
+
+  useEffect(() => {
+    setUserFromToken();
+  }, []);
+  {
+    /* เก็บ state user จาก token หลังจาก refresh หน้าที่อยู่ใน route authen (end) */
+  }
 
   const adminLogin = async (userLoginData) => {
     const data = {

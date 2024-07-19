@@ -3,14 +3,21 @@ import cors from 'cors';
 import connectionPool from './src/utils/db.mjs';
 import authRouter from './src/routes/auth.route.mjs';
 import { protect } from './src/middlewares/protect.middleware.mjs';
+import dotenv from 'dotenv';
+import paymentRouter from './src/routes/payment.route.mjs';
+
+dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 8000;
 
 app.use(cors());
+app.use(express.static('public'));
 app.use(express.json());
+
 app.use('/auth', authRouter);
 app.use(protect);
+app.use('/payment', paymentRouter);
 
 app.get('/', (req, res) => {
   res.send('Hello World!');
