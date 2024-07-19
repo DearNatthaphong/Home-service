@@ -2,7 +2,7 @@ import Header from "../components/header";
 import Footer from "../components/homepage/footer";
 import Historylist from "../components/customer-service-list-page/history-order-list";
 
-function Userhistorylistpage() {
+function UserHistoryListPage() {
   return (
     <div className="overflow-x-hidden">
       <Header />
@@ -12,4 +12,4 @@ function Userhistorylistpage() {
   );
 }
 
-export default Userhistorylistpage;
+export default UserHistoryListPage;
