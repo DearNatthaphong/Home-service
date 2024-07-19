@@ -15,13 +15,13 @@ export const adminLogin = async (req, res) => {
   } catch (error) {
     console.log(error);
     return res.status(500).json({
-      message: "พบข้อผิดพลาดภายในเซิร์ฟเวอร์",
+      message: 'พบข้อผิดพลาดภายในเซิร์ฟเวอร์'
     });
   }
 
   if (!user.rowCount) {
     return res.status(404).json({
-      message: "ไม่สามารถเข้าสู่ระบบได้เนื่องจากคุณไม่ใช่ Admin",
+      message: 'ไม่สามารถเข้าสู่ระบบได้เนื่องจากคุณไม่ใช่ Admin'
     });
   }
 
@@ -54,8 +54,8 @@ export const adminLogin = async (req, res) => {
   );
 
   return res.status(200).json({
-    message: "เข้าสู่ระบบสำเร็จ",
-    token: token,
+    message: 'เข้าสู่ระบบสำเร็จ',
+    token: token
   });
 };
 
@@ -100,7 +100,7 @@ export const login = async (req, res) => {
       },
       process.env.SECRET_KEY,
       {
-        expiresIn: '90000'
+        expiresIn: '1d'
       }
     );
 
