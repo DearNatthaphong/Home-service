@@ -18,7 +18,7 @@ app.use(express.json());
 
 app.use("/auth", authRouter);
 // app.use(protect);
-app.use("/payment", paymentRouter);
+// app.use("/payment", paymentRouter);
 app.use("/service", serviceRouter);
 
 app.get("/", (req, res) => {
