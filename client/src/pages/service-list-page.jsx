@@ -8,7 +8,7 @@ import { FilterProvider } from "../context/filter-context";
 
 function ServiceListPage() {
   return (
-    <div className="w-full h-full bg-background overflow-x-hidden overflow-y-hidden">
+    <div className="w-full h-full bg-background overflow-clip">
       <ServiceHeader />
       <ServiceTitle />
       <FilterProvider>

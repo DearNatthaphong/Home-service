@@ -2,7 +2,7 @@ import React from "react";
 
 function SecviceTitle() {
   return (
-    <div className="w-screen h-[168px] lg:h-[240px] flex items-center justify-center bg-[url('/images/service-list-banner-xs.png')] lg:bg-[url('/images/service-list-banner-lg.png')]">
+    <div className="w-full h-[168px] lg:h-[240px] flex items-center justify-center bg-[url('/images/service-list-banner-xs.png')] lg:bg-[url('/images/service-list-banner-lg.png')] mt-[54px] ">
       <div className="flex flex-col items-center gap-[16px] lg:gap-[17px]">
         <p className="font-prompt text-[20px] lg:text-[32px] text-white font-medium">
           บริการของเรา

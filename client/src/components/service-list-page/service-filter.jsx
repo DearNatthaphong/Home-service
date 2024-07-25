@@ -2,19 +2,47 @@ import React, { useState } from "react";
 import ServiceListTypeDropdown from "./service-list-type-dropdown";
 import ServiceListScopePriceDropdown from "./service-list-scope-price-dropdown";
 import ServiceListSortDropdown from "./service-list-sort-dropdown";
-import { UseFilter } from "../../context/filter-context";
+import { useFilter } from "../../context/filter-context";
 
 function ServiceFilter() {
-  const { searchService, setSearchService } = UseFilter();
+  const {
+    setSearchService,
+
+    setSearchByType,
+    isUserSelected,
+
+    isUserSlided1,
+    setSearchBySlided1,
+
+    isUserSlided2,
+    setSearchBySlided2,
+
+    isUserSort,
+    setSortByType,
+  } = useFilter();
+
+  const [isUserSearch, setIsUserSearch] = useState("");
 
   const handleSearch = (e) => {
-    setSearchService(e.target.value);
+    e.preventDefault();
+    setSearchService(isUserSearch);
+
+    setSearchByType(isUserSelected);
+
+    setSearchBySlided1(isUserSlided1);
+    setSearchBySlided2(isUserSlided2);
+
+    setSortByType(isUserSort);
   };
+
   return (
-    <div className="w-screen h-[135px] lg:h-[85px] bg-white p-[16px] flex items-center justify-center lg:p-[20px] border-b-[1px] border-b-gray-300">
-      <form className="w-full max-w-[1130px] h-full flex flex-col items-center justify-between lg:flex-row">
+    <div className="w-full h-[135px] lg:h-[85px] bg-white p-[16px] flex items-center justify-center lg:p-[20px] border-b-[1px] border-b-gray-300 sticky top-[53px] shadow-shadow">
+      <form
+        className="w-full max-w-[1130px] h-full flex flex-col items-center justify-between lg:flex-row"
+        onSubmit={handleSearch}
+      >
         {/** Search Bar Start */}
-        <form className="w-full max-w-[345px] h-[44px] flex justify-between lg:max-w-[350px]">
+        <div className="w-full max-w-[345px] h-[44px] flex justify-between lg:max-w-[350px]">
           {/** Input Text Box Start */}
           <div className="max-w-[241px] lg:max-w-[350px] w-full h-[44px] bg-transparent border-[1px] border-gray-300 rounded-[8px] flex items-center px-[15px]">
             <img
@@ -26,9 +54,9 @@ function ServiceFilter() {
               type="text"
               className="bg-transparent placeholder:text-[16px] font-prompt w-full pl-[5px] text-black outline-none"
               placeholder="ค้นหาบริการ..."
-              value={searchService}
+              value={isUserSearch}
               onChange={(e) => {
-                setSearchService(e.target.value);
+                setIsUserSearch(e.target.value);
               }}
             />
           </div>
@@ -37,14 +65,13 @@ function ServiceFilter() {
           <button
             type="submit"
             className="w-full max-w-[86px] h-[44px] bg-blue-600 rounded-[8px] lg:hidden"
-            onSubmit={handleSearch}
           >
             <p className="font-prompt text-[16px] font-medium text-white">
               ค้นหา
             </p>
           </button>
           {/** Submit Button End*/}
-        </form>
+        </div>
         {/** Search Bar End */}
         {/** Drop Down Section Start */}
         <div className="gap-[11px] h-full w-full max-w-[680px] flex items-center justify-center">

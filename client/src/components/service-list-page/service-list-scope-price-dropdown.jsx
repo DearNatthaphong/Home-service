@@ -1,5 +1,6 @@
 import { React, useState } from "react";
 import Slider from "@mui/material/Slider";
+import { useFilter } from "../../context/filter-context";
 
 function ServiceListScopePriceDropdown() {
   const [isOpen, setIsOpen] = useState(false);
@@ -8,8 +9,12 @@ function ServiceListScopePriceDropdown() {
   }
   const [value, setValue] = useState([0, 100]);
 
+  const { setIsUserSlided1, setIsUserSlided2 } = useFilter();
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
+    setIsUserSlided1(newValue[0] * 40);
+    setIsUserSlided2(newValue[1] * 40);
   };
 
   return (
@@ -18,7 +23,7 @@ function ServiceListScopePriceDropdown() {
         <p className="text-[12px] font-prompt text-gray-700">ราคา</p>
         <div className="flex items-center justify-between">
           <p className="text-[16px] font-prompt font-medium text-gray-950 truncate">
-            {value[0] * 20} - {value[1] * 20}฿
+            {value[0] * 40} - {value[1] * 40}฿
           </p>
           <img src="/icons/arrow-down-icon.svg" alt="" />
         </div>
@@ -26,7 +31,7 @@ function ServiceListScopePriceDropdown() {
       {!isOpen ? null : (
         <div className="w-[250px] h-[112px] bg-white mt-[25px] py-[20px] px-[14px] rounded-[8px]">
           <p className="text-[14px] font-prompt text-gray-700">
-            {value[0] * 20} - {value[1] * 20}฿
+            {value[0] * 40} - {value[1] * 40}฿
           </p>
           <Slider
             getAriaLabel={() => "Temperature range"}

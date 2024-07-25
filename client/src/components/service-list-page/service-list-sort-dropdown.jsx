@@ -1,6 +1,8 @@
 import React from "react";
+import { useFilter } from "../../context/filter-context";
 
 function ServiceListSortDropdown() {
+  const { isUserSort, setIsUserSort } = useFilter();
   return (
     <div className="w-[114px] lg:w-[215px] h-full pl-[10px] lg:pl-[0px]">
       <div className="w-full h-full">
@@ -9,19 +11,23 @@ function ServiceListSortDropdown() {
           name=""
           id=""
           className="w-full bg-transparent font-prompt text-[16px] text-gray-950 truncate outline-none"
+          value={isUserSort}
+          onChange={(e) => {
+            setIsUserSort(e.target.value);
+          }}
         >
           <option value="">บริการแนะนำ</option>
-          <option value="">บริการยอดนิยม</option>
-          <option value="" className="md:hidden">
+          <option value="ยอดนิยม">บริการยอดนิยม</option>
+          <option value="น้อย1" className="md:hidden">
             ตามตัวอักษร...
           </option>
-          <option value="" className="md:hidden">
+          <option value="มาก1" className="md:hidden">
             ตามตัวอักษร...
           </option>
-          <option value="" className="hidden md:flex">
+          <option value="น้อย2" className="hidden md:flex">
             ตามตัวอักษร (Ascending)
           </option>
-          <option value="" className="hidden md:flex">
+          <option value="มาก2" className="hidden md:flex">
             ตามตัวอักษร (Descending)
           </option>
         </select>
