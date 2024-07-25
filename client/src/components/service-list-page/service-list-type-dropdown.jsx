@@ -9,7 +9,7 @@ function ServiceListTypeDropdown() {
       <select
         name=""
         id=""
-        className="w-full bg-transparent font-prompt text-[16px] text-gray-950 truncate outline-none"
+        className="w-full bg-transparent font-prompt text-[16px] text-gray-950 truncate outline-none cursor-pointer"
         value={isUserSelected}
         onChange={(e) => {
           setIsUserSelected(e.target.value);
