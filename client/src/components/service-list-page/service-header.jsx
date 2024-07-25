@@ -13,7 +13,7 @@ function ServiceHeader() {
   return (
     <>
       {state.user ? (
-        <div className="w-screen h-[53px] flex items-center justify-center shadow-shadow bg-white">
+        <div className="w-full h-[53px] flex items-center justify-center shadow-shadow bg-white fixed z-10 top-0">
           <div className="w-full max-w-[1120px] h-full flex items-center justify-between px-[16px]">
             <div className="flex items-center">
               <button
@@ -168,7 +168,7 @@ function ServiceHeader() {
           </div>
         </div>
       ) : (
-        <div className="w-screen h-[53px] flex items-center justify-center shadow-shadow bg-white">
+        <div className="w-screen h-[53px] flex items-center justify-center shadow-shadow bg-white fixed z-10 top-0">
           <div className="w-full max-w-[1120px] h-full flex items-center justify-between px-[16px]">
             <div className="flex items-center">
               <button

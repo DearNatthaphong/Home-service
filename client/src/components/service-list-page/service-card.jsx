@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { UseFilter } from "../../context/filter-context";
+import { useFilter } from "../../context/filter-context";
 import { useAuth } from "../../context/authentication";
 import { useNavigate } from "react-router-dom";
 
@@ -9,8 +9,22 @@ function ServiceCard() {
   const navigate = useNavigate();
 
   const [servicePost, setServicePost] = useState([]);
-  const { searchService } = UseFilter();
-  console.log(searchService);
+
+  const {
+    /** เอาค่าจาก input text เมื่อกดค้นหามา render */
+    searchService,
+
+    /** เอาค่าจาก select dropdown เลือก category เมื่อกดค้นหามา render */
+    searchByType,
+
+    /** เอาค่่าจาก slider เมื่อเลือก range ที่ต้องการตัวที่ 1 เมื่อกดค้นหามา render */
+    searchBySlided1,
+    /** เอาค่าจาก slider เมื่อเลือก range ที่ต้องการตัวที่ 2 เมื่อกดค้นหามา render */
+    searchBySlided2,
+
+    /** เอาค่า select dropdown เลือก sort เมื่อกดค้นหามา render */
+    sortByType,
+  } = useFilter();
 
   const getServicePost = async () => {
     const result = await axios.get("http://localhost:4000/service");
@@ -18,30 +32,45 @@ function ServiceCard() {
     setServicePost(result.data.data);
   };
 
+  const filterServices = servicePost
+    .filter((items) => {
+      const filterSearchText =
+        searchService === "" || items.service_name.includes(searchService);
+      const filterSearchType =
+        searchByType === "" || items.category_name === searchByType;
+      const filterSearchSlide =
+        searchBySlided1 === "" ||
+        (items.service_price >= searchBySlided1 &&
+          items.service_price <= searchBySlided2);
+      return filterSearchText && filterSearchType && filterSearchSlide;
+    })
+    .sort((a, b) => {
+      if (sortByType === "น้อย2" || sortByType === "น้อย1") {
+        return a.service_name.localeCompare(b.service_name, "th");
+      } else if (sortByType === "มาก2" || sortByType === "มาก1") {
+        return b.service_name.localeCompare(a.service_name, "th");
+      }
+    });
+
+  console.log(filterServices);
+
   useEffect(() => {
     getServicePost();
-  }, [searchService]);
+  }, []);
 
   return (
     <div className="w-screen h-full flex items-center justify-center pt-[25px]">
       <div className="w-full max-w-[1125px] flex-wrap gap-x-[37px] gap-y-[24px] lg:gap-y-[48px] flex items-center justify-center">
-        {servicePost
-          .filter((items) => {
-            if (searchService === "") {
-              return items;
-            } else {
-              return items.service_name.includes(searchService);
-            }
-          })
-          .map((items, id) => (
+        {filterServices.length !== 0 ? (
+          filterServices.map((items, id) => (
             <div
               className="w-[350px] h-[350px] lg:h-[365px] bg-white rounded-[8px] border-[1px] border-gray-300"
               key={id}
             >
               <img
-                src=""
+                src={items.service_image}
                 alt=""
-                className="w-full h-[200px] bg-green-300 rounded-t-[8px]"
+                className="w-full h-[200px] rounded-t-[8px]"
               />
               <div className="w-full h-[150px] lg:h-[165px] flex flex-col p-[15px]">
                 <div className="w-full h-full justify-between flex-col flex">
@@ -58,7 +87,7 @@ function ServiceCard() {
                       <div className="flex items-center gap-[8px]">
                         <img src="/icons/sell-icon.png" alt="" />
                         <p className="font-prompt text-[14px] text-gray-700">
-                          {items.service_price}
+                          ค่าบริการประมาณ {items.service_price} ฿
                         </p>
                       </div>
                     </div>
@@ -89,7 +118,20 @@ function ServiceCard() {
                 </div>
               </div>
             </div>
-          ))}
+          ))
+        ) : (
+          <div className="w-full h-full flex flex-col items-center justify-center gap-[10px]">
+            <p className="mt-[20px] font-prompt text-[16px] text-gray-500">
+              ขออภัยครับ ไม่พบการค้นหาบริการที่ท่านต้องการ
+            </p>
+            <p className="font-prompt text-[16px] text-gray-500">
+              หากลูกค้าต้องการบริการใดๆเพิ่มเติม
+            </p>
+            <p className="font-prompt text-[16px] text-gray-500">
+              สามารถติดต่อสอบถามได้ที่ 080-540-6357
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );
