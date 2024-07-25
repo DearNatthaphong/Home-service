@@ -1,9 +1,15 @@
 import { Router } from 'express';
-import { paymentIntent } from '../controllers/payment.controller.mjs';
-import { protect } from '../middlewares/protect.middleware.mjs';
+import * as paymentController from '../controllers/payment.controller.mjs';
 
 const paymentRouter = Router();
 
-paymentRouter.post('/create-payment-intent', paymentIntent);
+paymentRouter
+  .post(
+    '/orders/:id/create-payment-intent',
+    paymentController.createPaymentIntent
+  )
+  .get('/orders/:id', paymentController.getPaymentOrder)
+  .put('/orders/:id/success', paymentController.successPaymentOrder)
+  .put('/orders/:id/fail', paymentController.failPaymentOrder);
 
 export default paymentRouter;

@@ -1,75 +1,163 @@
 import dotenv from 'dotenv';
 import Stripe from 'stripe';
+import connectionPool from '../utils/db.mjs';
+// import jwt from 'jsonwebtoken';
 
 dotenv.config();
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 const calculateOrderAmount = (items) => {
-  // Replace this constant with a calculation of the order's amount
-  // Calculate the order total on the server to prevent
-  // people from directly manipulating the amount on the client
-  return 1400;
+  return items * 100;
 };
 
-export const paymentIntent = async (req, res) => {
-  const { items } = req.body;
+export const createPaymentIntent = async (req, res) => {
+  // const { items } = req.body;
+  const { id } = req.params;
 
-  // Create a PaymentIntent with the order amount and currency
-  const paymentIntent = await stripe.paymentIntents.create({
-    amount: calculateOrderAmount(items),
-    currency: 'thb',
-    // In the latest version of the API, specifying the `automatic_payment_methods` parameter is optional because Stripe enables its functionality by default.
-    automatic_payment_methods: {
-      enabled: true
+  let order;
+  try {
+    // เชค order ถ้ามี ให้เลือก total_price ออกมา
+    order = await connectionPool.query(
+      `select total_price from orders where order_id=$1 AND payment_status=$2`,
+      [id, 'pending']
+    );
+
+    if (!order.rows.length) {
+      return res.status(404).json({ message: 'ไม่พบคำสั่งซ่อมในคำขอ' });
     }
-  });
 
-  res.send({
-    clientSecret: paymentIntent.client_secret
-  });
+    const { total_price } = order.rows[0];
+
+    // Create a PaymentIntent with the order amount and currency
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount: calculateOrderAmount(total_price),
+      currency: 'thb',
+      automatic_payment_methods: {
+        enabled: true
+      }
+    });
+
+    return res.status(200).json({
+      message: 'สร้าง payment intent สำเร็จ',
+      clientSecret: paymentIntent.client_secret
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      message: 'พบข้อผิดพลาดภายในเซอร์เวอร์'
+    });
+  }
 };
 
-//////  ****************** ////////////////////////
-// const calculateOrderAmount = (items) => {
-//   // คำนวณจำนวนเงินทั้งหมดของคำสั่งซื้อที่นี่
-//   // ตัวอย่างเช่น:
-//   const totalAmount = items.reduce(
-//     (sum, item) => sum + item.price * item.quantity,
-//     0
-//   );
-//   return totalAmount;
-// };
+export const getPaymentOrder = async (req, res) => {
+  const { id } = req.params;
+  const userId = req.user.id;
 
-// export const paymentIntent = async (req, res) => {
-//   const { items } = req.body;
+  try {
+    const result = await connectionPool.query(
+      `SELECT
+      a.service_date,
+      a.service_time,
+      a.address,
+      a.district,
+      a.sub_district,
+      a.province,
+      o.total_price,
+      oi.order_item_id,
+      oi.quantity,
+      s.service_name
+    FROM
+      appointments AS a
+    INNER JOIN orders AS o ON a.order_id = o.order_id
+    INNER JOIN order_items AS oi ON o.order_id = oi.order_id
+    INNER JOIN service_items AS s ON oi.service_item_id = s.service_item_id
+    WHERE
+      a.order_id = $1 AND o.user_id = $2`,
+      [id, userId]
+    );
 
-//   if (!items || items.length === 0) {
-//     return res.status(400).json({
-//       message: 'ไม่มีสินค้าในคำขอ'
-//     });
-//   }
+    console.log(result);
 
-//   let paymentIntent;
-//   try {
-//     // สร้าง PaymentIntent ด้วยจำนวนเงินและสกุลเงิน
-//     paymentIntent = await stripe.paymentIntents.create({
-//       amount: calculateOrderAmount(items),
-//       currency: 'thb',
-//       automatic_payment_methods: {
-//         enabled: true
-//       }
-//     });
+    if (result.rows.length === 0) {
+      return res.status(404).json({ message: 'ไม่พบคำสั่งซ่อมในคำขอ' });
+    }
 
-//     // ส่งการตอบกลับเมื่อการสร้าง PaymentIntent สำเร็จ
-//     res.status(200).send({
-//       clientSecret: paymentIntent.client_secret
-//     });
-//   } catch (error) {
-//     console.log(error);
-//     return res.status(500).json({
-//       message: 'พบข้อผิดพลาดภายในเซิร์ฟเวอร์จากทาง Stripe'
-//     });
-//   }
-// };
-//////  ****************** ////////////////////////
+    // return res.status(200).json({
+    //   message: 'ดึงข้อมูลรายการซ่อมสำเร็จ',
+    //   data: result.rows[0]
+    // });
+
+    // จัดระเบียบข้อมูล
+    const orderData = {
+      service_date: result.rows[0].service_date,
+      service_time: result.rows[0].service_time,
+      address: result.rows[0].address,
+      district: result.rows[0].district,
+      sub_district: result.rows[0].sub_district,
+      province: result.rows[0].province,
+      items: result.rows.map((row) => ({
+        order_item_id: row.order_item_id,
+        service_name: row.service_name,
+        quantity: row.quantity
+      })),
+      total_price: result.rows[0].total_price
+    };
+
+    return res.status(200).json(orderData);
+  } catch (error) {
+    return res.status(500).json({
+      message: 'พบข้อผิดพลาดภายในเซอร์เวอร์'
+    });
+  }
+};
+
+export const successPaymentOrder = async (req, res) => {
+  const { id } = req.params;
+  const successText = 'success';
+
+  try {
+    const result = await connectionPool.query(
+      `UPDATE orders
+      set payment_status = $1
+      where order_id = $2
+      RETURNING *`,
+      [successText, id]
+    );
+
+    if (result.rowCount === 0) {
+      return res.status(404).json({ message: 'ไม่พบคำสั่งซ่อมในคำขอ' });
+    }
+
+    return res.status(200).json({ message: 'ปรับปรุงสถานะทางการเงินสำเร็จ' });
+  } catch (error) {
+    return res.status(500).json({
+      message: 'พบข้อผิดพลาดภายในเซอร์เวอร์'
+    });
+  }
+};
+
+export const failPaymentOrder = async (req, res) => {
+  const { id } = req.params;
+  const successText = 'fail';
+
+  try {
+    const result = await connectionPool.query(
+      `UPDATE orders
+      set payment_status = $1
+      where order_id = $2
+      RETURNING *`,
+      [successText, id]
+    );
+
+    if (result.rowCount === 0) {
+      return res.status(404).json({ message: 'ไม่พบคำสั่งซ่อมในคำขอ' });
+    }
+
+    return res.status(200).json({ message: 'ปรับปรุงสถานะทางการเงินสำเร็จ' });
+  } catch (error) {
+    return res.status(500).json({
+      message: 'พบข้อผิดพลาดภายในเซอร์เวอร์'
+    });
+  }
+};
