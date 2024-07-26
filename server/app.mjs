@@ -6,6 +6,7 @@ import { protect } from "./src/middlewares/protect.middleware.mjs";
 import dotenv from "dotenv";
 import paymentRouter from "./src/routes/payment.route.mjs";
 import serviceRouter from "./src/routes/service.route.mjs";
+import orderRouter from "./src/routes/order.route.mjs";
 
 dotenv.config();
 
@@ -20,29 +21,11 @@ app.use("/auth", authRouter);
 // app.use(protect);
 // app.use("/payment", paymentRouter);
 app.use("/service", serviceRouter);
+app.use("/orders", orderRouter);
 
 app.get("/", (req, res) => {
   console.log("Sawaddee");
   res.send("Hello World!");
-});
-
-app.get("/roles", async (req, res) => {
-  let results;
-
-  try {
-    results = await connectionPool.query(`select * from users`);
-  } catch (error) {
-    console.log(error);
-    return res.status(500).json({
-      message: "Server could not read assignments because database connection",
-    });
-  }
-
-  if (!results.rows.length) {
-    return res.status(404).json({ message: "No assignments found" });
-  }
-
-  return res.status(200).json({ data: results.rows });
 });
 
 app.get("*", (req, res) => {

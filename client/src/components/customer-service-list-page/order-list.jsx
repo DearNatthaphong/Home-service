@@ -3,11 +3,31 @@ import {
   clockIcon,
   listPadIcon,
 } from "../../../public/icons/icon-user-2";
-import photo1 from "/public/images/calender-icon.png";
-import photo2 from "/public/images/worker-icon.png";
+import photo1 from "/images/calender-icon.png";
+import photo2 from "/images/worker-icon.png";
 import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 
 function Orderlist() {
+  const [orders, setOrders] = useState([]);
+
+  const fetchOrders = async () => {
+    try {
+      const response = await fetch("http://localhost:4000/orders");
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      setOrders(data.data);
+    } catch (error) {
+      setError(error.message);
+    }
+  };
+
+  useEffect(() => {
+    fetchOrders();
+  }, []);
+
   const navigate = useNavigate();
   const goToHistoryList = () => {
     navigate("/historylist");
@@ -103,7 +123,7 @@ function Orderlist() {
                   ราคารวม:
                 </div>
                 <div className=" text-zinc-800 text-base font-medium  leading-normal">
-                  1,550.00 ฿
+                  {orders.total_price} ฿
                 </div>
               </div>
               <div className="flex gap-6 lg:flex-col lg:gap-1">
