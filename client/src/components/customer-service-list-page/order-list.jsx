@@ -8,39 +8,39 @@ import photo2 from "/images/worker-icon.png";
 import { useNavigate } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 
-function Orderlist() {
+function OrderList() {
   const [orders, setOrders] = useState([]);
-
-  const fetchOrders = async () => {
-    try {
-      const response = await fetch("http://localhost:4000/orders");
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      const data = await response.json();
-      setOrders(data.data);
-    } catch (error) {
-      setError(error.message);
-    }
-  };
-
-  useEffect(() => {
-    fetchOrders();
-  }, []);
-
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
   const goToHistoryList = () => {
     navigate("/historylist");
   };
+
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        const response = await fetch(
+          "http://localhost:4000/orders?firstActionStatus=รอดำเนินการ&secondActionStatus=กำลังดำเนินการ"
+        );
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const data = await response.json();
+        setOrders(data.data);
+      } catch (error) {
+        setError(error.message);
+      }
+    };
+
+    fetchOrders();
+  }, []);
+
   return (
-    <section className="font-prompt flex justify-center bg-gray-100 lg:relative">
-      <div className=" flex flex-col  justify-center items-center gap-6 mb-8 lg:flex-row lg:mt-[120px] lg:items-start">
-        <div className="w-screen flex justify-center shadow-lg py-2 lg:w-[253px] lg:h-[252px] lg:shadow-none lg:py-0">
+    <section className="font-prompt flex justify-center bg-gray-100 lg:relative lg:min-h-[942px]">
+      <div className="flex flex-col justify-center items-center gap-6 mb-8 lg:flex-row lg:mt-[120px] lg:items-start">
+        <div className="w-screen flex justify-center shadow-lg py-2 lg:w-[253px] lg:h-[252px] lg:shadow-none lg:py-0 sticky top-0 bg-gray-100">
           <div className="w-[343px] border border-gray-300 bg-white rounded-lg lg:flex lg:flex-col lg:gap-3 ">
-            <div
-              className="py-2 text-gray-500 text-lg font-medium leading-[27px] px-3 lg:px-5 mt-3
-             lg:text-xl lg:font-normal  lg:leading-[30px]"
-            >
+            <div className="py-2 text-gray-500 text-lg font-medium leading-[27px] px-3 lg:px-5 mt-3 lg:text-xl lg:font-normal lg:leading-[30px]">
               บัญชีผู้ใช้
             </div>
             <hr />
@@ -49,19 +49,15 @@ function Orderlist() {
                 <div className="group-hover:text-blue-700 transition-colors duration-200 text-gray-500">
                   {userIcon}
                 </div>
-
-                <span
-                  className=" group-hover:text-blue-700 transition-colors duration-200  text-zinc-800 text-sm font-normal leading-[21px]
-                 lg:text-base lg:leading-normal"
-                >
+                <span className="group-hover:text-blue-700 transition-colors duration-200 text-zinc-800 text-sm font-normal leading-[21px] lg:text-base lg:leading-normal">
                   ข้อมูลผู้ใช้งาน
                 </span>
               </div>
               <div className="group cursor-pointer flex items-center gap-1 lg:gap-3">
-                <div className="group-hover:text-blue-700 transition-colors duration-200 text-gray-500">
+                <div className="group-hover:text-blue-700 transition-colors duration-200 text-blue-700">
                   {listPadIcon}
                 </div>
-                <span className="group-hover:text-blue-700 transition-colors duration-200 text-zinc-800 text-sm font-normal leading-[21px] lg:text-base lg:leading-normal">
+                <span className="group-hover:text-blue-700 transition-colors duration-200 text-blue-700 text-sm font-normal leading-[21px] lg:text-base lg:leading-normal">
                   รายการคำสั่งซ่อม
                 </span>
               </div>
@@ -81,65 +77,82 @@ function Orderlist() {
         </div>
         <div className="lg:absolute lg:top-0 lg:w-full">
           <div className="w-[343px] h-[46px] px-4 py-2 bg-blue-600 rounded-lg lg:w-full lg:h-[96px] lg:flex lg:justify-center lg:items-center">
-            <div className="w-[311px] text-center text-white text-xl font-medium  leading-[30px] lg:text-[32px] lg:leading-[48px]">
+            <div className="w-[311px] text-center text-white text-xl font-medium leading-[30px] lg:text-[32px] lg:leading-[48px]">
               รายการคำสั่งซ่อม
             </div>
           </div>
         </div>
-        <div className="w-[343px] p-4 bg-white rounded-lg border border-gray-300 flex-col justify-center items-start gap-6 flex lg:w-[831px] lg:py-5">
-          <div className="flex flex-col gap-4 lg:w-full lg:relative">
-            <div className="flex flex-col gap-1 lg:flex-row lg:justify-between">
-              <div className="text-black text-lg font-medium leading-[27px]  lg:text-xl  lg:leading-[30px]">
-                คำสั่งการซ่อมรหัส : AD04071205
-              </div>
-              <div className="flex items-center gap-3">
-                <div className=" text-gray-500 text-sm font-normal leading-[21px]">
-                  สถานะ:
+        <div className="w-[343px] flex flex-col gap-6 lg:w-[831px]">
+          {error && (
+            <div className="text-red-500 text-sm font-medium">{error}</div>
+          )}
+          {orders.map((order) => (
+            <div
+              key={order.order_item_id}
+              className="p-4 bg-white rounded-lg border border-gray-300 flex-col justify-center items-start gap-6 flex lg:py-5"
+            >
+              <div className="flex flex-col gap-4 lg:w-full lg:relative">
+                <div className="flex flex-col gap-1 lg:flex-row lg:justify-between">
+                  <div className="text-black text-lg font-medium leading-[27px] lg:text-xl lg:leading-[30px]">
+                    คำสั่งการซ่อมรหัส : {order.order_number}
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <div className="text-gray-500 text-sm font-normal leading-[21px]">
+                      สถานะ:
+                    </div>
+                    <div
+                      className={` h-[25px] px-3 py-0.5 rounded-[99px] justify-center items-start gap-2.5 flex ${
+                        order.action_status === "รอดำเนินการ"
+                          ? "bg-gray-200 text-zinc-700"
+                          : order.action_status === "กำลังดำเนินการ"
+                          ? "bg-yellow-100 text-yellow-900"
+                          : "bg-gray-200 text-zinc-700"
+                      }`}
+                    >
+                      <div className=" text-sm font-normal leading-[21px]">
+                        {order.action_status}
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div className="w-[99px] h-[25px] px-3 py-0.5 bg-gray-200 rounded-[99px] justify-start items-start gap-2.5 flex">
-                  <div className=" text-zinc-700 text-sm font-normal leading-[21px]">
-                    รอดำเนินการ
+                <div className="flex flex-col gap-3 lg:gap-5">
+                  <div className="flex flex-col gap-1">
+                    <div className="flex gap-2">
+                      <img src={photo1} className="w-[20px] h-[20px]" />
+                      <div className="w-[283px] text-gray-500 text-sm font-normal leading-[21px]">
+                        วันเวลาดำเนินการ: 25/04/2563 เวลา 13.00 น.
+                      </div>
+                    </div>
+                    <div className="flex gap-2">
+                      <img src={photo2} className="w-[20px] h-[20px]" />
+                      <div className="w-[283px] text-gray-500 text-sm font-normal leading-[21px]">
+                        พนักงาน: สมาน เยี่ยมยอด
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-4 lg:absolute lg:right-0">
+                    <div className="text-gray-500 text-sm font-normal leading-[21px]">
+                      ราคารวม:
+                    </div>
+                    <div className="text-zinc-800 text-base font-medium leading-normal">
+                      {order.total_price} ฿
+                    </div>
+                  </div>
+                  <div className="flex gap-6 lg:flex-col lg:gap-1">
+                    <div className="text-gray-500 text-sm font-normal leading-[21px]">
+                      รายการ:
+                    </div>
+                    <li className="w-[220px] text-black text-sm font-normal leading-[21px] lg:w-full">
+                      {order.service_name} {order.quantity} เครื่อง
+                    </li>
                   </div>
                 </div>
               </div>
             </div>
-            <div className="flex flex-col gap-3 lg:gap-5">
-              <div className="flex flex-col gap-1">
-                <div className="flex gap-2">
-                  <img src={photo1} className="w-[20px] h-[20px]" />
-                  <div className="w-[283px] text-gray-500 text-sm font-normal  leading-[21px]">
-                    วันเวลาดำเนินการ: 25/04/2563 เวลา 13.00 น.
-                  </div>
-                </div>
-                <div className="flex gap-2">
-                  <img src={photo2} className="w-[20px] h-[20px]" />
-                  <div className="w-[283px] text-gray-500 text-sm font-normal leading-[21px]">
-                    พนักงาน: สมาน เยี่ยมยอด
-                  </div>
-                </div>
-              </div>
-              <div className="flex items-center gap-4 lg:absolute lg:right-0">
-                <div className="text-gray-500 text-sm font-normal leading-[21px]">
-                  ราคารวม:
-                </div>
-                <div className=" text-zinc-800 text-base font-medium  leading-normal">
-                  {orders.total_price} ฿
-                </div>
-              </div>
-              <div className="flex gap-6 lg:flex-col lg:gap-1">
-                <div className="text-gray-500 text-sm font-normal leading-[21px]">
-                  รายการ:
-                </div>
-                <li className="w-[220px] text-black text-sm font-normal leading-[21px] lg:w-full ">
-                  ล้างแอร์ 9,000 - 18,000 BTU, ติดผนัง 2 เครื่อง
-                </li>
-              </div>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
     </section>
   );
 }
-
-export default Orderlist;
+export default OrderList;
