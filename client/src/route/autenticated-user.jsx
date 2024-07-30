@@ -6,6 +6,8 @@ import TestPayment from "../pages/test-payment-page";
 import PaymentSuccess from "../pages/payment-success-page";
 import ServiceListPage from "../pages/service-list-page";
 import DemoPage from "../pages/demo-page";
+import UserHistoryListPage from "../pages/customer-history-list-page";
+import UserOrderListPage from "../pages/customer-order-list-page";
 
 function AutenticatedUser() {
   return (
@@ -19,7 +21,9 @@ function AutenticatedUser() {
         {/* ม่อน */}
         {/* <Route path="/order" element={<ServiceOrder />} /> */}
         {/* ป้อง */}
-        {/* <Route path="/orders" element={<ServiceOrderList />} /> */}
+        <Route path="/orderlist" element={<UserOrderListPage />} />
+        <Route path="/historylist" element={<UserHistoryListPage />} />
+
         {/* เดียร์ */}
         {/* <Route path="/payment" element={<ServicePayment />} /> */}
         {/* <Route path="/payment" element={<TestPayment />} /> */}

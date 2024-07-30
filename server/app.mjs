@@ -18,7 +18,7 @@ app.use(express.static("public"));
 app.use(express.json());
 
 app.use("/auth", authRouter);
-// app.use(protect);
+app.use(protect);
 // app.use("/payment", paymentRouter);
 app.use("/service", serviceRouter);
 app.use("/orders", orderRouter);

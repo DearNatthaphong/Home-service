@@ -2,10 +2,15 @@ import connectionPool from "../utils/db.mjs";
 
 export const getOrderByQuerry = async (req, res) => {
   const { firstActionStatus, secondActionStatus } = req.query;
-
+  // const { userId } = req.user.id;
+  const userId = req.user && req.user.id;
+  console.log("User ID:", userId);
   let results;
 
   try {
+    console.log("firstActionStatus:", firstActionStatus);
+    console.log("secondActionStatus:", secondActionStatus);
+    console.log("userId:", userId);
     if (
       firstActionStatus === "รอดำเนินการ" &&
       secondActionStatus === "กำลังดำเนินการ"
@@ -21,8 +26,8 @@ export const getOrderByQuerry = async (req, res) => {
         FROM orders
         INNER JOIN order_items ON orders.order_id = order_items.order_id
         INNER JOIN service_items ON order_items.service_item_id = service_items.service_item_id
-        WHERE orders.action_status = $1 OR orders.action_status = $2`,
-        ["รอดำเนินการ", "กำลังดำเนินการ"]
+         WHERE (orders.action_status = $1 OR orders.action_status = $2) AND orders.user_id = $3`,
+        ["รอดำเนินการ", "กำลังดำเนินการ", userId]
       );
     }
     if (firstActionStatus === "ดำเนินการสำเร็จ") {
@@ -37,8 +42,8 @@ export const getOrderByQuerry = async (req, res) => {
         FROM orders
         INNER JOIN order_items ON orders.order_id = order_items.order_id
         INNER JOIN service_items ON order_items.service_item_id = service_items.service_item_id
-        WHERE orders.action_status = $1 `,
-        ["ดำเนินการสำเร็จ"]
+        WHERE orders.action_status = $1 AND orders.user_id = $2`,
+        ["ดำเนินการสำเร็จ", userId]
       );
     }
     console.log("results", results);

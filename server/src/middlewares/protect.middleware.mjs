@@ -18,6 +18,7 @@ export const protect = async (req, res, next) => {
       });
     }
     req.user = payload;
+    console.log("User payload:", payload);
     next();
   });
 };

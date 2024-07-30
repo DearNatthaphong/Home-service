@@ -7,6 +7,7 @@ import photo1 from "/public/images/calender-icon.png";
 import photo2 from "/public/images/worker-icon.png";
 import { useNavigate } from "react-router-dom";
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 function Historylist() {
   const [orders, setOrders] = useState([]);
@@ -20,14 +21,13 @@ function Historylist() {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await fetch(
+        const response = await axios.get(
           "http://localhost:4000/orders?firstActionStatus=ดำเนินการสำเร็จ"
         );
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        const data = await response.json();
-        setOrders(data.data);
+
+        console.log(response);
+        const orderItemsData = response.data.data;
+        setOrders(orderItemsData);
       } catch (error) {
         setError(error.message);
       }
@@ -85,7 +85,11 @@ function Historylist() {
         </div>
         <div className="w-[343px] flex flex-col gap-6 lg:w-[831px]">
           {error && (
-            <div className="text-red-500 text-sm font-medium">{error}</div>
+            <div className="text-red-500 text-sm font-medium">
+              ขออภัยครับ ไม่พบการค้นหาบริการที่ท่านต้องการ
+              หากลูกค้าต้องการบริการใดๆเพิ่มเติม สามารถติดต่อสอบถามได้ที่
+              080-540-6357
+            </div>
           )}
           {orders.map((order) => (
             <div
