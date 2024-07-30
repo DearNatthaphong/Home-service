@@ -35,7 +35,9 @@ function ServiceCard() {
   const filterServices = servicePost
     .filter((items) => {
       const filterSearchText =
-        searchService === "" || items.service_name.includes(searchService);
+        searchService === "" ||
+        items.service_name.includes(searchService) ||
+        items.category_name.includes(searchService);
       const filterSearchType =
         searchByType === "" || items.category_name === searchByType;
       const filterSearchSlide =
