@@ -2,8 +2,8 @@ import connectionPool from "../utils/db.mjs";
 
 export const getOrderByQuerry = async (req, res) => {
   const { firstActionStatus, secondActionStatus } = req.query;
-  // const { userId } = req.user.id;
-  const userId = req.user && req.user.id;
+  const userId = req.user.id;
+  // const userId = req.user && req.user.id;
   console.log("User ID:", userId);
   let results;
 
