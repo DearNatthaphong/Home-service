@@ -20,7 +20,6 @@ function AutenticatedUser() {
         {/* ม่อน */}
         {/* <Route path="/carts" element={<ServiceCarts />} /> */}
         {/* ม่อน */}
-        {/* <PaymentProvider> */}
         <Route
           path="/service/information/orders/:id/appointments"
           element={<ServiceInformation />}
@@ -30,11 +29,9 @@ function AutenticatedUser() {
         <Route path="/payment/:id/success" element={<PaymentSuccess />} />
         {/* <Route path="/payment/success/test" element={<PaymentSuccess />} /> */}
         {/* <Route path="/payment" element={<TestPayment />} /> */}
-        {/* </PaymentProvider> */}
         {/* ป้อง */}
         <Route path="/orderlist" element={<UserOrderListPage />} />
         <Route path="/historylist" element={<UserHistoryListPage />} />
-
         {/* <Route path="/demo" element={<DemoPage />} /> */}
       </Routes>
     </div>
