@@ -27,8 +27,13 @@ app.use(protect);
 app.use('/payment', paymentRouter);
 app.use('/orders', orderRouter);
 
-app.get('*', (req, res) => {
-  res.status(404).send('Not found');
+app.get("/", (req, res) => {
+  console.log("Sawaddee");
+  res.send("Hello World!");
+});
+
+app.get("*", (req, res) => {
+  res.status(404).send("Not found");
 });
 
 app.listen(port, () => {
