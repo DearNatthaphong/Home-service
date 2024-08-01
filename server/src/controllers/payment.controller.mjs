@@ -19,8 +19,8 @@ export const createPaymentIntent = async (req, res) => {
   try {
     // เชค order ถ้ามี ให้เลือก total_price ออกมา
     order = await connectionPool.query(
-      `select total_price from orders where order_id=$1 AND payment_status=$2`,
-      [id, 'pending']
+      `select total_price from orders where order_id=$1 AND (payment_status=$2 OR payment_status=$3)`,
+      [id, 'pending', 'fail']
     );
 
     if (!order.rows.length) {
@@ -61,7 +61,7 @@ export const getPaymentOrder = async (req, res) => {
       a.service_time,
       a.address,
       a.district,
-      a.sub_district,
+      a.subdistrict,
       a.province,
       o.total_price,
       oi.order_item_id,
@@ -90,18 +90,18 @@ export const getPaymentOrder = async (req, res) => {
 
     // จัดระเบียบข้อมูล
     const orderData = {
-      service_date: result.rows[0].service_date,
-      service_time: result.rows[0].service_time,
+      serviceDate: result.rows[0].service_date,
+      serviceTime: result.rows[0].service_time,
       address: result.rows[0].address,
       district: result.rows[0].district,
-      sub_district: result.rows[0].sub_district,
+      subdistrict: result.rows[0].subdistrict,
       province: result.rows[0].province,
-      items: result.rows.map((row) => ({
-        order_item_id: row.order_item_id,
-        service_name: row.service_name,
+      orderItems: result.rows.map((row) => ({
+        orderItemId: row.order_item_id,
+        serviceName: row.service_name,
         quantity: row.quantity
       })),
-      total_price: result.rows[0].total_price
+      totalPrice: result.rows[0].total_price
     };
 
     return res.status(200).json(orderData);

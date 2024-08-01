@@ -1,11 +1,19 @@
-import React, { useState, useEffect } from "react";
-import airImage from "../../../public/images/image-air.png";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import airImage from '../../../public/images/image-air.png';
+import { useNavigate, useParams } from 'react-router-dom';
+import { usePayment } from '../../context/payment-context';
 
 function ServiceInformation() {
+  const { id } = useParams();
+  const { handleClickToPayment } = usePayment();
+
+  const handleClick = () => {
+    handleClickToPayment(id);
+  };
+
   const [formData, setFormData] = useState({
-    date: "",
-    time: "",
+    date: '',
+    time: ''
   });
 
   const handleChange = (e) => {
@@ -18,11 +26,7 @@ function ServiceInformation() {
   };
   const navigate = useNavigate();
   const goToServiceDetail = () => {
-    navigate("/servicedetail");
-  };
-
-  const goToServiceInform = () => {
-    navigate("/service/imformation");
+    navigate('/servicedetail');
   };
 
   return (
@@ -34,7 +38,7 @@ function ServiceInformation() {
         <div className="card bg-white w-fit rounded-lg border border-gray-300 lg:ml-36">
           <div className="card-body p-4">
             <p className="card-title text-sm flex items-baseline">
-              บริการของเรา{" > "}
+              บริการของเรา{' > '}
               <span className="text-blue-600">ล้างแอร์</span>
             </p>
           </div>
@@ -155,13 +159,13 @@ function ServiceInformation() {
               onClick={goToServiceDetail}
               className="w-[164px] bg-white btn btn-sm border border-blue-600 text-blue-600 lg:ml-[150px]"
             >
-              {" < "}ย้อนกลับ{" "}
+              {' < '}ย้อนกลับ{' '}
             </button>
             <button
-              onClick={goToServiceInform}
+              onClick={handleClick}
               className="w-[164px] bg-white btn btn-sm border border-blue-600 text-blue-600 lg:mr-[200px]"
             >
-              ดำเนินการต่อ{" > "}
+              ดำเนินการต่อ{' > '}
             </button>
           </div>
         </div>

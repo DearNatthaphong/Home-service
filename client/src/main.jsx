@@ -5,15 +5,17 @@ import './index.css';
 import { AuthProvider } from './context/authentication.jsx';
 import { BrowserRouter } from 'react-router-dom';
 import adminJwtInterceptor from './utils/admin-jwt-interceptor.js';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer, Bounce } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { PaymentProvider } from './context/payment-context.jsx';
 
 adminJwtInterceptor();
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <AuthProvider>
+  // <React.StrictMode>
+  <BrowserRouter>
+    <AuthProvider>
+      <PaymentProvider>
         <App />
         <ToastContainer
           position="top-center"
@@ -26,9 +28,10 @@ ReactDOM.createRoot(document.getElementById('root')).render(
           draggable
           pauseOnHover
           theme="colored"
-          transition:Bounce
+          transition={Bounce}
         />
-      </AuthProvider>
-    </BrowserRouter>
-  </React.StrictMode>
+      </PaymentProvider>
+    </AuthProvider>
+  </BrowserRouter>
+  // </React.StrictMode>
 );

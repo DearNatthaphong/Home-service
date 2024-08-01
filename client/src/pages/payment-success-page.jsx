@@ -1,11 +1,30 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from '../components/header';
 import { successIcon } from '../assets/icons/icon-service-detail';
+import SummaryDetail from '../components/payment/summary-detail';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
+import { usePayment } from '../context/payment-context';
 
 function PaymentSuccess() {
+  const [order, setOrder] = useState({});
+  const { id } = useParams();
+
+  // const { handlePaymentSuccess } = usePayment();
+
+  const getOrder = async () => {
+    const result = await axios(`http://localhost:4000/payment/orders/${id}`);
+    setOrder(result.data);
+  };
+
+  useEffect(() => {
+    // handlePaymentSuccess(id);
+    getOrder();
+  }, []);
+
   return (
     <div>
-      <Header />
+      {/* <Header /> */}
       <section className="bg-background w-screen h-screen flex flex-col items-center pt-10 font-prompt px-3">
         <div className="card bg-white rounded-lg border border-gray-300 w-full max-w-lg">
           <div className="card-body p-3 sm:px-10">
@@ -18,38 +37,7 @@ function PaymentSuccess() {
               </h1>
             </div>
             <div className="text-[14px]">
-              <ul role="list" clasName="divide-y divide-gray-100 pb-0 ">
-                <li class="">
-                  <div className="flex justify-between gap-x-6 py-2 sm:py-4">
-                    <p className="text-black">9,000 - 18,000 BTU, แบบติดผนัง</p>
-                    <p className="text-end">2 รายการ</p>
-                  </div>
-                </li>
-                <hr />
-                <li>
-                  <div className="flex justify-between gap-x-6 py-2 sm:pt-6">
-                    <p className="test-gray-700">วันที่</p>
-                    <p className="text-black text-end">23 เม.ย. 2022</p>
-                  </div>
-                  <div className="flex justify-between gap-x-6 py-2 ">
-                    <p className="test-gray-700">เวลา</p>
-                    <p className="text-black text-end">11.00 น.</p>
-                  </div>
-                  <div className="flex justify-between gap-x-6 py-2 sm:pb-6">
-                    <p className="test-gray-700">สถานที่</p>
-                    <p className="text-black text-end">
-                      444/4 คอนโดสุภาลัย เสนานิคม <br /> จตุจักร กรุงเทพฯ
-                    </p>
-                  </div>
-                </li>
-                <hr />
-                <li>
-                  <div className="flex justify-between gap-x-6 py-4">
-                    <p className="test-gray-700">รวม</p>
-                    <p className="text-black text-end">1,550.00 บาท</p>
-                  </div>
-                </li>
-              </ul>
+              <SummaryDetail details={order} />
             </div>
             <div className="pb-4">
               <button
