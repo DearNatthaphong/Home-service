@@ -4,7 +4,7 @@ import Orderlist from "../components/customer-service-list-page/order-list";
 
 function UserOrderListPage() {
   return (
-    <div className="overflow-x-hidden">
+    <div className="overflow-clip">
       <Header />
       <Orderlist />
       <Footer />

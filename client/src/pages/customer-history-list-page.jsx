@@ -4,7 +4,7 @@ import Historylist from "../components/customer-service-list-page/history-order-
 
 function UserHistoryListPage() {
   return (
-    <div className="overflow-x-hidden">
+    <div className="overflow-clip ">
       <Header />
       <Historylist />
       <Footer />
