@@ -1,6 +1,8 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 function AdminPromotionHeader() {
+  const navigate = useNavigate();
   return (
     <div className="w-full h-full max-h-[80px] border-b-[1px] border-gray-300 flex items-center bg-white px-[40px] justify-between">
       <span className="font-prompt text-[20px] font-medium text-black">
@@ -24,7 +26,12 @@ function AdminPromotionHeader() {
             placeholder="ค้นหา Promotion Code..."
           />
         </form>
-        <button className="w-full h-full max-w-[240px] max-h-[45px] rounded-[8px] bg-blue-600 flex items-center justify-center gap-[8px] hover:bg-blue-500 active:bg-blue-800">
+        <button
+          className="w-full h-full max-w-[240px] max-h-[45px] rounded-[8px] bg-blue-600 flex items-center justify-center gap-[8px] hover:bg-blue-500 active:bg-blue-800"
+          onClick={() => {
+            navigate("/admin/promotion/addpromotion");
+          }}
+        >
           <span className="font-prompt font-medium text-[16px] text-white">
             เพิ่ม Promotion Code
           </span>
