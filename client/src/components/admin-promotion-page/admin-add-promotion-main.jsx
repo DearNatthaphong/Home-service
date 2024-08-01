@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "./admin-input.css";
 
 function AdminAddPromotionMain() {
   const [isFixed, setIsFixed] = useState(true);
@@ -155,9 +156,20 @@ function AdminAddPromotionMain() {
           <span className="font-prompt font-medium text-[16px] text-gray-700">
             วันหมดอายุ
           </span>
-          <div className="w-full max-w-[433px] h-full max-h-[45px] flex justify-between">
-            <div className="w-full max-w-[205px] h-full bg-red"></div>
-            <div className="w-full max-w-[205px] h-full bg-green-500"></div>
+          <div className="w-full max-w-[433px] h-full max-h-[45px] flex justify-between ">
+            {/** Date Start */}
+            <div className="w-full max-w-[205px] h-full rounded-[8px] border-[1px] border-gray-300">
+              <input
+                type="date"
+                className="w-full max-w-[205px] h-full max-h-[45px] px-[10px] py-[10px] text-black bg-transparent outline-none font-prompt text-[16px]"
+              />
+            </div>
+            <div className="w-full max-w-[205px] h-full rounded-[8px] border-[1px] border-gray-300">
+              <input
+                type="time"
+                className="w-full max-w-[205px] h-full max-h-[45x] px-[10px] py-[10px] text-black bg-transparent outline-none font-prompt text-[16px]"
+              />
+            </div>
           </div>
         </div>
         {/** Exp Date Section End */}
