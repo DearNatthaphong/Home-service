@@ -5,10 +5,7 @@ import Homepage from '../pages/landing-page';
 import ServiceListPage from '../pages/service-list-page';
 import LoginPage from '../pages/login-page';
 import RegisterPage from '../pages/register-page';
-import UserHistoryListPage from '../pages/customer-history-list-page';
-import UserOrderListPage from '../pages/customer-order-list-page';
 import ServiceDetailPage from '../pages/service-detail-page';
-import ServiceInformation from '../pages/service-detail-information-page';
 
 function UnauthenticatedApp() {
   return (
