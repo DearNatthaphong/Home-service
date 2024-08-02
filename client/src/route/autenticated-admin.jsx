@@ -4,6 +4,7 @@ import { Route, Routes } from "react-router-dom";
 import AdminServicePage from "../pages/admin-service-page";
 
 import AdminPromotionPage from "../pages/admin-promotion-page";
+import AdminServiceCreatePage from "../pages/admin-service-create-page";
 import AdminAddPromotionPage from "../pages/admin-add-promotion-page";
 import AdminEditPromotionPage from "../pages/admin-edit-promotion-page";
 import AdminViewPromotionPage from "../pages/admin-view-promotion-page";
@@ -19,6 +20,10 @@ function AutenticatedAdmin() {
       <Routes>
         <Route path="/admin/category" element={<AdminCategoryPage />} />
         <Route path="/admin/service" element={<AdminServicePage />} />
+        <Route
+          path="/admin/service/create"
+          element={<AdminServiceCreatePage />}
+        />
         <Route path="/admin/promotion" element={<AdminPromotionPage />} />
         <Route
           path="/admin/promotion/add-promotion"
