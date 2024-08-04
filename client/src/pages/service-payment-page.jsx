@@ -1,28 +1,35 @@
 import ServiceHeader from '../components/service-list-page/service-header.jsx';
 import CardHeader from '../components/payment/card-header.jsx';
 import CardProcess from '../components/payment/card-process.jsx';
-import PaymentFooter from '../components/payment/payment-footer.jsx';
 import CardBody from '../components/payment/card-body.jsx';
 import CardSummary from '../components/payment/card-summary.jsx';
+import PaymentFooter from '../components/payment/payment-footer.jsx';
 
 function ServicePayment() {
   return (
-    <>
+    <section className="w-screen min-h-screen font-prompt text-sm bg-background">
       <ServiceHeader />
-      <section className="relative font-prompt text-[14px] bg-background w-screen flex flex-col justify-center items-centers">
-        <div className="absolute top-0 left-0 w-full h-[168px] xl:h-[240px] bg-cover bg-center bg-[url('images/bg-payment-mobile.png')] xl:bg-[url('images/bg-payment-desktop.png')]"></div>
-        <div className="px-3 pt-12 pb-6 xl:pt-20 xl:px-[10%] xl:pb-12 flex flex-col gap-5 xl:gap-12">
+      <div className="relative bottom-[160px] xl:bottom-auto xl:static flex flex-col items-center">
+        <div
+          className="absolute top-[53px] left-0 mt-[160px] xl:mt-0 w-full h-[168px] bg-cover bg-center"
+          style={{
+            backgroundImage: `url('../../public/images/bg-payment-mobile.png')`
+          }}
+        ></div>
+        <div className="w-full min-h-full max-w-[1120px] px-3 xl:px-0 flex flex-col gap-3 overflow-hidden">
           <CardHeader />
           <CardProcess />
+          <div className="w-full flex flex-col xl:flex-row gap-5 xl:pb-20">
+            <CardBody />
+            <CardSummary />
+          </div>
         </div>
-        <div className="flex flex-col xl:px-[10%] xl:flex-row gap-5 xl:pb-20">
-          <CardBody />
-          <CardSummary />
-        </div>
-      </section>
+      </div>
       <PaymentFooter />
-    </>
+    </section>
   );
 }
 
 export default ServicePayment;
+{
+}

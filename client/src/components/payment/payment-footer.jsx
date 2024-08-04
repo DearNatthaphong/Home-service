@@ -1,83 +1,76 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import {
+  Collapse,
+  Typography,
+  Card,
+  CardContent,
+  IconButton
+} from '@mui/material';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import { useState } from 'react';
+import SummaryDetail from './summary-detail.jsx';
+import SummaryPrice from './summary-price.jsx';
+import axios from 'axios';
 
 function PaymentFooter() {
+  const [open, setOpen] = useState(false);
   const navigate = useNavigate();
+  const [order, setOrder] = useState({});
+  const params = useParams();
+
+  const getOrder = async () => {
+    const result = await axios(
+      `http://localhost:4000/payment/orders/${params.id}`
+    );
+    setOrder(result.data);
+  };
+
+  useEffect(() => {
+    getOrder();
+  }, []);
+
   return (
-    <>
-      <footer className="font-prompt w-screen text-[16px] ">
-        {/* <footer className="fixed bottom-0 left-0 right-0 font-prompt w-screen text-[16px] xl:px-[10%]"> */}
-        <div
-          tabIndex={0}
-          className="xl:hidden collapse collapse-arrow bg-white border border-b-0 border-gray-300 rounded-b-none rounded-t-lg pb-0 mb-0"
-        >
-          <div className="collapse-arrow xl:hidden"></div>
-          <div className="collapse-title text-[16px] font-bold text-gray-700">
-            สรุปรายการ
-          </div>
-          <div className="collapse-content text-[14px] pb-0">
-            <ul className="divide-y divide-gray-100 pb-0">
-              <li>
-                <div className="flex justify-between gap-x-6 py-2 xl:pb-4">
-                  <p className="text-black">9,000 - 18,000 BTU, แบบติดผนัง</p>
-                  <p>2 รายการ</p>
-                </div>
-              </li>
-              <hr />
-              <li>
-                <div className="flex justify-between gap-x-6 py-2 xl:pt-4">
-                  <p className="text-gray-700">วันที่</p>
-                  <p className="text-black">23 เม.ย. 2022</p>
-                </div>
-                <div className="flex justify-between gap-x-6 py-2">
-                  <p className="text-gray-700">เวลา</p>
-                  <p className="text-black">11.00 น.</p>
-                </div>
-                <div className="flex justify-between gap-x-6 py-2 xl:pb-4 text-end">
-                  <p className="text-gray-700">สถานที่</p>
-                  <p className="text-black">
-                    444/4 คอนโดสุภาลัย เสนานิคม <br /> จตุจักร กรุงเทพฯ
-                  </p>
-                </div>
-              </li>
-              <hr />
-              <li>
-                <div className="flex justify-between gap-x-6 pt-2 xl:pt-4">
-                  <p className="text-gray-700">Promotion Code</p>
-                  <p className="text-red text-end">-50.00 บาท</p>
-                </div>
-                <div className="flex justify-between gap-x-6 py-4">
-                  <p className="text-gray-700">รวม</p>
-                  <p className="text-black text-end">1,550.00 บาท</p>
-                </div>
-              </li>
-            </ul>
-          </div>
+    <footer className="w-full h-auto flex flex-col items-center justify-center shadow-shadow fixed z-10 bottom-0 bg-background md:bg-white">
+      <div className="w-full max-w-[1120px] h-full">
+        <div className="w-full md:hidden">
+          <Card className="shadow-none border border-gray-300 rounded-t-xl border-b-0">
+            <CardContent className="text-base flex justify-between items-center pb-1">
+              <p className="text-gray-900">สรุปรายการ</p>
+              <IconButton
+                className="p-0 text-gray-900"
+                onClick={() => setOpen(!open)}
+                aria-expanded={open}
+                style={{
+                  transform: open ? 'rotate(180deg)' : 'rotate(0deg)',
+                  transition: 'transform 0.3s'
+                }}
+              >
+                <ArrowDropDownIcon />
+              </IconButton>
+            </CardContent>
+            <Collapse in={open}>
+              <CardContent className="overflow-y-auto max-h-auto border-0 py-2">
+                <Typography className="m-0" paragraph>
+                  <SummaryDetail details={order} isSummary={true} />
+                </Typography>
+              </CardContent>
+            </Collapse>
+            <CardContent className="py-0 border-b-2 border-gray-300">
+              <SummaryPrice details={order} />
+            </CardContent>
+          </Card>
         </div>
-        <div className=" bg-white flex gap-3 p-3 xl:justify-between xl:px-[10%]">
-          <div className="w-1/2 xl:w-fit">
-            <button
-              type="button"
-              className="btn btn-outline text-blue-600 border-blue-600 hover:bg-white hover:text-blue-400 hover:border-blue-400 focus:text-blue-800 focus:border-blue-800 w-full"
-            >
-              <span className="xl:px-4">{'< '}ย้อนกลับ</span>
-            </button>
-          </div>
-          <div className="w-1/2 xl:w-fit">
-            {/* <button
-            type="button"
-            className="btn btn-ghost text-white bg-blue-600  hover:bg-blue-500 hover:text-white focus:bg-blue-800 focus:text-white w-full"
-            onClick={() => {
-              navigate('/services/carts/orders/payment/success');
-            }}
-          >
-            {' '}
-            <span>ยืนยันการชำระเงิน {' >'}</span>
-          </button> */}
-          </div>
+        <div className="w-full h-[70px] bg-white p-3">
+          <button
+            onClick={() =>
+              navigate(`/service/information/orders/${params.id}/appointments`)
+            }
+            className="w-full md:w-2/3 btn btn-outline text-blue-600 border-blue-600 hover:bg-white hover:text-blue-400 hover:border-blue-400 focus:text-blue-800 focus:border-blue-800 "
+          >{`< ย้อนกลับ`}</button>
         </div>
-      </footer>
-    </>
+      </div>
+    </footer>
   );
 }
 

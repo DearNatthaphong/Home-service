@@ -9,7 +9,7 @@ function CardBody() {
   const { options, stripePromise } = usePayment();
 
   return (
-    <div className="px-3 xl:px-0 xl:w-2/3">
+    <div className="xl:px-0 xl:w-2/3">
       <div className="card bg-white rounded-lg border-[1px] border-gray-300">
         <div className="card-body px-3 py-4 xl:px-6 xl:py-8">
           <h2 className="card-title text-[18px]">กรอกข้อมูลบริการ</h2>
@@ -18,7 +18,7 @@ function CardBody() {
               <CheckoutForm />
             </Elements>
           )}
-          <PromotionForm />
+          {/* <PromotionForm /> */}
         </div>
       </div>
     </div>

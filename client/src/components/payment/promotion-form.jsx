@@ -1,10 +1,10 @@
 function PromotionForm() {
   return (
-    <form action="">
-      <hr className="pb-6" />
+    <form action="" className="mt-6">
+      <hr className="mb-3" />
       <label
         htmlFor="promotion"
-        className="pt-6 font-semibold text-[16px] text-gray-900 pb-0"
+        className="font-semibold text-[16px] text-gray-900"
       >
         Promotion Code
       </label>
@@ -29,6 +29,7 @@ function PromotionForm() {
           </button>
         </div>
       </div>
+      <hr className="mt-6" />
     </form>
   );
 }

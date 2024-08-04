@@ -1,6 +1,5 @@
 import express from 'express';
 import cors from 'cors';
-import connectionPool from './src/utils/db.mjs';
 import authRouter from './src/routes/auth.route.mjs';
 import { protect } from './src/middlewares/protect.middleware.mjs';
 import dotenv from 'dotenv';
@@ -23,9 +22,10 @@ app.get('/', (req, res) => {
 });
 
 app.use('/auth', authRouter);
+app.use('/service', serviceRouter);
 app.use(protect);
 app.use('/payment', paymentRouter);
-app.use('/service', serviceRouter);
+app.use('/orders', orderRouter);
 
 app.get('*', (req, res) => {
   res.status(404).send('Not found');

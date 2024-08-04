@@ -7,6 +7,7 @@ import {
 import { usePayment } from '../../context/payment-context';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import PromotionForm from './promotion-form';
 
 export default function CheckoutForm() {
   const stripe = useStripe();
@@ -69,7 +70,6 @@ export default function CheckoutForm() {
           // Make sure to change this to your payment completion page
           // return_url: `http://localhost:5173/payment/${id}/success`
         },
-
         redirect: 'if_required'
       });
       // การทำ 3D Secure.
@@ -79,11 +79,11 @@ export default function CheckoutForm() {
         if (error.type === 'card_error' || error.type === 'validation_error') {
           setMessage(error.message);
           await handlePaymentFail(id);
-          toast.error(error.message);
+          toast.error(message);
           await createClientSecret(id);
         } else {
           setMessage('An unexpected error occurred.');
-          toast.error('An unexpected error occurred.');
+          toast.error(message);
         }
       } else {
         if (paymentIntent.status === 'requires_action') {
@@ -91,16 +91,16 @@ export default function CheckoutForm() {
             paymentIntent.client_secret
           );
           if (confirmError) {
-            console.log('Confirm Card Payment Error:', confirmError);
+            // console.log('Confirm Card Payment Error:', confirmError);
             setMessage(confirmError.message);
-            toast.error(confirmError.message);
+            toast.error(message);
           } else {
-            console.log('Payment was successful');
+            // console.log('Payment was successful');
             await handlePaymentSuccess(id);
             navigate(`/payment/${id}/success`);
           }
         } else {
-          console.log('Payment was successful');
+          // console.log('Payment was successful');
           await handlePaymentSuccess(id);
           navigate(`/payment/${id}/success`);
         }
@@ -108,7 +108,7 @@ export default function CheckoutForm() {
     } catch (error) {
       console.error('Error during payment confirmation:', err);
       setMessage('An unexpected error occurred.');
-      toast.error('An unexpected error occurred.');
+      toast.error(message);
     } finally {
       setIsLoading(false);
     }
@@ -121,21 +121,22 @@ export default function CheckoutForm() {
   return (
     <form id="payment-form" onSubmit={handleSubmit}>
       <PaymentElement id="payment-element" options={paymentElementOptions} />
-      <div className="flex justify-center mt-3">
-        <button
-          className="btn w-full bg-blue-600 border-blue-600 text-white hover:bg-blue-500 hover:text-white focus:bg-blue-800 focus:text-white"
-          disabled={isLoading || !stripe || !elements}
-          id="submit"
-        >
-          <span id="button-text">
-            {isLoading ? (
-              <div className="spinner" id="spinner"></div>
-            ) : (
-              'ยืนยันการชำระเงิน >'
-            )}
-          </span>
-        </button>
-      </div>
+      <PromotionForm />
+      {/* <div className="flex justify-center mt-3"> */}
+      <button
+        className="btn w-full mt-3 bg-blue-600 border-blue-600 text-white hover:bg-blue-500 hover:text-white focus:bg-blue-800 focus:text-white"
+        disabled={isLoading || !stripe || !elements}
+        id="submit"
+      >
+        <span id="button-text">
+          {isLoading ? (
+            <div className="spinner" id="spinner"></div>
+          ) : (
+            'ยืนยันการชำระเงิน >'
+          )}
+        </span>
+      </button>
+      {/* </div> */}
       {/* Show any error or success messages */}
       {message && <div id="payment-message">{message}</div>}
     </form>
