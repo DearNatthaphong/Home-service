@@ -49,3 +49,15 @@ export const postPromotion = async (req, res) => {
     message: "สร้าง Promotion สำเร็จ",
   });
 };
+
+export const getAllPromotion = async (req, res) => {
+  let results;
+  try {
+    results = await connectionPool.query(`select * from promotions`);
+  } catch (error) {
+    return res.status(500).json({
+      message: "พบข้อผิดพลาดภายในเซิร์ฟเวอร์",
+    });
+  }
+  return res.status(200).json({ data: results.rows });
+};
