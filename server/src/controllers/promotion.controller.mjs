@@ -3,6 +3,13 @@ import connectionPool from "../utils/db.mjs";
 export const postPromotion = async (req, res) => {
   const newPromotion = {
     ...req.body,
+    promotion_code: req.body.isPromotionCode,
+    discount:
+      req.body.isType === "fixed" ? req.body.isNumFixed : req.body.isNumPercent,
+    discount_type: req.body.isType,
+    usage_limit: req.body.isUsageLimit,
+    expiry_date: req.body.isExpiryDate,
+    expiry_time: req.body.isExpiryTime,
     create_at: new Date(),
   };
   console.log(newPromotion);
@@ -20,6 +27,7 @@ export const postPromotion = async (req, res) => {
       ]
     );
   } catch (error) {
+    console.log(error);
     if (
       !newPromotion.promotion_code ||
       !newPromotion.discount ||
