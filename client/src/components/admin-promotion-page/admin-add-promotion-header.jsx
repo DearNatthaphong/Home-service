@@ -1,8 +1,10 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { useAddPromotion } from "../../context/add-promotion-context";
 
 function AdminAddPromotionHeader() {
   const navigate = useNavigate();
+  const { createPromotion } = useAddPromotion();
   return (
     <div className="w-full h-full max-h-[80px] border-b-[1px] border-gray-300 flex items-center bg-white px-[40px] justify-between">
       <span className="font-prompt text-[20px] font-medium text-black">
@@ -19,7 +21,13 @@ function AdminAddPromotionHeader() {
             ยกเลิก
           </span>
         </button>
-        <button className="w-full h-full max-w-[112px] max-h-[45px] rounded-[8px] bg-blue-600 flex items-center justify-center">
+        <button
+          className="w-full h-full max-w-[112px] max-h-[45px] rounded-[8px] bg-blue-600 flex items-center justify-center"
+          type="submit"
+          onClick={() => {
+            createPromotion();
+          }}
+        >
           <span className="font-prompt font-medium text-[16px] text-white">
             สร้าง
           </span>
