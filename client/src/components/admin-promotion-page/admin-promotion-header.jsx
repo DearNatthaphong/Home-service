@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { usePromotion } from "../../context/promotion-context";
 
 function AdminPromotionHeader() {
   const navigate = useNavigate();
+  const { isSearchPromotion, setIsSearchPromotion } = usePromotion();
+
   return (
     <div className="w-full h-full max-h-[80px] border-b-[1px] border-gray-300 flex items-center bg-white px-[40px] justify-between">
       <span className="font-prompt text-[20px] font-medium text-black">
@@ -24,6 +27,10 @@ function AdminPromotionHeader() {
             type="text"
             className="w-full h-full outline-none bg-transparent placeholder:text-gray-700 placeholder:text-[16px] placeholder:font-prompt placeholder:font-light text-black text-[16px] font-prompt font-light"
             placeholder="ค้นหา Promotion Code..."
+            value={isSearchPromotion}
+            onChange={(e) => {
+              setIsSearchPromotion(e.target.value);
+            }}
           />
         </form>
         <button

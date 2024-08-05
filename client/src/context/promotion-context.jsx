@@ -1,10 +1,11 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-const adminAddPromotionContext = createContext();
+const adminPromotionContext = createContext();
 
-function AddPromotionProvider({ children }) {
+function PromotionProvider({ children }) {
+  /** POST Promotion Start */
   const [isFixed, setIsFixed] = useState(true);
   const [isPercent, setIsPercent] = useState(false);
   // console.log(isFixed);
@@ -31,6 +32,7 @@ function AddPromotionProvider({ children }) {
   const [isExpiryTime, setIsExpiryTime] = useState("");
 
   const navigate = useNavigate();
+
   const dataPost = {
     isPromotionCode,
     isType,
@@ -40,6 +42,7 @@ function AddPromotionProvider({ children }) {
     isExpiryDate,
     isExpiryTime,
   };
+
   const createPromotion = async () => {
     try {
       await axios.post(`http://localhost:4000/promotions`, dataPost);
@@ -48,10 +51,30 @@ function AddPromotionProvider({ children }) {
       console.log(error);
     }
   };
+  /** POST Promotion End */
+
+  /** Search Promotion In Promotion Main Page Start */
+  const [isSearchPromotion, setIsSearchPromotion] = useState("");
+  /** Search Promotion In Promotion Main Page End */
+
+  /** GET All Promotion Start */
+  const [isAllPromotion, setIsAllPromotion] = useState([]);
+
+  const getAllPromotion = async () => {
+    const result = await axios.get(`http://localhost:4000/promotions`);
+    console.log(result.data.data);
+    setIsAllPromotion(result.data.data);
+  };
+
+  useEffect(() => {
+    getAllPromotion();
+  }, [isSearchPromotion]);
+  /** GET All Promotion End */
 
   return (
-    <adminAddPromotionContext.Provider
+    <adminPromotionContext.Provider
       value={{
+        // POST Promotion Start //
         isFixed,
         setIsFixed,
 
@@ -80,12 +103,22 @@ function AddPromotionProvider({ children }) {
         setIsExpiryTime,
 
         createPromotion,
+        // POST Promotion End //
+
+        // GET All Promotion Start //
+        isAllPromotion,
+        // GET All Promotion End //
+
+        // Search On Promotion Main Page Start //
+        isSearchPromotion,
+        setIsSearchPromotion,
+        // Search On Promotion Main Page End //
       }}
     >
       {children}
-    </adminAddPromotionContext.Provider>
+    </adminPromotionContext.Provider>
   );
 }
 
-const useAddPromotion = () => useContext(adminAddPromotionContext);
-export { AddPromotionProvider, useAddPromotion };
+const usePromotion = () => useContext(adminPromotionContext);
+export { PromotionProvider, usePromotion };

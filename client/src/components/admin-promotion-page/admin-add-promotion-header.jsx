@@ -1,10 +1,10 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { useAddPromotion } from "../../context/add-promotion-context";
+import { usePromotion } from "../../context/promotion-context";
 
 function AdminAddPromotionHeader() {
   const navigate = useNavigate();
-  const { createPromotion } = useAddPromotion();
+  const { createPromotion } = usePromotion();
   return (
     <div className="w-full h-full max-h-[80px] border-b-[1px] border-gray-300 flex items-center bg-white px-[40px] justify-between">
       <span className="font-prompt text-[20px] font-medium text-black">

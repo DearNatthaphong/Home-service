@@ -7,3 +7,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   filter: invert(10%) sepia(20%) saturate(500%) hue-rotate(130deg)
     brightness(90%) contrast(40%);
 }
+
+/* เปลี่ยนรูปแบบสี Table*/
+.table-pin-rows thead tr {
+  background-color: #efeff2;
+}

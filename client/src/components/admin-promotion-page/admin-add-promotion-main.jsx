@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import "./admin-input.css";
-import { useAddPromotion } from "../../context/add-promotion-context";
+import "./admin-promotion.css";
+import { usePromotion } from "../../context/promotion-context";
 
 function AdminAddPromotionMain() {
   const {
@@ -29,7 +29,7 @@ function AdminAddPromotionMain() {
 
     isExpiryTime,
     setIsExpiryTime,
-  } = useAddPromotion();
+  } = usePromotion();
 
   function handleClickFixed(e) {
     e.preventDefault();
