@@ -53,7 +53,9 @@ export const postPromotion = async (req, res) => {
 export const getAllPromotion = async (req, res) => {
   let results;
   try {
-    results = await connectionPool.query(`select * from promotions`);
+    results = await connectionPool.query(
+      `select * from promotions order by created_at desc`
+    );
   } catch (error) {
     return res.status(500).json({
       message: "พบข้อผิดพลาดภายในเซิร์ฟเวอร์",
