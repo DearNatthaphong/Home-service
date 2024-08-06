@@ -3,6 +3,6 @@ import { getServiceById } from "../controllers/view-service.controller.mjs";
 
 const ViewServiceRouter = Router();
 
-ViewServiceRouter.get("/services/:id", getServiceById);
+ViewServiceRouter.get("/:id", getServiceById);
 
 export default ViewServiceRouter;

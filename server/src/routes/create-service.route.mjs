@@ -3,6 +3,6 @@ import { createService } from "../controllers/create-service.controller.mjs";
 
 const createServices = Router();
 
-createServices.post("/services", createService);
+createServices.post("/", createService);
 
 export default createServices;

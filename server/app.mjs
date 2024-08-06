@@ -25,8 +25,8 @@ app.use(protect);
 app.use("/promotions", promotionRouter);
 app.use("/payment", paymentRouter);
 app.use("/service", serviceRouter);
-app.use("/", createService);
-app.use("/", ViewServiceRouter);
+app.use("/service", createService);
+app.use("/service", ViewServiceRouter);
 app.use("/orders", orderRouter);
 
 app.get("/", (req, res) => {
