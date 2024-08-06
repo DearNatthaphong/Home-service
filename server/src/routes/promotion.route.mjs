@@ -5,5 +5,7 @@ const promotionRouter = Router();
 
 promotionRouter.post("/", promotionController.postPromotion);
 promotionRouter.get("/", promotionController.getAllPromotion);
+promotionRouter.put("/:id", promotionController.putPromotionById);
+promotionRouter.delete("/:id", promotionController.deletePromotionById);
 
 export default promotionRouter;
