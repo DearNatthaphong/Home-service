@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../context/authentication";
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/authentication';
 
 function ServiceHeader() {
   const navigate = useNavigate();
@@ -13,13 +13,13 @@ function ServiceHeader() {
   return (
     <>
       {state.user ? (
-        <div className="w-full h-[53px] flex items-center justify-center shadow-shadow bg-white fixed z-10 top-0">
+        <div className="w-full h-[53px] flex items-center justify-center shadow-shadow bg-white fixed z-20 top-0">
           <div className="w-full max-w-[1120px] h-full flex items-center justify-between px-[16px]">
             <div className="flex items-center">
               <button
                 className="flex items-center gap-[4px] lg:gap-[8px]"
                 onClick={() => {
-                  navigate("/home");
+                  navigate('/home');
                 }}
               >
                 <img
@@ -174,7 +174,7 @@ function ServiceHeader() {
               <button
                 className="flex items-center gap-[4px] lg:gap-[8px]"
                 onClick={() => {
-                  navigate("/");
+                  navigate('/');
                 }}
               >
                 <img
@@ -197,7 +197,7 @@ function ServiceHeader() {
               <button
                 className="w-[90px] h-[37px] lg:w-[115px] lg:h-[40px] border-[1px] border-blue-600 rounded-[8px]"
                 onClick={() => {
-                  navigate("/login");
+                  navigate('/login');
                 }}
               >
                 <p className="font-prompt text-[14px] font-medium text-blue-600">

@@ -1,59 +1,49 @@
-import React from 'react';
-import Header from '../components/header';
+import React, { useEffect, useState } from 'react';
 import { successIcon } from '../assets/icons/icon-service-detail';
+import { useNavigate, useParams } from 'react-router-dom';
+import axios from 'axios';
+import SummaryDetail from '../components/payment/summary-detail';
+import SummaryPrice from '../components/payment/summary-price';
+import ServiceHeader from '../components/service-list-page/service-header';
 
 function PaymentSuccess() {
+  const [order, setOrder] = useState({});
+  const { id } = useParams();
+  const navigate = useNavigate();
+
+  const getOrder = async () => {
+    const result = await axios(`http://localhost:4000/payment/orders/${id}`);
+    setOrder(result.data);
+  };
+
+  useEffect(() => {
+    getOrder();
+  }, []);
+
   return (
-    <div>
-      <Header />
-      <section className="bg-background w-screen h-screen flex flex-col items-center pt-10 font-prompt px-3">
-        <div className="card bg-white rounded-lg border border-gray-300 w-full max-w-lg">
+    <div className="w-screen min-h-screen font-prompt text-sm bg-background">
+      <ServiceHeader />
+      <section className="w-full h-full mt-[53px] flex flex-col items-center pt-10 px-3 ">
+        <div className="card w-full max-w-[542px] bg-white rounded-lg border border-gray-300 ">
           <div className="card-body p-3 sm:px-10">
             <div className="flex flex-col justify-center items-center pt-8">
               <span className="bg-green-900 text-white w-[64px] h-[64px] rounded-full flex items-center justify-center">
                 {successIcon}
               </span>
-              <h1 className="pt-8 text-[20px] xl:text-[32px] text-black">
+              <h1 className="pt-8 text-[20px] md:text-[32px] text-black">
                 ชำระเงินเรียบร้อย !
               </h1>
             </div>
-            <div className="text-[14px]">
-              <ul role="list" clasName="divide-y divide-gray-100 pb-0 ">
-                <li class="">
-                  <div className="flex justify-between gap-x-6 py-2 sm:py-4">
-                    <p className="text-black">9,000 - 18,000 BTU, แบบติดผนัง</p>
-                    <p className="text-end">2 รายการ</p>
-                  </div>
-                </li>
-                <hr />
-                <li>
-                  <div className="flex justify-between gap-x-6 py-2 sm:pt-6">
-                    <p className="test-gray-700">วันที่</p>
-                    <p className="text-black text-end">23 เม.ย. 2022</p>
-                  </div>
-                  <div className="flex justify-between gap-x-6 py-2 ">
-                    <p className="test-gray-700">เวลา</p>
-                    <p className="text-black text-end">11.00 น.</p>
-                  </div>
-                  <div className="flex justify-between gap-x-6 py-2 sm:pb-6">
-                    <p className="test-gray-700">สถานที่</p>
-                    <p className="text-black text-end">
-                      444/4 คอนโดสุภาลัย เสนานิคม <br /> จตุจักร กรุงเทพฯ
-                    </p>
-                  </div>
-                </li>
-                <hr />
-                <li>
-                  <div className="flex justify-between gap-x-6 py-4">
-                    <p className="test-gray-700">รวม</p>
-                    <p className="text-black text-end">1,550.00 บาท</p>
-                  </div>
-                </li>
+            <div className="text-[14px] mt-8">
+              <ul className="divide-y divide-gray-100 pb-0">
+                <SummaryDetail details={order} />
+                <SummaryPrice details={order} />
               </ul>
             </div>
             <div className="pb-4">
               <button
                 type="button"
+                onClick={() => navigate('/orderlist')}
                 className="btn btn-ghost text-white bg-blue-600  hover:bg-blue-500 hover:text-white focus:bg-blue-800 focus:text-white w-full"
               >
                 เช็ครายการซ่อม

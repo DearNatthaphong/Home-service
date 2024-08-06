@@ -1,6 +1,9 @@
 import connectionPool from '../utils/db.mjs';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 export const adminLogin = async (req, res) => {
   const getUserData = {
