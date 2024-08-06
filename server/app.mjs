@@ -15,14 +15,14 @@ const app = express();
 const port = process.env.PORT || 8000;
 
 app.use(cors());
-app.use(express.static('public'));
+app.use(express.static("public"));
 app.use(express.json());
 
 app.use("/auth", authRouter);
 app.use("/service", serviceRouter);
-// app.use(protect);
+app.use(protect);
 app.use("/promotions", promotionRouter);
-// app.use("/payment", paymentRouter);
+app.use("/payment", paymentRouter);
 app.use("/orders", orderRouter);
 
 app.get("/", (req, res) => {
