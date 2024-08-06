@@ -1,10 +1,10 @@
 import React from "react";
-import photo from "/public/icons/frame-icon.png";
-import photo1 from "/public/icons/bin-icon.png";
-import photo2 from "/public/icons/pen-icon.png";
-import { useState } from "react";
-import { useEffect } from "react";
+import photo from "/icons/frame-icon.png";
+import photo1 from "/icons/bin-icon.png";
+import photo2 from "/icons/pen-icon.png";
+import { useState, useEffect } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function AdminServiceMain() {
   const [services, setServices] = useState([]);
@@ -23,6 +23,12 @@ function AdminServiceMain() {
 
     fetchServices();
   }, []);
+
+  const navigate = useNavigate();
+  const goToServiceViewPage = (id) => {
+    navigate(`/admin/service/view/${id}`);
+  };
+
   return (
     <div className="w-full h-full p-[40px] flex justify-center">
       <div className="w-full h-full bg-white border rounded-lg">
@@ -123,7 +129,9 @@ function AdminServiceMain() {
               </div>
               <div className="w-[120px] flex gap-8">
                 <img className="w-[24px] h-[24px]" src={photo1} alt="delete" />
-                <img className="w-[24px] h-[24px]" src={photo2} alt="edit" />
+                <button onClick={() => goToServiceViewPage(service.service_id)}>
+                  <img className="w-[24px] h-[24px]" src={photo2} alt="edit" />
+                </button>
               </div>
             </div>
           ))
@@ -132,4 +140,5 @@ function AdminServiceMain() {
     </div>
   );
 }
+
 export default AdminServiceMain;

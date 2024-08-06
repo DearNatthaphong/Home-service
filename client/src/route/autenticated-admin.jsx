@@ -5,6 +5,7 @@ import AdminServicePage from "../pages/admin-service-page";
 
 import AdminPromotionPage from "../pages/admin-promotion-page";
 import AdminServiceCreatePage from "../pages/admin-service-create-page";
+import AdminServiceViewPage from "../pages/admin-service-view-page";
 import AdminAddPromotionPage from "../pages/admin-add-promotion-page";
 import AdminEditPromotionPage from "../pages/admin-edit-promotion-page";
 import AdminViewPromotionPage from "../pages/admin-view-promotion-page";
@@ -23,6 +24,10 @@ function AutenticatedAdmin() {
         <Route
           path="/admin/service/create"
           element={<AdminServiceCreatePage />}
+        />
+        <Route
+          path="/admin/service/view/:id"
+          element={<AdminServiceViewPage />}
         />
         <Route path="/admin/promotion" element={<AdminPromotionPage />} />
         <Route

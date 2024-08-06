@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
-import photo from "/public/icons/add-image-icon.png";
-import photo1 from "/public/icons/frame-icon.png";
+import photo from "/icons/add-image-icon.png";
+import photo1 from "/icons/frame-icon.png";
 
 function AdminServiceMain2() {
   const [serviceName, setServiceName] = useState("");
@@ -9,7 +9,6 @@ function AdminServiceMain2() {
   const [image, setImage] = useState(null);
   const [subServices, setSubServices] = useState([
     { id: Date.now(), name: "", price: "", unit: "" },
-    { id: Date.now() + 1, name: "", price: "", unit: "" },
   ]);
 
   const handleImageUpload = (event) => {
@@ -52,7 +51,7 @@ function AdminServiceMain2() {
       );
 
       const response = await axios.post(
-        "http://localhost:4000/services/services",
+        "http://localhost:4000/services",
         formData,
         {
           headers: {

@@ -8,6 +8,7 @@ import paymentRouter from "./src/routes/payment.route.mjs";
 import serviceRouter from "./src/routes/service.route.mjs";
 import orderRouter from "./src/routes/order.route.mjs";
 import promotionRouter from "./src/routes/promotion.route.mjs";
+import ViewServiceRouter from "./src/routes/view-service.route.mjs";
 
 dotenv.config();
 
@@ -23,6 +24,9 @@ app.use("/service", serviceRouter);
 app.use(protect);
 app.use("/promotions", promotionRouter);
 app.use("/payment", paymentRouter);
+app.use("/service", serviceRouter);
+app.use("/", createService);
+app.use("/", ViewServiceRouter);
 app.use("/orders", orderRouter);
 
 app.get("/", (req, res) => {
