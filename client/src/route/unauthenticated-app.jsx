@@ -1,13 +1,13 @@
-import React from "react";
-import { Route, Routes } from "react-router-dom";
-import AdminLoginPage from "../pages/admin-login-page";
-import Homepage from "../pages/landing-page";
-import ServiceListPage from "../pages/service-list-page";
-import LoginPage from "../pages/login-page";
-import RegisterPage from "../pages/register-page";
-import ServiceDetailPage from "../pages/service-detail-page";
-import UserLandingPage from "../pages/user-landing-page";
-import UserNotFoundPage from "../pages/user-not-found-page";
+import React from 'react';
+import { Route, Routes } from 'react-router-dom';
+import AdminLoginPage from '../pages/admin-login-page';
+import Homepage from '../pages/landing-page';
+import ServiceListPage from '../pages/service-list-page';
+import LoginPage from '../pages/login-page';
+import RegisterPage from '../pages/register-page';
+import ServiceDetailPage from '../pages/service-detail-page';
+import UserLandingPage from '../pages/user-landing-page';
+import UserNotFoundPage from '../pages/user-not-found-page';
 
 function UnauthenticatedApp() {
   return (

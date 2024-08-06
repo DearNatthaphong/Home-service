@@ -1,4 +1,4 @@
-import connectionPool from "../utils/db.mjs";
+import connectionPool from '../utils/db.mjs';
 
 export const getAllService = async (req, res) => {
   try {
@@ -20,7 +20,7 @@ export const getAllService = async (req, res) => {
     return res.status(200).json({ data: services });
   } catch (error) {
     return res.status(500).json({
-      message: "พบข้อผิดพลาดภายในเซิร์ฟเวอร์",
+      message: 'พบข้อผิดพลาดภายในเซิร์ฟเวอร์'
     });
   }
 };
@@ -32,11 +32,27 @@ export const getSomeService = async (req, res) => {
     );
     const results = serviceLimit.rows;
     return res.status(200).json({
-      data: results,
+      data: results
     });
   } catch (error) {
     return res.status(500).json({
-      message: "พบข้อผิดพลาดภายในเซริฟเวอร์",
+      message: 'พบข้อผิดพลาดภายในเซริฟเวอร์'
     });
   }
+};
+
+export const getServiceItemsByServiceId = async (req, res) => {
+  const { id } = req.params;
+  let results;
+  try {
+    results = await connectionPool.query(
+      `select * from service_items where service_id = $1`,
+      [id]
+    );
+  } catch (error) {
+    return res.status(500).json({
+      message: 'พบข้อผิดพลาดภายในเซิร์ฟเวอร์'
+    });
+  }
+  return res.status(200).json({ data: results.rows });
 };
