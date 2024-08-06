@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { useFilter } from "../../context/filter-context";
 import { useAuth } from "../../context/authentication";
@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 function ServiceCard() {
   const { state } = useAuth();
   const navigate = useNavigate();
+ 
 
   const [servicePost, setServicePost] = useState([]);
 
@@ -60,6 +61,10 @@ function ServiceCard() {
     getServicePost();
   }, []);
 
+  const handleSelectService = (id) => {
+    navigate(`/servicedetail/${id}`);
+  };
+
   return (
     <div className="w-screen h-full flex items-center justify-center pt-[25px]">
       <div className="w-full max-w-[1125px] flex-wrap gap-x-[37px] gap-y-[24px] lg:gap-y-[48px] flex items-center justify-center">
@@ -98,7 +103,7 @@ function ServiceCard() {
                     <button
                       className="w-[80px] h-[28px] flex items-center justify-center"
                       onClick={() => {
-                        navigate("/demo");
+                        handleSelectService(items.service_id);
                       }}
                     >
                       <p className="font-prompt font-semibold text-[16px] text-blue-600 underline underline-offset-1">

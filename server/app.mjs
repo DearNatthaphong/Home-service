@@ -1,13 +1,13 @@
 import express from 'express';
 import cors from 'cors';
-import connectionPool from './src/utils/db.mjs';
 import authRouter from './src/routes/auth.route.mjs';
 import { protect } from './src/middlewares/protect.middleware.mjs';
 import dotenv from 'dotenv';
 import paymentRouter from './src/routes/payment.route.mjs';
 import serviceRouter from './src/routes/service.route.mjs';
 import orderRouter from './src/routes/order.route.mjs';
-import promotionRouter from './src/routes/promotion.route.mjs';
+import promotionRouter from "./src/routes/promotion.route.mjs";
+import appointmentRouter from "./src/routes/appointment.route.mjs";
 
 dotenv.config();
 
@@ -26,10 +26,10 @@ app.get('/', (req, res) => {
 app.use('/service', serviceRouter);
 app.use('/auth', authRouter);
 app.use(protect);
-app.use('/promotions', promotionRouter);
 app.use('/payment', paymentRouter);
-app.use('/promotions', promotionRouter);
 app.use('/orders', orderRouter);
+app.use("/promotions", promotionRouter);
+app.use("/appointments", appointmentRouter);
 
 app.get('/', (req, res) => {
   console.log('Sawaddee');

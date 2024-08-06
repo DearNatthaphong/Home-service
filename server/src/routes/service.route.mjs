@@ -4,6 +4,9 @@ import { protect } from '../middlewares/protect.middleware.mjs';
 
 const serviceRouter = Router();
 
-serviceRouter.get('/', serviceController.getAllService);
+// serviceRouter.use(protect);
+
+serviceRouter.get("/", serviceController.getAllService);
+serviceRouter.get("/:id", serviceController.getServiceItemsByServiceId);
 
 export default serviceRouter;

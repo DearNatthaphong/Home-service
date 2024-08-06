@@ -4,7 +4,8 @@ import Homepage from '../pages/user-home-page';
 import ServicePayment from '../pages/service-payment-page';
 import PaymentSuccess from '../pages/payment-success-page';
 import ServiceListPage from '../pages/service-list-page';
-import DemoPage from '../pages/demo-page';
+import ServiceDetailPage from '../pages/service-detail-page";
+import ServiceInformation from "../pages/service-detail-information-page';
 import ServiceInformation from '../components/service-detail-page/service-detail-information';
 import UserHistoryListPage from '../pages/customer-history-list-page';
 import UserOrderListPage from '../pages/customer-order-list-page';
@@ -17,7 +18,8 @@ function AutenticatedUser() {
         {/* เทรน */}
         <Route path="/servicelist" element={<ServiceListPage />} />
         {/* ม่อน */}
-        {/* <Route path="/carts" element={<ServiceCarts />} /> */}
+        <Route path="/servicedetail/:id" element={<ServiceDetailPage />} />
+        <Route path="/service/information/orders/:id/appointments" element={<ServiceInformation />} />
         {/* ม่อน */}
         <Route
           path="/service/information/orders/:id/appointments"
@@ -29,7 +31,7 @@ function AutenticatedUser() {
         {/* ป้อง */}
         <Route path="/orderlist" element={<UserOrderListPage />} />
         <Route path="/historylist" element={<UserHistoryListPage />} />
-        {/* <Route path="/demo" element={<DemoPage />} /> */}
+
       </Routes>
     </div>
   );
