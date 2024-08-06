@@ -8,6 +8,10 @@ paymentRouter
     '/orders/:id/create-payment-intent',
     paymentController.createPaymentIntent
   )
+  .put(
+    '/orders/:id/update-payment-intent',
+    paymentController.updatePaymentIntent
+  )
   .get('/orders/:id', paymentController.getPaymentOrder)
   .put('/orders/:id/success', paymentController.successPaymentOrder)
   .put('/orders/:id/fail', paymentController.failPaymentOrder);

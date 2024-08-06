@@ -1,4 +1,173 @@
-import connectionPool from "../utils/db.mjs";
+import connectionPool from '../utils/db.mjs';
+
+export const getPromotion = async (req, res) => {
+  const { promotionCode } = req.query;
+  const userId = req.user.id;
+
+  try {
+    const result = await connectionPool.query(
+      `
+        SELECT 
+            p.promotion_id,
+            p.promotion_code,
+            p.discount,
+            p.discount_type,
+            COUNT(pu.promotion_id) AS usage_count
+        FROM 
+            promotions AS p
+        INNER JOIN 
+            promotion_usages AS pu 
+            ON p.promotion_id = pu.promotion_id
+        WHERE 
+            p.promotion_code = $1 
+            AND p.expiry_date >= current_date
+            AND pu.user_id = $2
+        GROUP by
+            p.promotion_id,
+            p.promotion_code,
+            p.discount,
+            p.discount_type,
+            p.usage_limit
+        HAVING 
+            COUNT(pu.promotion_id) < p.usage_limit`,
+      [promotionCode, userId]
+    );
+
+    if (result.rows.length === 0) {
+      return res
+        .status(400)
+        .json({ message: 'การใช้งานโปรโมชั่นหมดอายุหรือเกินลิมิตแล้ว' });
+    }
+
+    const promotionData = {
+      promotionId: result.rows[0].promotion_id,
+      promotionCode: result.rows[0].promotion_code,
+      discount: result.rows[0].discount,
+      discountType: result.rows[0].discount_type
+    };
+
+    return res.status(200).json(promotionData);
+  } catch (error) {
+    return res.status(500).json({
+      message: 'พบข้อผิดพลาดภายในเซอร์เวอร์'
+    });
+  }
+};
+
+export const updateTotalPrice = async (req, res) => {
+  const { orderId, promotionId } = req.params;
+
+  try {
+    const promotionResult = await connectionPool.query(
+      `SELECT * FROM promotions WHERE promotion_id = $1`,
+      [promotionId]
+    );
+
+    if (promotionResult.rows.length === 0) {
+      return res.status(404).json({ message: 'ไม่พบโปรโมชั่น' });
+    }
+
+    const promotion = promotionResult.rows[0];
+
+    const orderResult = await connectionPool.query(
+      `SELECT * FROM orders WHERE order_id = $1`,
+      [orderId]
+    );
+
+    if (orderResult.rows.length === 0) {
+      return res.status(404).json({ message: 'ไม่พบคำสั่งซื้อ' });
+    }
+
+    const order = orderResult.rows[0];
+
+    let newTotalPrice;
+    if (promotion.discount_type === 'fixed') {
+      newTotalPrice = order.total_price - promotion.discount;
+    } else {
+      newTotalPrice = (order.total_price * (100 - promotion.discount)) / 100;
+    }
+
+    if (newTotalPrice < 0) {
+      newTotalPrice = 0;
+    }
+
+    const updateResult = await connectionPool.query(
+      `UPDATE orders SET total_price = $1 WHERE order_id = $2 RETURNING total_price`,
+      [newTotalPrice, order.order_id]
+    );
+
+    if (updateResult.rows.length === 0) {
+      return res.status(400).json({ message: 'ปรับปรุงคำสั่งซื้อไม่สำเร็จ' });
+    }
+
+    return res.status(200).json({
+      message: 'ปรับปรุงยอดเงินสุทธิสำเร็จ',
+      totalPrice: updateResult.rows[0].total_price
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      message: 'พบข้อผิดพลาดภายในเซอร์เวอร์'
+    });
+  }
+};
+
+export const createPromotionUsage = async (req, res) => {
+  const { orderId, promotionId } = req.params;
+  const userId = req.user.id;
+
+  if (!orderId || !promotionId) {
+    return res.status(400).json({ message: 'ข้อมูลไม่ครบหรือไม่ถูกต้อง' });
+  }
+
+  try {
+    // ตรวจสอบว่าโปรโมชั่นมีอยู่จริงและยังใช้งานได้
+    const promotion = await connectionPool.query(
+      'SELECT * FROM promotions WHERE promotion_id = $1',
+      [promotionId]
+    );
+    if (!promotion.rows.length) {
+      return res.status(404).json({ message: 'ไม่พบโปรโมชั่น' });
+    }
+
+    // ตรวจสอบว่า order มีอยู่จริง
+    const order = await connectionPool.query(
+      'SELECT * FROM orders WHERE order_id = $1',
+      [orderId]
+    );
+    if (!order.rows.length) {
+      return res.status(404).json({ message: 'ไม่พบ order' });
+    }
+
+    // ตรวจสอบว่า order นี้เคยใช้โปรโมชั่นไปแล้วหรือไม่
+    const existingUsage = await connectionPool.query(
+      'SELECT * FROM promotion_usages WHERE order_id = $1',
+      [orderId]
+    );
+
+    if (existingUsage.rows.length > 0) {
+      return res
+        .status(400)
+        .json({ message: 'คำสั่งซ่อมนี้เคยใช้โปรโมชั่นไปแล้ว' });
+    }
+
+    // บันทึกการใช้งานโปรโมชั่น
+    await connectionPool.query(
+      `INSERT INTO promotion_usages (promotion_id, order_id, user_id) VALUES ($1, $2, $3)`,
+      [promotionId, orderId, userId]
+    );
+
+    return res.status(201).json({
+      message: 'สร้างการใช้งานโปรโมชั่นสำเร็จ'
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      message: 'พบข้อผิดพลาดภายในเซอร์เวอร์'
+    });
+  }
+};
+import connectionPool from '../utils/db.mjs';
 
 /** POST Promotion Start */
 export const postPromotion = async (req, res) => {
@@ -6,13 +175,13 @@ export const postPromotion = async (req, res) => {
     ...req.body,
     promotion_code: req.body.isPromotionCode,
     discount:
-      req.body.isType === "fixed" ? req.body.isNumFixed : req.body.isNumPercent,
+      req.body.isType === 'fixed' ? req.body.isNumFixed : req.body.isNumPercent,
     discount_type: req.body.isType,
     usage_limit: req.body.isUsageLimit,
     expiry_date: req.body.isExpiryDate,
     expiry_time: req.body.isExpiryTime,
     create_at: new Date(),
-    updated_at: new Date(),
+    updated_at: new Date()
   };
   console.log(newPromotion);
   try {
@@ -25,7 +194,7 @@ export const postPromotion = async (req, res) => {
         newPromotion.discount_type,
         newPromotion.usage_limit,
         newPromotion.expiry_date,
-        newPromotion.expiry_time,
+        newPromotion.expiry_time
       ]
     );
   } catch (error) {
@@ -39,16 +208,16 @@ export const postPromotion = async (req, res) => {
       !newPromotion.expiry_time
     ) {
       return res.status(400).json({
-        message: "ข้อมูลไม่ครบหรือไม่ถูกต้อง",
+        message: 'ข้อมูลไม่ครบหรือไม่ถูกต้อง'
       });
     } else {
       return res.status(500).json({
-        message: "เกิดข้อผิดพลาดภายในเซิร์ฟเวอร์",
+        message: 'เกิดข้อผิดพลาดภายในเซิร์ฟเวอร์'
       });
     }
   }
   return res.status(201).json({
-    message: "สร้างโปรโมชั่นโค้ดสำเร็จ",
+    message: 'สร้างโปรโมชั่นโค้ดสำเร็จ'
   });
 };
 /** POST Promotion End */
@@ -62,12 +231,12 @@ export const getAllPromotion = async (req, res) => {
     );
   } catch (error) {
     return res.status(500).json({
-      message: "พบข้อผิดพลาดภายในเซิร์ฟเวอร์",
+      message: 'พบข้อผิดพลาดภายในเซิร์ฟเวอร์'
     });
   }
   return res.status(200).json({
-    message: "ดึงข้อมูลโปรโมชั่นโค้ดสำเร็จ",
-    data: results.rows,
+    message: 'ดึงข้อมูลโปรโมชั่นโค้ดสำเร็จ',
+    data: results.rows
   });
 };
 /** GET All Promotion End */
@@ -83,18 +252,18 @@ export const getPromotionById = async (req, res) => {
     );
     if (!results.rows[0]) {
       return res.status(404).json({
-        message: "ไม่พบโปรโมชั่นโค้ด",
+        message: 'ไม่พบโปรโมชั่นโค้ด'
       });
     }
   } catch (error) {
     console.log(error);
     return res.status(500).json({
-      message: "พบข้อผิดพลาดภายในเซิร์ฟเวอร์",
+      message: 'พบข้อผิดพลาดภายในเซิร์ฟเวอร์'
     });
   }
   return res.status(200).json({
-    message: "ดึงข้อมูลโปรโมชั่นโค้ดสำเร็จ",
-    data: results.rows,
+    message: 'ดึงข้อมูลโปรโมชั่นโค้ดสำเร็จ',
+    data: results.rows
   });
 };
 /** GET Promotion By ID End */
@@ -105,9 +274,9 @@ export const putPromotionById = async (req, res) => {
   const promotionIdFromAdmin = req.params.id;
   const updatedPromotion = {
     ...req.body,
-    updated_at: new Date(),
+    updated_at: new Date()
   };
-  console.log("HEe");
+  console.log('HEe');
   console.log(req.body);
   try {
     results = await connectionPool.query(
@@ -116,7 +285,7 @@ export const putPromotionById = async (req, res) => {
     );
     if (!results.rows[0]) {
       return res.status(404).json({
-        message: "ไม่พบโปรโมชั่นโค้ด",
+        message: 'ไม่พบโปรโมชั่นโค้ด'
       });
     }
     await connectionPool.query(
@@ -132,7 +301,7 @@ export const putPromotionById = async (req, res) => {
         updatedPromotion.usage_limit,
         updatedPromotion.expiry_date,
         updatedPromotion.expiry_time,
-        updatedPromotion.updated_at,
+        updatedPromotion.updated_at
       ]
     );
   } catch (error) {
@@ -146,17 +315,17 @@ export const putPromotionById = async (req, res) => {
       !updatedPromotion.expiry_time
     ) {
       return res.status(400).json({
-        message: "ข้อมูลไม่ครบหรือไม่ถูกต้อง",
+        message: 'ข้อมูลไม่ครบหรือไม่ถูกต้อง'
       });
     } else {
       return res.status(500).json({
-        message: "เกิดข้อผิดพลาดภายในเซิร์ฟเวอร์",
+        message: 'เกิดข้อผิดพลาดภายในเซิร์ฟเวอร์'
       });
     }
   }
   return res.status(200).json({
-    message: "อัพเดตข้อมูลโปรโมชั่นโค้ดสำเร็จ",
-    data: updatedPromotion,
+    message: 'อัพเดตข้อมูลโปรโมชั่นโค้ดสำเร็จ',
+    data: updatedPromotion
   });
 };
 /** PUT Promotion By ID End */
@@ -176,17 +345,17 @@ export const deletePromotionById = async (req, res) => {
     );
     if (!results.rowCount) {
       return res.status(404).json({
-        message: "ไม่พบโปรโมชั่นโค้ด",
+        message: 'ไม่พบโปรโมชั่นโค้ด'
       });
     }
   } catch (error) {
     console.log(error);
     return res.status(500).json({
-      message: "พบข้อผิดพลาดภายในเซิร์ฟเวอร์",
+      message: 'พบข้อผิดพลาดภายในเซิร์ฟเวอร์'
     });
   }
   return res.status(200).json({
-    message: "ลบข้อมูลโปรโมชั่นโค้ดสำเร็จ",
+    message: 'ลบข้อมูลโปรโมชั่นโค้ดสำเร็จ'
   });
 };
 /** DELETE Promotion By ID End */
