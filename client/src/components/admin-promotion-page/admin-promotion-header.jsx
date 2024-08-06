@@ -36,7 +36,7 @@ function AdminPromotionHeader() {
         <button
           className="w-full h-full max-w-[240px] max-h-[45px] rounded-[8px] bg-blue-600 flex items-center justify-center gap-[8px] hover:bg-blue-500 active:bg-blue-800"
           onClick={() => {
-            navigate("/admin/promotion/addpromotion");
+            navigate("/admin/promotion/add-promotion");
           }}
         >
           <span className="font-prompt font-medium text-[16px] text-white">

@@ -4,6 +4,7 @@ import AdminCategoryPage from "../pages/admin-category-page";
 import AdminServicePage from "../pages/admin-service-page";
 import AdminPromotionPage from "../pages/admin-promotion-page";
 import AdminAddPromotionPage from "../pages/admin-add-promotion-page";
+import AdminEditPromotionPage from "../pages/admin-edit-promotion-page";
 
 function AutenticatedAdmin() {
   return (
@@ -13,8 +14,12 @@ function AutenticatedAdmin() {
         <Route path="/admin/service" element={<AdminServicePage />} />
         <Route path="/admin/promotion" element={<AdminPromotionPage />} />
         <Route
-          path="/admin/promotion/addpromotion"
+          path="/admin/promotion/add-promotion"
           element={<AdminAddPromotionPage />}
+        />
+        <Route
+          path="/admin/promotion/edit-promotion/:promotionId"
+          element={<AdminEditPromotionPage />}
         />
       </Routes>
     </div>
