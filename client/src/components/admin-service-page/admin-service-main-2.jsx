@@ -51,7 +51,7 @@ function AdminServiceMain2() {
       );
 
       const response = await axios.post(
-        "http://localhost:4000/services",
+        "http://localhost:4000/service",
         formData,
         {
           headers: {

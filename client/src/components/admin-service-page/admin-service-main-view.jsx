@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import photo1 from "/public/icons/frame-icon.png";
+import photo1 from "/icons/frame-icon.png";
 
 function getImageUrl(service_image) {
   // ตรวจสอบว่า service_image เป็น URL หรือชื่อไฟล์
@@ -22,9 +22,7 @@ function AdminServiceMainView() {
   useEffect(() => {
     const fetchServiceData = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:4000/services/${id}`
-        );
+        const response = await axios.get(`http://localhost:4000/service/${id}`);
         const { main_service, sub_services } = response.data;
         setMainService(main_service);
         setSubServices(sub_services);
