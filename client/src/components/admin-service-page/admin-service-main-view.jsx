@@ -4,12 +4,16 @@ import { useParams } from "react-router-dom";
 import photo1 from "/icons/frame-icon.png";
 
 function getImageUrl(service_image) {
+  // ตรวจสอบว่า service_image ไม่เป็น null หรือ undefined
+  if (!service_image) {
+    console.error("Invalid service_image:", service_image);
+    return ""; // หรือให้ค่า fallback อื่นๆ ตามต้องการ
+  }
+
   // ตรวจสอบว่า service_image เป็น URL หรือชื่อไฟล์
   if (service_image.startsWith("http")) {
-    // ถ้าเป็น URL เต็มรูปแบบ
     return service_image;
   } else {
-    // ถ้าเป็น path ชื่อไฟล์
     return `http://localhost:4000/uploads/${service_image}`;
   }
 }
@@ -71,6 +75,7 @@ function AdminServiceMainView() {
           <div className="w-[300px] h-[150px]">
             <img
               src={getImageUrl(mainService.service_image)}
+              // src={mainService.service_image}
               alt="service"
               className="w-full h-full object-cover rounded-[8px]"
             />

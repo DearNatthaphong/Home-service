@@ -110,12 +110,18 @@ function AdminServiceMain2() {
               htmlFor="file-upload"
               className="border-dashed border-[3px] py-6 flex flex-col items-center justify-center cursor-pointer"
             >
-              <img className="w-[48px] h-[48px]" src={photo} alt="add image" />
+              {!image && (
+                <img
+                  className="w-[48px] h-[48px]"
+                  src={photo}
+                  alt="add image"
+                />
+              )}
               {image ? (
                 <img
                   src={URL.createObjectURL(image)}
                   alt="Uploaded"
-                  className="max-h-32"
+                  className="max-h-32 rounded-[8px]"
                 />
               ) : (
                 <div className="text-center">

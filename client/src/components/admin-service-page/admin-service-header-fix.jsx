@@ -3,7 +3,7 @@ import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import photo from "/icons/arrow-icon.png";
 
-function AdminServiceHeaderView() {
+function AdminServiceHeaderFix() {
   const { id } = useParams(); // รับ ID จาก URL
   const [serviceName, setServiceName] = useState("Loading...");
   const navigate = useNavigate();
@@ -12,11 +12,22 @@ function AdminServiceHeaderView() {
     const fetchServiceName = async () => {
       try {
         const response = await axios.get(`http://localhost:4000/service/${id}`);
-        const { main_service } = response.data;
-        setServiceName(main_service.service_name);
+        // ตรวจสอบโครงสร้างของข้อมูลที่ได้รับ
+        console.log("Response data:", response.data);
+
+        // ตรวจสอบว่า `main_service` และ `service_name` มีอยู่ในข้อมูลหรือไม่
+        if (
+          response.data &&
+          response.data.main_service &&
+          response.data.main_service.service_name
+        ) {
+          setServiceName(response.data.main_service.service_name);
+        } else {
+          setServiceName("Service name not found");
+        }
       } catch (error) {
         console.error("Error fetching service name:", error);
-        setServiceName("Error");
+        setServiceName("Error loading service name");
       }
     };
 
@@ -25,10 +36,6 @@ function AdminServiceHeaderView() {
 
   const goToServicePage = () => {
     navigate("/admin/service");
-  };
-
-  const goToServiceFixPage = () => {
-    navigate(`/admin/service/fix/${id}`);
   };
 
   return (
@@ -44,13 +51,18 @@ function AdminServiceHeaderView() {
           </span>
         </div>
       </div>
-      <div className="flex w-full max-w-[320px] h-full max-h-[45px] justify-end">
+      <div className="flex w-full max-w-[320px] h-full max-h-[45px] justify-around">
         <button
-          className="w-full h-full max-w-[130px] max-h-[45px] rounded-[8px] bg-blue-600 flex items-center justify-center gap-[8px] hover:bg-blue-500 active:bg-blue-800"
-          onClick={goToServiceFixPage}
+          className="w-full h-full max-w-[130px] max-h-[45px] rounded-[8px] bg-white flex items-center justify-center gap-[8px] hover:bg-gray-100 active:bg-gray-600 border border-blue-600"
+          onClick={goToServicePage}
         >
+          <span className="font-prompt font-medium text-[16px] text-blue-600">
+            ยกเลิก
+          </span>
+        </button>
+        <button className="w-full h-full max-w-[130px] max-h-[45px] rounded-[8px] bg-blue-600 flex items-center justify-center gap-[8px] hover:bg-blue-500 active:bg-blue-800">
           <span className="font-prompt font-medium text-[16px] text-white">
-            แก้ไข
+            ยืนยัน
           </span>
         </button>
       </div>
@@ -58,4 +70,4 @@ function AdminServiceHeaderView() {
   );
 }
 
-export default AdminServiceHeaderView;
+export default AdminServiceHeaderFix;

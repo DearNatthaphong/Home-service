@@ -7,13 +7,15 @@ export const getServiceById = async (req, res) => {
     const query = `
       SELECT
         services.service_name AS main_service_name,
+        services.service_id,
         services.created_at,
         services.updated_at,
         services.category_name,
         services.service_image,
         service_items.service_name AS sub_service_name,
         service_items.service_price,
-        service_items.service_unit
+        service_items.service_unit,
+        service_items.service_item_id
       FROM services
       LEFT JOIN service_items ON services.service_id = service_items.service_id
       WHERE services.service_id = $1
@@ -32,6 +34,7 @@ export const getServiceById = async (req, res) => {
         updated_at: result.rows[0].updated_at,
         category_name: result.rows[0].category_name,
         service_image: result.rows[0].service_image,
+        service_id: result.rows[0].service_id,
       },
       sub_services: result.rows
         .filter((row) => row.sub_service_name) // กรองแถวที่มีบริการย่อย
@@ -39,6 +42,7 @@ export const getServiceById = async (req, res) => {
           service_name: row.sub_service_name,
           service_price: row.service_price,
           service_unit: row.service_unit,
+          service_item_id: row.service_item_id,
         })),
     };
 
