@@ -10,6 +10,7 @@ import orderRouter from "./src/routes/order.route.mjs";
 import promotionRouter from "./src/routes/promotion.route.mjs";
 import ViewServiceRouter from "./src/routes/view-service.route.mjs";
 import updateServiceRouter from "./src/routes/fix-service.route.mjs";
+import deleteServiceRoute from "./src/routes/delete-route.mjs";
 import path from "path";
 
 dotenv.config();
@@ -30,6 +31,7 @@ app.use("/service", serviceRouter);
 app.use("/service", createService);
 app.use("/service", ViewServiceRouter);
 app.use("/service", updateServiceRouter);
+app.use("/service", deleteServiceRoute);
 app.use("/orders", orderRouter);
 
 app.get("/", (req, res) => {

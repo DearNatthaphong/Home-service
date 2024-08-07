@@ -10,6 +10,20 @@ function AdminServiceMain() {
   const [services, setServices] = useState([]);
   const [error, setError] = useState(null);
 
+  const deleteService = async (id) => {
+    try {
+      await axios.delete(`http://localhost:4000/service/${id}`);
+    } catch (error) {
+      console.error("Error deleting service:", error);
+    }
+  };
+
+  const handleDelete = (id) => {
+    if (window.confirm("Are you sure you want to delete this service?")) {
+      deleteService(id);
+    }
+  };
+
   useEffect(() => {
     const fetchServices = async () => {
       try {
@@ -128,7 +142,13 @@ function AdminServiceMain() {
                 </div>
               </div>
               <div className="w-[120px] flex gap-8">
-                <img className="w-[24px] h-[24px]" src={photo1} alt="delete" />
+                <button onClick={() => handleDelete(service.service_id)}>
+                  <img
+                    className="w-[24px] h-[24px]"
+                    src={photo1}
+                    alt="delete"
+                  />
+                </button>
                 <button onClick={() => goToServiceViewPage(service.service_id)}>
                   <img className="w-[24px] h-[24px]" src={photo2} alt="edit" />
                 </button>
