@@ -196,7 +196,7 @@ export const updateService = async (req, res) => {
 
       if (!service_name || !service_price || !service_unit) {
         return res.status(400).json({
-          message: "ข้อมูลรายการบริการย่อยไม่ครบถ้วน",
+          message: "ข้อมูลรายการไม่ครบถ้วน",
         });
       }
 
