@@ -93,7 +93,7 @@ function AdminServiceMain() {
         </div>
         {services.length === 0 ? (
           <div className="w-full h-[90px] bg-white flex items-center justify-center">
-            No services available
+            ไม่พบรายการเซอร์วิส
           </div>
         ) : (
           services.map((service, index) => (

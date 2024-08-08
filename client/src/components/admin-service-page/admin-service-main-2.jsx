@@ -1,9 +1,18 @@
-import React, { useState } from "react";
+import React, {
+  useState,
+  useRef,
+  forwardRef,
+  useImperativeHandle,
+} from "react";
 import axios from "axios";
 import photo from "/icons/add-image-icon.png";
 import photo1 from "/icons/frame-icon.png";
+import { useNavigate } from "react-router-dom";
 
-function AdminServiceMain2() {
+const AdminServiceMain2 = forwardRef((props, ref) => {
+  const submitRef = useRef();
+  const navigate = useNavigate();
+
   const [serviceName, setServiceName] = useState("");
   const [category, setCategory] = useState("");
   const [image, setImage] = useState(null);
@@ -59,13 +68,17 @@ function AdminServiceMain2() {
           },
         }
       );
-
       alert(response.data.message || "สร้างบริการสำเร็จ!");
+      navigate(`/admin/service`);
     } catch (error) {
       console.error("เกิดข้อผิดพลาดในการสร้างบริการ:", error);
       alert("เกิดข้อผิดพลาดในการสร้างบริการ!");
     }
   };
+
+  useImperativeHandle(ref, () => ({
+    handleSubmit,
+  }));
   return (
     <div className="w-full h-screen p-[40px] flex justify-center">
       <div className="w-full h-full bg-white border rounded-lg flex flex-col overflow-y-scroll">
@@ -206,18 +219,10 @@ function AdminServiceMain2() {
               <img src="/icons/plus-icon-blue.svg" alt="plus icon" />
             </div>
           </button>
-          <button
-            onClick={handleSubmit}
-            className="w-full border border-blue-600 max-w-[175px] h-[45px] rounded-[8px] bg-blue-600 flex items-center justify-center gap-[8px] hover:bg-blue-500 active:bg-blue-800 mt-4"
-          >
-            <span className="font-prompt font-medium text-[16px] text-white">
-              สร้าง
-            </span>
-          </button>
         </div>
       </div>
     </div>
   );
-}
+});
 
 export default AdminServiceMain2;
