@@ -1,17 +1,23 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { usePromotion } from "../../context/promotion-context";
-function AdminPromotionMain() {
-  const { isAllPromotion, isSearchPromotion } = usePromotion();
+import { useNavigate, useParams } from "react-router-dom";
+import Modal from "./delete-modal";
+import {
+  formatDate,
+  formatExpiryDate,
+  formatExpiryTime,
+} from "../../utils/admin-promotion-date-time-format";
 
-  const filterPromotion = isAllPromotion.filter((items) => {
-    const filterSearchPromotion =
-      isSearchPromotion === "" ||
-      items.promotion_code.includes(isSearchPromotion.toUpperCase());
-    return filterSearchPromotion;
-  });
+function AdminPromotionMain() {
+  const navigate = useNavigate();
+  const {
+    setKeepId,
+    setOpen,
+    filterPromotion,
+  } = usePromotion();
 
   return (
-    <div className="w-full h-full p-[40px] flex justify-center">
+    <div className="w-full h-full p-[40px] flex justify-center relative">
       <div className="w-full h-full bg-white rounded-[8px] border-collapse border-[1px] border-gray-200 overflow-auto">
         <div className="overflow-auto w-full h-full max-h-[390px] 2xl:max-h-[750px]">
           <table className="table table-pin-rows table-pin-cols">
@@ -53,17 +59,28 @@ function AdminPromotionMain() {
                         )}
                       </td>
                       <td className="font-prompt text-[16px] font-light text-black px-[24px] pt-[10px]">
-                        {items.created_at.slice(0, 10)}{" "}
-                        {items.created_at.slice(11, 19)}
+                        {formatDate(items.created_at)}
                       </td>
                       <td className="font-prompt text-[16px] font-light text-black px-[24px] pt-[10px]">
-                        {items.expiry_date.slice(0, 10)} {items.expiry_time}
+                        {formatExpiryDate(items.expiry_date)}{" "}
+                        {formatExpiryTime(items.expiry_time)}
                       </td>
                       <td className="flex gap-[10px] w-full h-full mt-[20px]">
-                        <button className="w-[24px] h-[24px] flex items-center justify-center">
+                        <button
+                          className="w-[24px] h-[24px] flex items-center justify-center"
+                          onClick={() => {
+                            setOpen(true);
+                            setKeepId(items.promotion_id);
+                          }}
+                        >
                           <img src="/icons/bin-icon.png" alt="" />
                         </button>
-                        <button className="w-[24px] h-[24px] flex items-center justify-center">
+                        <button
+                          className="w-[24px] h-[24px] flex items-center justify-center"
+                          onClick={() => {
+                            navigate(`edit-promotion/${items.promotion_id}`);
+                          }}
+                        >
                           <img src="/icons/modify-icon.png" alt="" />
                         </button>
                       </td>

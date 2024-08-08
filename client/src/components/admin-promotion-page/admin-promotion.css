@@ -11,4 +11,5 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 /* เปลี่ยนรูปแบบสี Table*/
 .table-pin-rows thead tr {
   background-color: #efeff2;
+  z-index: 0;
 }

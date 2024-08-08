@@ -5,6 +5,7 @@ import AdminServicePage from "../pages/admin-service-page";
 import AdminPromotionPage from "../pages/admin-promotion-page";
 import AdminAddPromotionPage from "../pages/admin-add-promotion-page";
 import AdminEditPromotionPage from "../pages/admin-edit-promotion-page";
+import AdminViewPromotionPage from "../pages/admin-view-promotion-page";
 
 function AutenticatedAdmin() {
   return (
@@ -18,8 +19,12 @@ function AutenticatedAdmin() {
           element={<AdminAddPromotionPage />}
         />
         <Route
-          path="/admin/promotion/edit-promotion/:promotionId"
+          path="/admin/promotion/edit-promotion/:promotion_id"
           element={<AdminEditPromotionPage />}
+        />
+        <Route
+          path="/admin/promotion/:promotion_id"
+          element={<AdminViewPromotionPage />}
         />
       </Routes>
     </div>
