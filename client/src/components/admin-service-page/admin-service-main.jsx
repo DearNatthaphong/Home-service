@@ -7,16 +7,20 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import DeleteModal from "./delete-modal";
 
-function AdminServiceMain() {
+function AdminServiceMain({ searchTerm }) {
   const [services, setServices] = useState([]);
   const [error, setError] = useState(null);
   const [selectedService, setSelectedService] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [filteredServices, setFilteredServices] = useState([]);
 
   const deleteService = async (id) => {
     try {
       await axios.delete(`http://localhost:4000/service/${id}`);
       setServices((prevServices) =>
+        prevServices.filter((service) => service.service_id !== id)
+      );
+      setFilteredServices((prevServices) =>
         prevServices.filter((service) => service.service_id !== id)
       );
       setIsModalOpen(false);
@@ -36,6 +40,7 @@ function AdminServiceMain() {
         const response = await axios.get("http://localhost:4000/service");
         console.log(response);
         setServices(response.data.data);
+        setFilteredServices(response.data.data);
       } catch (error) {
         setError(error.message);
       }
@@ -43,6 +48,18 @@ function AdminServiceMain() {
 
     fetchServices();
   }, []);
+
+  useEffect(() => {
+    if (searchTerm) {
+      setFilteredServices(
+        services.filter((service) =>
+          service.service_name.toLowerCase().includes(searchTerm.toLowerCase())
+        )
+      );
+    } else {
+      setFilteredServices(services);
+    }
+  }, [searchTerm, services]);
 
   const navigate = useNavigate();
   const goToServiceViewPage = (id) => {
@@ -91,12 +108,12 @@ function AdminServiceMain() {
             </div>
           </div>
         </div>
-        {services.length === 0 ? (
+        {filteredServices.length === 0 ? (
           <div className="w-full h-[90px] bg-white flex items-center justify-center">
             ไม่พบรายการเซอร์วิส
           </div>
         ) : (
-          services.map((service, index) => (
+          filteredServices.map((service, index) => (
             <div
               key={service.id}
               className="w-full h-[90px] bg-white flex items-center justify-between"

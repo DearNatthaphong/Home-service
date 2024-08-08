@@ -1,10 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-function AdminServiceHeader() {
+function AdminServiceHeader({ onSearch }) {
+  const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
   const goToCreatePage = () => {
     navigate("/admin/service/create");
+  };
+  const handleSearchChange = (e) => {
+    const term = e.target.value;
+    setSearchTerm(term);
+    onSearch(term);
   };
   return (
     <div className="w-full h-full max-h-[80px] border-b-[1px] border-gray-300 flex items-center bg-white px-[40px] justify-between">
@@ -25,6 +31,8 @@ function AdminServiceHeader() {
           </div>
           <input
             type="text"
+            value={searchTerm}
+            onChange={handleSearchChange}
             className="w-full h-full outline-none bg-transparent placeholder:text-gray-700 placeholder:text-[16px] placeholder:font-prompt placeholder:font-light text-black text-[16px] font-prompt font-light"
             placeholder="ค้นหาบริการ..."
           />
