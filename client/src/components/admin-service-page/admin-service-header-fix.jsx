@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import photo from "/icons/arrow-icon.png";
 
 function AdminServiceHeaderFix({ onConfirm }) {
-  const { id } = useParams(); // รับ ID จาก URL
+  const { id } = useParams();
   const [serviceName, setServiceName] = useState("Loading...");
   const navigate = useNavigate();
 
@@ -12,10 +12,9 @@ function AdminServiceHeaderFix({ onConfirm }) {
     const fetchServiceName = async () => {
       try {
         const response = await axios.get(`http://localhost:4000/service/${id}`);
-        // ตรวจสอบโครงสร้างของข้อมูลที่ได้รับ
+
         console.log("Response data:", response.data);
 
-        // ตรวจสอบว่า `main_service` และ `service_name` มีอยู่ในข้อมูลหรือไม่
         if (
           response.data &&
           response.data.main_service &&

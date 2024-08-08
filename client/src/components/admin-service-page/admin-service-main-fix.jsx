@@ -37,8 +37,8 @@ const AdminServiceMainFix = forwardRef((props, ref) => {
         const response = await axios.get(`http://localhost:4000/service/${id}`);
         const { main_service, sub_services } = response.data;
         setMainService(main_service);
-        setSubServices(sub_services || []); // ตรวจสอบให้แน่ใจว่า sub_services ไม่เป็น undefined
-        console.log("SubServices after fetch:", sub_services); // ตรวจสอบค่าที่นี่
+        setSubServices(sub_services || []);
+        console.log("SubServices after fetch:", sub_services);
         setServiceName(main_service.service_name);
         setCategory(main_service.category_name);
         setImage(main_service.service_image);
@@ -53,7 +53,7 @@ const AdminServiceMainFix = forwardRef((props, ref) => {
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
     if (file) {
-      setImage(file); // Set the File object instead of URL
+      setImage(file);
     }
   };
 
@@ -128,7 +128,6 @@ const AdminServiceMainFix = forwardRef((props, ref) => {
       console.log("Response from API:", response);
       alert(response.data.message || "อัปเดตบริการสำเร็จ!");
 
-      // Update the mainService state with the new data
       setMainService(response.data.main_service);
 
       navigate(`/admin/service/view/${id}`);
@@ -149,7 +148,6 @@ const AdminServiceMainFix = forwardRef((props, ref) => {
   return (
     <div className="w-full h-screen p-[40px] flex justify-center">
       <div className="w-full h-full bg-white border rounded-lg flex flex-col overflow-y-scroll">
-        {/* Main Service Details */}
         <div className="px-8 py-6 flex items-center mt-5">
           <div className="min-w-[250px]">
             <div className="text-[#646c80] text-base font-medium 2xl:text-lg">
@@ -240,7 +238,6 @@ const AdminServiceMainFix = forwardRef((props, ref) => {
           </div>
         </div>
         <hr className="border-gray-300 w-[95%] mx-auto" />
-        {/* Sub Services */}
         <div className="px-8 py-8 text-[#646c80] text-base font-medium 2xl:text-lg">
           รายการบริการย่อย
         </div>

@@ -4,13 +4,11 @@ import { useParams } from "react-router-dom";
 import photo1 from "/icons/frame-icon.png";
 
 function getImageUrl(service_image) {
-  // ตรวจสอบว่า service_image ไม่เป็น null หรือ undefined
   if (!service_image) {
     console.error("Invalid service_image:", service_image);
-    return ""; // หรือให้ค่า fallback อื่นๆ ตามต้องการ
+    return "";
   }
 
-  // ตรวจสอบว่า service_image เป็น URL หรือชื่อไฟล์
   if (service_image.startsWith("http")) {
     return service_image;
   } else {
@@ -45,7 +43,6 @@ function AdminServiceMainView() {
   return (
     <div className="w-full h-screen p-[40px] flex justify-center">
       <div className="w-full h-full bg-white border rounded-lg flex flex-col overflow-y-scroll">
-        {/* Main Service Details */}
         <div className="px-8 py-6 flex items-center mt-5">
           <div className="min-w-[250px]">
             <div className="text-[#646c80] text-base font-medium 2xl:text-lg">
@@ -82,7 +79,6 @@ function AdminServiceMainView() {
           </div>
         </div>
         <hr className="border-gray-300 w-[95%] mx-auto" />
-        {/* Sub Services */}
         <div className="px-8 py-8 text-[#646c80] text-base font-medium 2xl:text-lg">
           รายการบริการย่อย
         </div>

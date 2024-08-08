@@ -30,7 +30,6 @@ export const createService = [
     const { service_name, category_name, subServices } = req.body;
     const serviceImage = req.file ? req.file.filename : null;
 
-    // ตรวจสอบว่าข้อมูล subServices เป็น JSON string และแปลงเป็น JavaScript object
     if (typeof subServices !== "string") {
       return res.status(400).json({
         message: "ข้อมูลรายการบริการย่อยไม่ถูกต้อง",
@@ -46,19 +45,16 @@ export const createService = [
       });
     }
 
-    // ตรวจสอบรูปแบบของ subServices
     if (!Array.isArray(parsedSubServices)) {
       return res.status(400).json({
         message: "ข้อมูลรายการบริการย่อยไม่ถูกต้อง",
       });
     }
 
-    // เริ่มการทำธุรกรรม
     const client = await connectionPool.connect();
     try {
-      await client.query("BEGIN"); // เริ่มการทำธุรกรรม
+      await client.query("BEGIN");
 
-      // เพิ่มข้อมูลหลักของบริการ
       const result = await client.query(
         `INSERT INTO services (service_name, category_name, service_image) VALUES ($1, $2, $3) RETURNING service_id`,
         [service_name, category_name, serviceImage]
@@ -66,10 +62,9 @@ export const createService = [
 
       const serviceId = result.rows[0].service_id;
 
-      // เพิ่มข้อมูลบริการย่อย
       for (const subService of parsedSubServices) {
         if (!subService.name || !subService.price || !subService.unit) {
-          await client.query("ROLLBACK"); // ย้อนกลับธุรกรรม
+          await client.query("ROLLBACK");
           return res.status(400).json({
             message: "ข้อมูลรายการบริการย่อยไม่ครบถ้วน",
           });
@@ -80,19 +75,19 @@ export const createService = [
         );
       }
 
-      await client.query("COMMIT"); // ยืนยันธุรกรรม
+      await client.query("COMMIT");
 
       return res.status(201).json({
         message: "สร้างเซอร์วิสใหม่เรียบร้อย",
       });
     } catch (error) {
       console.error("ข้อผิดพลาดในการสร้างบริการ:", error.message);
-      await client.query("ROLLBACK"); // ย้อนกลับธุรกรรม
+      await client.query("ROLLBACK");
       return res.status(500).json({
         message: "พบข้อผิดพลาดภายในเซิร์ฟเวอร์",
       });
     } finally {
-      client.release(); // คืนค่าการเชื่อมต่อกลับไปยัง pool
+      client.release();
     }
   },
 ];

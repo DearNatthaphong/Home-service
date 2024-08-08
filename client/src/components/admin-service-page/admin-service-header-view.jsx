@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import photo from "/icons/arrow-icon.png";
 
 function AdminServiceHeaderView() {
-  const { id } = useParams(); // รับ ID จาก URL
+  const { id } = useParams();
   const [serviceName, setServiceName] = useState("Loading...");
   const navigate = useNavigate();
 
