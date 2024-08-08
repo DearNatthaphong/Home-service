@@ -7,5 +7,6 @@ promotionRouter.post("/", promotionController.postPromotion);
 promotionRouter.get("/", promotionController.getAllPromotion);
 promotionRouter.put("/:id", promotionController.putPromotionById);
 promotionRouter.delete("/:id", promotionController.deletePromotionById);
+promotionRouter.get("/:id", promotionController.getPromotionById);
 
 export default promotionRouter;

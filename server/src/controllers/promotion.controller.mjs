@@ -48,7 +48,7 @@ export const postPromotion = async (req, res) => {
     }
   }
   return res.status(201).json({
-    message: "สร้าง Promotion สำเร็จ",
+    message: "สร้างโปรโมชั่นโค้ดสำเร็จ",
   });
 };
 /** POST Promotion End */
@@ -58,16 +58,46 @@ export const getAllPromotion = async (req, res) => {
   let results;
   try {
     results = await connectionPool.query(
-      `select * from promotions order by created_at desc`
+      `select * from promotions order by updated_at desc`
     );
   } catch (error) {
     return res.status(500).json({
       message: "พบข้อผิดพลาดภายในเซิร์ฟเวอร์",
     });
   }
-  return res.status(200).json({ data: results.rows });
+  return res.status(200).json({
+    message: "ดึงข้อมูลโปรโมชั่นโค้ดสำเร็จ",
+    data: results.rows,
+  });
 };
 /** GET All Promotion End */
+
+/** GET Promotion By ID Start */
+export const getPromotionById = async (req, res) => {
+  let results;
+  const promotionIdFromAdmin = req.params.id;
+  try {
+    results = await connectionPool.query(
+      `select * from promotions where promotion_id = $1`,
+      [promotionIdFromAdmin]
+    );
+    if (!results.rows[0]) {
+      return res.status(404).json({
+        message: "ไม่พบโปรโมชั่นโค้ด",
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      message: "พบข้อผิดพลาดภายในเซิร์ฟเวอร์",
+    });
+  }
+  return res.status(200).json({
+    message: "ดึงข้อมูลโปรโมชั่นโค้ดสำเร็จ",
+    data: results.rows,
+  });
+};
+/** GET Promotion By ID End */
 
 /** PUT Promotion By ID Start */
 export const putPromotionById = async (req, res) => {
@@ -77,7 +107,8 @@ export const putPromotionById = async (req, res) => {
     ...req.body,
     updated_at: new Date(),
   };
-  console.log(updatedPromotion);
+  console.log("HEe");
+  console.log(req.body);
   try {
     results = await connectionPool.query(
       `select * from promotions where promotion_id = $1`,
@@ -85,13 +116,13 @@ export const putPromotionById = async (req, res) => {
     );
     if (!results.rows[0]) {
       return res.status(404).json({
-        message: "ไม่พบ Promotion Code",
+        message: "ไม่พบโปรโมชั่นโค้ด",
       });
     }
     await connectionPool.query(
       `update promotions 
       set promotion_code = $2, discount = $3, discount_type = $4,
-      usage_limit = $5, expiry_date = $6, expiry_time = $7
+      usage_limit = $5, expiry_date = $6, expiry_time = $7, updated_at = $8
       where promotion_id = $1`,
       [
         promotionIdFromAdmin,
@@ -101,16 +132,30 @@ export const putPromotionById = async (req, res) => {
         updatedPromotion.usage_limit,
         updatedPromotion.expiry_date,
         updatedPromotion.expiry_time,
+        updatedPromotion.updated_at,
       ]
     );
   } catch (error) {
     console.log(error);
-    return res.status(400).json({
-      message: "ข้อมูลไม่ครบหรือไม่ถูกต้อง",
-    });
+    if (
+      !updatedPromotion.promotion_code ||
+      !updatedPromotion.discount ||
+      !updatedPromotion.discount_type ||
+      !updatedPromotion.usage_limit ||
+      !updatedPromotion.expiry_date ||
+      !updatedPromotion.expiry_time
+    ) {
+      return res.status(400).json({
+        message: "ข้อมูลไม่ครบหรือไม่ถูกต้อง",
+      });
+    } else {
+      return res.status(500).json({
+        message: "เกิดข้อผิดพลาดภายในเซิร์ฟเวอร์",
+      });
+    }
   }
   return res.status(200).json({
-    message: "อัพเดต Promotion สำเร็จ",
+    message: "อัพเดตข้อมูลโปรโมชั่นโค้ดสำเร็จ",
     data: updatedPromotion,
   });
 };
@@ -121,26 +166,27 @@ export const deletePromotionById = async (req, res) => {
   let results;
   const promotionIdFromAdmin = req.params.id;
   try {
+    // results = await connectionPool.query(
+    //   `select * from promotions where promotion_id = $1`,
+    //   [promotionIdFromAdmin]
+    // );
     results = await connectionPool.query(
-      `select * from promotions where promotion_id = $1`,
-      [promotionIdFromAdmin]
-    );
-    if (!results.rows[0]) {
-      return res.status(404).json({
-        message: "ไม่พบ Promotion Code",
-      });
-    }
-    await connectionPool.query(
       `delete from promotions where promotion_id = $1`,
       [promotionIdFromAdmin]
     );
+    if (!results.rowCount) {
+      return res.status(404).json({
+        message: "ไม่พบโปรโมชั่นโค้ด",
+      });
+    }
   } catch (error) {
+    console.log(error);
     return res.status(500).json({
       message: "พบข้อผิดพลาดภายในเซิร์ฟเวอร์",
     });
   }
   return res.status(200).json({
-    message: "ลบ Promotion สำเร็จ",
+    message: "ลบข้อมูลโปรโมชั่นโค้ดสำเร็จ",
   });
 };
 /** DELETE Promotion By ID End */
