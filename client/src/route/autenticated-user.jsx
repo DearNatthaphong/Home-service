@@ -4,9 +4,8 @@ import Homepage from '../pages/user-home-page';
 import ServicePayment from '../pages/service-payment-page';
 import PaymentSuccess from '../pages/payment-success-page';
 import ServiceListPage from '../pages/service-list-page';
-import ServiceDetailPage from '../pages/service-detail-page";
-import ServiceInformation from "../pages/service-detail-information-page';
-import ServiceInformation from '../components/service-detail-page/service-detail-information';
+import ServiceDetailPage from '../pages/service-detail-page';
+import ServiceInformation from '../pages/service-detail-information-page';
 import UserHistoryListPage from '../pages/customer-history-list-page';
 import UserOrderListPage from '../pages/customer-order-list-page';
 
