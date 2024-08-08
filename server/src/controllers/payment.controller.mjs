@@ -67,7 +67,9 @@ export const createPaymentIntent = async (req, res) => {
     });
   } catch (error) {
     console.error('Error creating PaymentIntent:', error);
-    return res.status(500).json({ message: 'เกิดข้อผิดพลาดในการชำระเงิน' });
+    return res
+      .status(500)
+      .json({ message: 'เกิดข้อผิดพลาดในการสร้างการชำระเงิน' });
     // if (error.type === 'StripeCardError') {
     //   // Handle a declined card error
     //   return res.status(402).json({ message: 'บัตรเครดิตของคุณถูกปฏิเสธ' });
@@ -80,6 +82,37 @@ export const createPaymentIntent = async (req, res) => {
     //   // Handle other errors
     //   return res.status(500).json({ message: 'เกิดข้อผิดพลาดในการชำระเงิน' });
     // }
+  }
+};
+
+export const getPaymentIntent = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const order = await connectionPool.query(
+      `SELECT payment_intent_id FROM orders WHERE order_id = $1`,
+      [id]
+    );
+
+    if (!order.rows.length) {
+      return res.status(404).json({ message: 'ไม่พบคำสั่งซ่อมในคำขอ' });
+    }
+
+    const { payment_intent_id } = order.rows[0];
+
+    const paymentIntent = await stripe.paymentIntents.retrieve(
+      payment_intent_id
+    );
+
+    return res.status(200).json({
+      message: 'ดึงข้อมูล payment intent สำเร็จ',
+      clientSecret: paymentIntent.client_secret
+    });
+  } catch (error) {
+    console.error('Error retrieving PaymentIntent:', error);
+    return res
+      .status(500)
+      .json({ message: 'เกิดข้อผิดพลาดในการดึงข้อมูลการชำระเงิน' });
   }
 };
 

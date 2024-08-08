@@ -5,45 +5,57 @@ export const getPromotion = async (req, res) => {
   const userId = req.user.id;
 
   try {
-    const result = await connectionPool.query(
+    // เชค code ว่ามีอยู่และ หมดอายุแล้วรึป่าว
+    const promotionResult = await connectionPool.query(
       `
         SELECT 
-            p.promotion_id,
-            p.promotion_code,
-            p.discount,
-            p.discount_type,
-            COUNT(pu.promotion_id) AS usage_count
+            promotion_id,
+            promotion_code,
+            discount,
+            discount_type,
+            usage_limit
         FROM 
-            promotions AS p
-        INNER JOIN 
-            promotion_usages AS pu 
-            ON p.promotion_id = pu.promotion_id
+            promotions
         WHERE 
-            p.promotion_code = $1 
-            AND p.expiry_date >= current_date
-            AND pu.user_id = $2
-        GROUP by
-            p.promotion_id,
-            p.promotion_code,
-            p.discount,
-            p.discount_type,
-            p.usage_limit
-        HAVING 
-            COUNT(pu.promotion_id) < p.usage_limit`,
-      [promotionCode, userId]
+            promotion_code = $1 
+            AND expiry_date >= current_date`,
+      [promotionCode]
     );
 
-    if (result.rows.length === 0) {
+    if (promotionResult.rows.length === 0) {
       return res
         .status(400)
-        .json({ message: 'การใช้งานโปรโมชั่นหมดอายุหรือเกินลิมิตแล้ว' });
+        .json({ message: 'รหัสโปรโมชันหมดอายุหรือไม่ถูกต้อง' });
+    }
+
+    const promotion = promotionResult.rows[0];
+
+    // เชคว่า การใช้งานมีการใช้งานเกินลิมิตรึป่าว
+    const usageResult = await connectionPool.query(
+      `
+        SELECT 
+            COUNT(*) AS usage_count
+        FROM 
+            promotion_usages 
+        WHERE 
+            promotion_id = $1 
+            AND user_id = $2`,
+      [promotion.promotion_id, userId]
+    );
+
+    const usageCount = parseInt(usageResult.rows[0].usage_count, 10);
+
+    if (usageCount >= promotion.usage_limit) {
+      return res
+        .status(400)
+        .json({ message: 'การใช้งานโปรโมชั่นเกินลิมิตแล้ว' });
     }
 
     const promotionData = {
-      promotionId: result.rows[0].promotion_id,
-      promotionCode: result.rows[0].promotion_code,
-      discount: result.rows[0].discount,
-      discountType: result.rows[0].discount_type
+      promotionId: promotion.promotion_id,
+      promotionCode: promotion.promotion_code,
+      discount: promotion.discount,
+      discountType: promotion.discount_type
     };
 
     return res.status(200).json(promotionData);
