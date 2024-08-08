@@ -52,7 +52,7 @@ export const postOrderItems = async (req, res) => {
               [orderId, item.service_item_id, item.quantity]
           );
           return {
-              order_item_id: result.rows[0].order_item_id,
+              orderItemId: result.rows[0].order_item_id,
               quantity: result.rows[0].quantity
           };
       }));
@@ -89,14 +89,14 @@ export const getOrderItems = async (req, res) => {
 
     const totalPrice = results.rows[0].total_price;
     const orderItems = results.rows.map(row => ({
-      order_item_id: row.order_item_id,
-      service_name: row.service_name,
+      orderItemId: row.order_item_id,
+      serviceName: row.service_name,
       quantity: row.quantity
     }));
 
     return res.status(200).json({
-      total_price: totalPrice,
-      order_items: orderItems
+      totalPrice: totalPrice,
+      orderItems: orderItems
     });
 
   } catch (error) {
