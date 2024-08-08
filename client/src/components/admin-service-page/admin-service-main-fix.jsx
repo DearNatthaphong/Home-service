@@ -1,4 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  forwardRef,
+  useImperativeHandle,
+} from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import photo1 from "/icons/frame-icon.png";
@@ -14,9 +20,10 @@ function getImageUrl(image) {
   }
 }
 
-function AdminServiceMainFix() {
+const AdminServiceMainFix = forwardRef((props, ref) => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const submitRef = useRef();
 
   const [mainService, setMainService] = useState(null);
   const [subServices, setSubServices] = useState([]);
@@ -130,6 +137,10 @@ function AdminServiceMainFix() {
       alert("เกิดข้อผิดพลาดในการอัปเดตบริการ!");
     }
   };
+
+  useImperativeHandle(ref, () => ({
+    handleSubmit,
+  }));
 
   if (!mainService) {
     return <div>Loading...</div>;
@@ -335,17 +346,9 @@ function AdminServiceMainFix() {
           </div>
           <div>{new Date(mainService.updated_at).toLocaleString()}</div>
         </div>
-        <div className="px-8 py-4 flex justify-end">
-          <button
-            onClick={handleSubmit}
-            className="bg-[#336df2] text-white px-4 py-2 rounded"
-          >
-            บันทึกการเปลี่ยนแปลง
-          </button>
-        </div>
       </div>
     </div>
   );
-}
+});
 
 export default AdminServiceMainFix;

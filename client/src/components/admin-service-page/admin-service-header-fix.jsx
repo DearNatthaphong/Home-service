@@ -3,7 +3,7 @@ import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import photo from "/icons/arrow-icon.png";
 
-function AdminServiceHeaderFix() {
+function AdminServiceHeaderFix({ onConfirm }) {
   const { id } = useParams(); // รับ ID จาก URL
   const [serviceName, setServiceName] = useState("Loading...");
   const navigate = useNavigate();
@@ -60,7 +60,10 @@ function AdminServiceHeaderFix() {
             ยกเลิก
           </span>
         </button>
-        <button className="w-full h-full max-w-[130px] max-h-[45px] rounded-[8px] bg-blue-600 flex items-center justify-center gap-[8px] hover:bg-blue-500 active:bg-blue-800">
+        <button
+          className="w-full h-full max-w-[130px] max-h-[45px] rounded-[8px] bg-blue-600 flex items-center justify-center gap-[8px] hover:bg-blue-500 active:bg-blue-800"
+          onClick={onConfirm}
+        >
           <span className="font-prompt font-medium text-[16px] text-white">
             ยืนยัน
           </span>
