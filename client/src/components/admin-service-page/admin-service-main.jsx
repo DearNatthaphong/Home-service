@@ -5,23 +5,29 @@ import photo2 from "/icons/pen-icon.png";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import DeleteModal from "./delete-modal";
 
 function AdminServiceMain() {
   const [services, setServices] = useState([]);
   const [error, setError] = useState(null);
+  const [selectedService, setSelectedService] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const deleteService = async (id) => {
     try {
       await axios.delete(`http://localhost:4000/service/${id}`);
+      setServices((prevServices) =>
+        prevServices.filter((service) => service.service_id !== id)
+      );
+      setIsModalOpen(false);
     } catch (error) {
       console.error("Error deleting service:", error);
     }
   };
 
-  const handleDelete = (id) => {
-    if (window.confirm("Are you sure you want to delete this service?")) {
-      deleteService(id);
-    }
+  const handleDelete = (service) => {
+    setSelectedService(service);
+    setIsModalOpen(true);
   };
 
   useEffect(() => {
@@ -142,7 +148,7 @@ function AdminServiceMain() {
                 </div>
               </div>
               <div className="w-[120px] flex gap-8">
-                <button onClick={() => handleDelete(service.service_id)}>
+                <button onClick={() => handleDelete(service)}>
                   <img
                     className="w-[24px] h-[24px]"
                     src={photo1}
@@ -157,6 +163,12 @@ function AdminServiceMain() {
           ))
         )}
       </div>
+      <DeleteModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onConfirm={() => deleteService(selectedService.service_id)}
+        serviceName={selectedService?.service_name}
+      />
     </div>
   );
 }

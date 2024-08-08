@@ -11,7 +11,7 @@ import promotionRouter from "./src/routes/promotion.route.mjs";
 import ViewServiceRouter from "./src/routes/view-service.route.mjs";
 import updateServiceRouter from "./src/routes/fix-service.route.mjs";
 import deleteServiceRoute from "./src/routes/delete-route.mjs";
-import path from "path";
+import createServices from "./src/routes/create-service.route.mjs";
 
 dotenv.config();
 
@@ -23,12 +23,11 @@ app.use(express.static("public"));
 app.use(express.json());
 
 app.use("/auth", authRouter);
-// app.use("/service", serviceRouter);
-app.use(protect);
+// app.use(protect);
 app.use("/promotions", promotionRouter);
 app.use("/payment", paymentRouter);
 app.use("/service", serviceRouter);
-app.use("/service", createService);
+app.use("/service", createServices);
 app.use("/service", ViewServiceRouter);
 app.use("/service", updateServiceRouter);
 app.use("/service", deleteServiceRoute);
