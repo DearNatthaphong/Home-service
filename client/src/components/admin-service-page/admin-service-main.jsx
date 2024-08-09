@@ -68,7 +68,7 @@ function AdminServiceMain({ searchTerm }) {
 
   return (
     <div className="w-full h-full p-[40px] flex justify-center">
-      <div className="w-full h-full bg-white border rounded-lg">
+      <div className="w-full h-full bg-white border rounded-lg overflow-y-scroll ">
         <div className="w-full h-[41px] bg-gray-100 flex items-center justify-between">
           <div className="flex flex-row gap-3 items-center">
             <div className="h-full w-[56px]">
@@ -109,14 +109,14 @@ function AdminServiceMain({ searchTerm }) {
           </div>
         </div>
         {filteredServices.length === 0 ? (
-          <div className="w-full h-[90px] bg-white flex items-center justify-center">
+          <div className="w-full h-[90px] bg-white flex items-center justify-center ">
             ไม่พบรายการเซอร์วิส
           </div>
         ) : (
           filteredServices.map((service, index) => (
             <div
               key={service.id}
-              className="w-full h-[90px] bg-white flex items-center justify-between"
+              className="w-full h-[90px] bg-white flex items-center justify-between "
             >
               <div className="flex flex-row gap-3 items-center">
                 <div className="h-full">
@@ -205,6 +205,7 @@ function AdminServiceMain({ searchTerm }) {
             </div>
           ))
         )}
+        <div className="mb-10"></div>
       </div>
       <DeleteModal
         isOpen={isModalOpen}

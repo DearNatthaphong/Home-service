@@ -40,7 +40,7 @@ function AdminServiceHeaderFix({ onConfirm }) {
   };
 
   return (
-    <div className="w-full h-full min-h-[80px] max-h-[80px] border-b-[1px] border-gray-300 flex items-center bg-white px-[40px] justify-between flex-shrink: 0">
+    <div className="w-full h-full min-h-[80px] max-h-[80px] border-b-[1px] border-gray-300 flex items-center bg-white px-[40px] justify-between ">
       <div className="flex gap-5">
         <button onClick={goToServicePage}>
           <img className="w-[40px] h-[40px]" src={photo} alt="goback" />

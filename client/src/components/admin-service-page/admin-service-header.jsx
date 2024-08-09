@@ -13,7 +13,7 @@ function AdminServiceHeader({ onSearch }) {
     onSearch(term);
   };
   return (
-    <div className="w-full h-full max-h-[80px] border-b-[1px] border-gray-300 flex items-center bg-white px-[40px] justify-between">
+    <div className="w-full h-full min-h-[80px] max-h-[80px] border-b-[1px] border-gray-300 flex items-center bg-white px-[40px] justify-between ">
       <span className="font-prompt text-[20px] font-medium text-black">
         บริการ
       </span>
