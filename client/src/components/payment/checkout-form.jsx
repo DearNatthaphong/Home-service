@@ -16,8 +16,15 @@ export default function CheckoutForm() {
   const [message, setMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const { handlePaymentSuccess, handlePaymentFail, createClientSecret } =
-    usePayment();
+  const {
+    handlePaymentSuccess,
+    handlePaymentFail,
+    createClientSecret,
+    clientSecret,
+    createPromotionUsage,
+    promotion
+  } = usePayment();
+
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -25,7 +32,6 @@ export default function CheckoutForm() {
     if (!stripe) {
       return;
     }
-
     const clientSecret = new URLSearchParams(window.location.search).get(
       'payment_intent_client_secret'
     );
@@ -97,16 +103,18 @@ export default function CheckoutForm() {
           } else {
             // console.log('Payment was successful');
             await handlePaymentSuccess(id);
+            await createPromotionUsage(promotion.promotionId, id);
             navigate(`/payment/${id}/success`);
           }
         } else {
           // console.log('Payment was successful');
           await handlePaymentSuccess(id);
+          await createPromotionUsage(promotion.promotionId, id);
           navigate(`/payment/${id}/success`);
         }
       }
     } catch (error) {
-      console.error('Error during payment confirmation:', err);
+      console.error('Error during payment confirmation:', error);
       setMessage('An unexpected error occurred.');
       toast.error(message);
     } finally {
@@ -122,7 +130,6 @@ export default function CheckoutForm() {
     <form id="payment-form" onSubmit={handleSubmit}>
       <PaymentElement id="payment-element" options={paymentElementOptions} />
       <PromotionForm />
-      {/* <div className="flex justify-center mt-3"> */}
       <button
         className="btn w-full mt-3 bg-blue-600 border-blue-600 text-white hover:bg-blue-500 hover:text-white focus:bg-blue-800 focus:text-white"
         disabled={isLoading || !stripe || !elements}
@@ -136,7 +143,6 @@ export default function CheckoutForm() {
           )}
         </span>
       </button>
-      {/* </div> */}
       {/* Show any error or success messages */}
       {message && <div id="payment-message">{message}</div>}
     </form>
