@@ -9,6 +9,7 @@ import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import photo1 from "/icons/frame-icon.png";
 import photo from "/icons/add-image-icon.png";
+import { toast } from "react-toastify";
 
 function getImageUrl(image) {
   if (typeof image === "string" && image.startsWith("http")) {
@@ -124,16 +125,14 @@ const AdminServiceMainFix = forwardRef((props, ref) => {
           },
         }
       );
-
-      console.log("Response from API:", response);
-      alert(response.data.message || "อัปเดตบริการสำเร็จ!");
+      toast.success("อัปเดตเซอร์วิสสำเร็จ!");
 
       setMainService(response.data.main_service);
 
       navigate(`/admin/service/view/${id}`);
     } catch (error) {
       console.error("เกิดข้อผิดพลาดในการอัปเดตบริการ:", error);
-      alert("เกิดข้อผิดพลาดในการอัปเดตบริการ!");
+      toast.error("เกิดข้อผิดพลาดในการอัปเดตเซอร์วิส!");
     }
   };
 

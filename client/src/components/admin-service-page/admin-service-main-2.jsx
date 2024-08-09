@@ -8,6 +8,7 @@ import axios from "axios";
 import photo from "/icons/add-image-icon.png";
 import photo1 from "/icons/frame-icon.png";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const AdminServiceMain2 = forwardRef((props, ref) => {
   const submitRef = useRef();
@@ -68,11 +69,11 @@ const AdminServiceMain2 = forwardRef((props, ref) => {
           },
         }
       );
-      alert(response.data.message || "สร้างบริการสำเร็จ!");
+      toast.success("สร้างบริการสำเร็จ!");
       navigate(`/admin/service`);
     } catch (error) {
       console.error("เกิดข้อผิดพลาดในการสร้างบริการ:", error);
-      alert("เกิดข้อผิดพลาดในการสร้างบริการ!");
+      toast.error("เกิดข้อผิดพลาดในการสร้างบริการ!");
     }
   };
 

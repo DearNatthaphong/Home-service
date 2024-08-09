@@ -29,11 +29,11 @@ function DeleteModal({ isOpen, onClose, onConfirm, serviceName }) {
                   ยืนยันการลบรายการ?
                 </p>
                 <p className="text-center text-gray-700 font-prompt font-light text-[16px]">
-                  คุณต้องการลบรายการ '{serviceName}' <br />
+                  คุณต้องการลบรายการ <br />'{serviceName}' <br />
                   ใช่หรือไม่
                 </p>
               </div>
-              <div className="w-full max-w-[240px] h-full max-h-[45px] flex justify-between">
+              <div className="w-full max-w-[240px] h-full max-h-[45px] flex justify-between mt-3">
                 <button
                   className="w-full max-w-[112px] h-full bg-blue-600 rounded-[8px]"
                   onClick={onConfirm}
