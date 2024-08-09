@@ -210,13 +210,17 @@ const AdminServiceMain2 = forwardRef((props, ref) => {
         <div className="w-full h-full px-8 py-8 mb-10">
           <button
             onClick={handleAddSubService}
-            className="w-full border border-blue-600 max-w-[175px] h-[45px] rounded-[8px] bg-white flex items-center justify-center gap-[8px] hover:bg-blue-500 active:bg-blue-800"
+            className="group w-full border border-blue-600 max-w-[175px] h-[45px] rounded-[8px] bg-white flex items-center justify-center gap-[8px] hover:bg-blue-500 active:bg-blue-800 "
           >
-            <span className="font-prompt font-medium text-[16px] text-blue-600">
+            <span className="font-prompt font-medium text-[16px] text-blue-600 group-hover:text-white">
               เพิ่มรายการ
             </span>
             <div className="w-[20px] h-[20px] flex items-center justify-center">
-              <img src="/icons/plus-icon-blue.svg" alt="plus icon" />
+              <img
+                src="/icons/plus-icon-blue.svg"
+                alt="plus icon"
+                className="group-hover:invert group-hover:brightness-0"
+              />
             </div>
           </button>
         </div>
