@@ -24,8 +24,8 @@ export const postOrders = async (req, res) => {
 
   try {
     const results = await connectionPool.query(
-      `insert into orders (user_id, order_number, total_price)
-             values ($1, $2, $3) returning order_id`,
+      `INSERT INTO orders (user_id, order_number, total_price)
+       VALUES ($1, $2, $3) RETURNING order_id`,
       [newOrder.userId, newOrder.orderNumber, newOrder.total_price]
     );
     const orderId = results.rows[0];
@@ -34,33 +34,48 @@ export const postOrders = async (req, res) => {
       data: orderId,
     });
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return res.status(500).json({
       message: "พบข้อผิดพลาดภายในเซิร์ฟเวอร์",
     });
   }
 };
 
+
 export const postOrderItems = async (req, res) => {
   const orderId = req.params.id;
   const orderItems = req.body;
 
-  try {
-      const postOrderItems = await Promise.all(orderItems.map(async (item) => {
-          const result = await connectionPool.query(
-              `INSERT INTO order_items (order_id, service_item_id, quantity) VALUES ($1, $2, $3) RETURNING order_item_id, quantity`,
-              [orderId, item.service_item_id, item.quantity]
-          );
-          return {
-              orderItemId: result.rows[0].order_item_id,
-              quantity: result.rows[0].quantity
-          };
-      }));
+  if (!Array.isArray(orderItems) || orderItems.length === 0) {
+    return res.status(400).json({ message: 'ข้อมูลไม่ครบหรือไม่ถูกต้อง' });
+  }
 
-      res.status(201).json(postOrderItems);
+  try {
+    const postOrderItems = await Promise.all(orderItems.map(async (item) => {
+      if (!item.service_item_id || !item.quantity) {
+        throw new Error('ข้อมูลไม่ครบหรือไม่ถูกต้อง');
+      }
+
+      const result = await connectionPool.query(
+        `INSERT INTO order_items (order_id, service_item_id, quantity)
+         VALUES ($1, $2, $3) RETURNING order_item_id, quantity`,
+        [orderId, item.service_item_id, item.quantity]
+      );
+
+      return {
+        order_item_id: result.rows[0].order_item_id,
+        quantity: result.rows[0].quantity
+      };
+    }));
+
+    res.status(201).json(postOrderItems);
   } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: 'พบข้อผิดพลาดภายในเซิร์ฟเวอร์' });
+    console.error(error);
+    if (error.message === 'ข้อมูลไม่ครบหรือไม่ถูกต้อง') {
+      res.status(400).json({ message: 'ข้อมูลไม่ครบหรือไม่ถูกต้อง' });
+    } else {
+      res.status(500).json({ message: 'พบข้อผิดพลาดภายในเซิร์ฟเวอร์' });
+    }
   }
 };
 
@@ -89,14 +104,14 @@ export const getOrderItems = async (req, res) => {
 
     const totalPrice = results.rows[0].total_price;
     const orderItems = results.rows.map(row => ({
-      orderItemId: row.order_item_id,
-      serviceName: row.service_name,
+      order_item_id: row.order_item_id,
+      service_name: row.service_name,
       quantity: row.quantity
     }));
 
     return res.status(200).json({
-      totalPrice: totalPrice,
-      orderItems: orderItems
+      total_price: totalPrice,
+      order_items: orderItems
     });
 
   } catch (error) {

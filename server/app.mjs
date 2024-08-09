@@ -6,7 +6,7 @@ import { protect } from './src/middlewares/protect.middleware.mjs';
 import dotenv from 'dotenv';
 import paymentRouter from './src/routes/payment.route.mjs';
 import serviceRouter from './src/routes/service.route.mjs';
-import orderRouter from './src/routes/order.route.mjs';
+import orderRouter from './src/routes/user.route.mjs';
 import promotionRouter from './src/routes/promotion.route.mjs';
 import categoriesRouter from './src/routes/categories.router.mjs';
 import adminPromotionRouter from './src/routes/admin-promotion.route.mjs';
