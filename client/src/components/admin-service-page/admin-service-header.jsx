@@ -1,6 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-function AdminServiceHeader() {
+function AdminServiceHeader({ onSearch }) {
+  const [searchTerm, setSearchTerm] = useState("");
+  const navigate = useNavigate();
+  const goToCreatePage = () => {
+    navigate("/admin/service/create");
+  };
+  const handleSearchChange = (e) => {
+    const term = e.target.value;
+    setSearchTerm(term);
+    onSearch(term);
+  };
   return (
     <div className="w-full h-full max-h-[80px] border-b-[1px] border-gray-300 flex items-center bg-white px-[40px] justify-between">
       <span className="font-prompt text-[20px] font-medium text-black">
@@ -20,11 +31,16 @@ function AdminServiceHeader() {
           </div>
           <input
             type="text"
+            value={searchTerm}
+            onChange={handleSearchChange}
             className="w-full h-full outline-none bg-transparent placeholder:text-gray-700 placeholder:text-[16px] placeholder:font-prompt placeholder:font-light text-black text-[16px] font-prompt font-light"
             placeholder="ค้นหาบริการ..."
           />
         </form>
-        <button className="w-full h-full max-w-[150px] max-h-[45px] rounded-[8px] bg-blue-600 flex items-center justify-center gap-[8px] hover:bg-blue-500 active:bg-blue-800">
+        <button
+          className="w-full h-full max-w-[150px] max-h-[45px] rounded-[8px] bg-blue-600 flex items-center justify-center gap-[8px] hover:bg-blue-500 active:bg-blue-800"
+          onClick={goToCreatePage}
+        >
           <span className="font-prompt font-medium text-[16px] text-white">
             เพิ่มบริการ
           </span>

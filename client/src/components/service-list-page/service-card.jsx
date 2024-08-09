@@ -4,6 +4,17 @@ import { useFilter } from "../../context/filter-context";
 import { useAuth } from "../../context/authentication";
 import { useNavigate } from "react-router-dom";
 
+function getImageUrl(service_image) {
+  // ตรวจสอบว่า service_image เป็น URL หรือชื่อไฟล์
+  if (service_image.startsWith("http")) {
+    // ถ้าเป็น URL เต็มรูปแบบ
+    return service_image;
+  } else {
+    // ถ้าเป็น path ชื่อไฟล์
+    return `http://localhost:4000/uploads/${service_image}`;
+  }
+}
+
 function ServiceCard() {
   const { state } = useAuth();
   const navigate = useNavigate();
@@ -70,7 +81,7 @@ function ServiceCard() {
               key={id}
             >
               <img
-                src={items.service_image}
+                src={getImageUrl(items.service_image)}
                 alt=""
                 className="w-full h-[200px] rounded-t-[8px]"
               />
