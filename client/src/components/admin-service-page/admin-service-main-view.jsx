@@ -129,7 +129,23 @@ function AdminServiceMainView() {
               สร้างเมื่อ
             </div>
           </div>
-          <div>{new Date(mainService.created_at).toLocaleString()}</div>
+          {/* <div>{new Date(mainService.created_at).toLocaleString()}</div> */}
+          <div>
+            {new Date(mainService.created_at)
+              .toLocaleDateString(undefined, {
+                month: "2-digit",
+                day: "2-digit",
+                year: "numeric",
+              })
+              .replace(/\//g, "/")}{" "}
+            {new Date(mainService.updated_at)
+              .toLocaleTimeString(undefined, {
+                hour: "2-digit",
+                minute: "2-digit",
+                hour12: true,
+              })
+              .replace(" ", "")}
+          </div>
         </div>
         <div className="px-8 py-3 flex items-center mb-10">
           <div className="min-w-[250px]">
@@ -137,7 +153,22 @@ function AdminServiceMainView() {
               แก้ไขล่าสุด
             </div>
           </div>
-          <div>{new Date(mainService.updated_at).toLocaleString()}</div>
+          <div>
+            {new Date(mainService.updated_at)
+              .toLocaleDateString(undefined, {
+                month: "2-digit",
+                day: "2-digit",
+                year: "numeric",
+              })
+              .replace(/\//g, "/")}{" "}
+            {new Date(mainService.updated_at)
+              .toLocaleTimeString(undefined, {
+                hour: "2-digit",
+                minute: "2-digit",
+                hour12: true,
+              })
+              .replace(" ", "")}
+          </div>
         </div>
       </div>
     </div>

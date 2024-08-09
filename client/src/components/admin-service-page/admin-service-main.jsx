@@ -153,14 +153,40 @@ function AdminServiceMain({ searchTerm }) {
                 </div>
               </div>
               <div className="flex">
-                <div className="w-[240px] flex justify-start px-5">
+                <div className="w-[240px] px-5">
                   <div className="2xl:text-lg">
-                    {new Date(service.created_at).toLocaleString()}
+                    {new Date(service.created_at)
+                      .toLocaleDateString(undefined, {
+                        month: "2-digit",
+                        day: "2-digit",
+                        year: "numeric",
+                      })
+                      .replace(/\//g, "/")}{" "}
+                    {new Date(service.updated_at)
+                      .toLocaleTimeString(undefined, {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                        hour12: true,
+                      })
+                      .replace(" ", "")}
                   </div>
                 </div>
                 <div className="w-[240px] px-5">
                   <div className="2xl:text-lg">
-                    {new Date(service.updated_at).toLocaleString()}
+                    {new Date(service.updated_at)
+                      .toLocaleDateString(undefined, {
+                        month: "2-digit",
+                        day: "2-digit",
+                        year: "numeric",
+                      })
+                      .replace(/\//g, "/")}{" "}
+                    {new Date(service.updated_at)
+                      .toLocaleTimeString(undefined, {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                        hour12: true,
+                      })
+                      .replace(" ", "")}
                   </div>
                 </div>
               </div>
