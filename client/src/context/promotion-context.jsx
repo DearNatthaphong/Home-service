@@ -45,7 +45,7 @@ function PromotionProvider({ children }) {
   const createPromotion = async () => {
     try {
       const result = await axios.post(
-        `http://localhost:4000/promotions/admin`,
+        `http://localhost:4000/admin/promotions`,
         dataPost
       );
       toast.success(result.data.message);
@@ -65,7 +65,7 @@ function PromotionProvider({ children }) {
   const [isAllPromotion, setIsAllPromotion] = useState([]);
 
   const getAllPromotion = async () => {
-    const result = await axios.get(`http://localhost:4000/promotions/admin`);
+    const result = await axios.get(`http://localhost:4000/admin/promotions`);
     setIsAllPromotion(result.data.data);
   };
 
@@ -90,7 +90,7 @@ function PromotionProvider({ children }) {
   const deletedPromotion = async (promotionId) => {
     try {
       const result = await axios.delete(
-        `http://localhost:4000/promotions/admin/${promotionId}`
+        `http://localhost:4000/admin/promotions/${promotionId}`
       );
       const newPromotions = isAllPromotion.filter((items) => {
         return items.promotion_id !== promotionId;
@@ -118,7 +118,7 @@ function PromotionProvider({ children }) {
   const getPromotionById = async (promotionId) => {
     try {
       const result = await axios.get(
-        `http://localhost:4000/promotions/admin/${promotionId}`
+        `http://localhost:4000/admin/promotions/${promotionId}`
       );
 
       setIsOnePromotion(result.data.data[0]);
@@ -141,7 +141,7 @@ function PromotionProvider({ children }) {
   const updatedPromotion = async (promotionId) => {
     try {
       const result = await axios.put(
-        `http://localhost:4000/promotions/admin/${promotionId}`,
+        `http://localhost:4000/admin/promotions/${promotionId}`,
         isOnePromotion
       );
       toast.success(result.data.message);
