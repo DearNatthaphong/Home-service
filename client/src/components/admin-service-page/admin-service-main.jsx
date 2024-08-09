@@ -16,7 +16,7 @@ function AdminServiceMain({ searchTerm }) {
 
   const deleteService = async (id) => {
     try {
-      await axios.delete(`http://localhost:4000/service/${id}`);
+      await axios.delete(`http://localhost:4000/service/auth/${id}`);
       setServices((prevServices) =>
         prevServices.filter((service) => service.service_id !== id)
       );
@@ -37,7 +37,7 @@ function AdminServiceMain({ searchTerm }) {
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        const response = await axios.get("http://localhost:4000/service");
+        const response = await axios.get("http://localhost:4000/service/");
         console.log(response);
         setServices(response.data.data);
         setFilteredServices(response.data.data);

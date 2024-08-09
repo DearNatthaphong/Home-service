@@ -11,7 +11,9 @@ function AdminServiceHeaderView() {
   useEffect(() => {
     const fetchServiceName = async () => {
       try {
-        const response = await axios.get(`http://localhost:4000/service/${id}`);
+        const response = await axios.get(
+          `http://localhost:4000/service/auth/${id}`
+        );
         const { main_service } = response.data;
         setServiceName(main_service.service_name);
       } catch (error) {

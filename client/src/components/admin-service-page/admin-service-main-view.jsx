@@ -24,7 +24,9 @@ function AdminServiceMainView() {
   useEffect(() => {
     const fetchServiceData = async () => {
       try {
-        const response = await axios.get(`http://localhost:4000/service/${id}`);
+        const response = await axios.get(
+          `http://localhost:4000/service/auth/${id}`
+        );
         const { main_service, sub_services } = response.data;
         setMainService(main_service);
         setSubServices(sub_services);

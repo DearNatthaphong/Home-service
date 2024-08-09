@@ -61,7 +61,7 @@ const AdminServiceMain2 = forwardRef((props, ref) => {
       );
 
       const response = await axios.post(
-        "http://localhost:4000/service",
+        "http://localhost:4000/service/auth",
         formData,
         {
           headers: {
