@@ -32,7 +32,7 @@ app.use(express.json());
 app.use("/auth", authRouter);
 app.use("/service", serviceRouter);
 app.use(protect);
-app.use("/promotions/admin", adminPromotionRouter);
+app.use("/admin/promotions", adminPromotionRouter);
 app.use("/promotions", promotionRouter);
 app.use("/payment", paymentRouter);
 app.use("/service", createServices);
