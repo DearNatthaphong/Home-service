@@ -27,7 +27,7 @@ export const createCategory = async (req, res) => {
 export const fetchAllCategories = async (req, res) => {
   try {
     const result = await connectionPool.query(
-      'SELECT * FROM service_categories ORDER BY category_name ASC'
+      'SELECT * FROM service_categories ORDER BY updated_at DESC'
     );
 
     if (result.rows.length === 0) {
@@ -74,8 +74,8 @@ export const updateCategoryById = async (req, res) => {
   }
   try {
     const result = await connectionPool.query(
-      'UPDATE service_categories SET category_name = $1 WHERE service_category_id = $2 returning *',
-      [categoryName, id]
+      'UPDATE service_categories SET category_name = $1, updated_at=$2 WHERE service_category_id = $3 returning *',
+      [categoryName, new Date(), id]
     );
 
     if (result.rows.length === 0) {

@@ -14,6 +14,7 @@ import ViewServiceRouter from './src/routes/view-service.route.mjs';
 import updateServiceRouter from './src/routes/fix-service.route.mjs';
 import deleteServiceRoute from './src/routes/delete-route.mjs';
 import createServices from './src/routes/create-service.route.mjs';
+import categoriesRouter from './src/routes/categories.router.mjs';
 
 dotenv.config();
 
