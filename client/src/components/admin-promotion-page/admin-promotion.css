@@ -13,3 +13,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   background-color: #efeff2;
   z-index: 0;
 }
+
+/* เอา icon จา input type number ออก*/
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

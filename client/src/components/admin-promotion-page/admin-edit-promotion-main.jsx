@@ -1,10 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./admin-promotion.css";
 import { usePromotion } from "../../context/promotion-context";
 import { formatDate } from "../../utils/admin-promotion-date-time-format";
 import { useParams } from "react-router-dom";
 
 function AdminEditPromotionMain() {
+  const [isFocusedDiscount, setIsFocusedDiscount] = useState(false);
+  const [isFocusedUsage, setIsFocusedUsage] = useState(false);
+  const [isFocusedExpiryDate, setIsFocusedExpiryDate] = useState(false);
+  const [isFocusedExpiryTime, setIsFocusedExpiryTime] = useState(false);
+
   const {
     isFixed,
     setIsFixed,
@@ -58,8 +63,8 @@ function AdminEditPromotionMain() {
   }, []);
 
   return (
-    <div className="w-full h-full p-[40px] flex flex-col ">
-      <form className="w-full h-full max-h-[430px] 2xl:max-h-[610px] rounded-[8px] px-[24px] py-[40px] bg-white flex flex-col gap-[40px] border-[1px] border-gray-200">
+    <div className="w-full h-full px-[40px] pt-[10px] 2xl:p-[40px] flex flex-col ">
+      <form className="w-full h-full max-h-[390px] 2xl:max-h-[610px] rounded-[8px] px-[24px] py-[40px] bg-white flex flex-col gap-[40px] border-[1px] border-gray-200">
         {/** Promotion Code Section Start */}
         <div className="w-full max-w-[665px] h-full max-h-[45px] flex items-center justify-between">
           <span className="font-prompt font-medium text-[16px] text-gray-700">
@@ -67,7 +72,7 @@ function AdminEditPromotionMain() {
           </span>
           <input
             type="text"
-            className="w-full max-w-[433px] h-full bg-transparent outline-none border-[1px] border-gray-300 rounded-[8px] px-[16px] py-[10px] text-[16px] font-prompt font-medium text-black"
+            className="w-full max-w-[433px] h-full bg-transparent outline-none border-[1px] border-gray-300 rounded-[8px] px-[16px] py-[10px] text-[16px] font-prompt font-medium text-black focus:border-blue-600"
             value={isOnePromotion.promotion_code}
             onChange={(e) => {
               setIsOnePromotion({
@@ -99,9 +104,15 @@ function AdminEditPromotionMain() {
                       Fixed
                     </span>
                   </div>
-                  <div className="w-full max-w-[140px] h-full max-h-[45px] border-[1px] border-gray-300 rounded-[6px] flex items-center pr-[10px]">
+                  <div
+                    className={`w-full max-w-[140px] h-full max-h-[45px] rounded-[6px] flex items-center pr-[10px] ${
+                      isFocusedDiscount
+                        ? "border-[1px] border-blue-600"
+                        : "border-[1px] border-gray-300"
+                    }`}
+                  >
                     <input
-                      type="text"
+                      type="number"
                       className="w-full h-full bg-transparent outline-none px-[10px] flex items-center font-prompt text-black"
                       value={isOnePromotion.discount}
                       onChange={(e) => {
@@ -110,6 +121,8 @@ function AdminEditPromotionMain() {
                           discount: e.target.value,
                         });
                       }}
+                      onFocus={() => setIsFocusedDiscount(true)}
+                      onBlur={() => setIsFocusedDiscount(false)}
                     />
                     <span className="font-prompt text-[16px] text-gray-500 ml-[10px]">
                       ฿
@@ -129,7 +142,7 @@ function AdminEditPromotionMain() {
                   </div>
                   <div className="w-full max-w-[140px] h-full max-h-[45px] border-[1px] border-gray-300 rounded-[6px] flex items-center pr-[10px] bg-gray-100">
                     <input
-                      type="text"
+                      type="number"
                       className="w-full h-full bg-transparent outline-none px-[10px] flex items-center"
                       value={isNumFixed}
                       disabled
@@ -158,9 +171,15 @@ function AdminEditPromotionMain() {
                       Percent
                     </span>
                   </div>
-                  <div className="w-full max-w-[140px] h-full max-h-[45px] border-[1px] border-gray-300 rounded-[6px] flex items-center pr-[10px]">
+                  <div
+                    className={`w-full max-w-[140px] h-full max-h-[45px] rounded-[6px] flex items-center pr-[10px] ${
+                      isFocusedDiscount
+                        ? "border-[1px] border-blue-600"
+                        : "border-[1px] border-gray-300"
+                    }`}
+                  >
                     <input
-                      type="text"
+                      type="number"
                       className="w-full h-full bg-transparent outline-none px-[10px] flex items-center font-prompt text-black"
                       value={isOnePromotion.discount}
                       onChange={(e) => {
@@ -169,6 +188,8 @@ function AdminEditPromotionMain() {
                           discount: e.target.value,
                         });
                       }}
+                      onFocus={() => setIsFocusedDiscount(true)}
+                      onBlur={() => setIsFocusedDiscount(false)}
                     />
                     <span className="font-prompt text-[16px] text-gray-500 ml-[10px]">
                       %
@@ -188,7 +209,7 @@ function AdminEditPromotionMain() {
                   </div>
                   <div className="w-full max-w-[140px] h-full max-h-[45px] border-[1px] border-gray-300 rounded-[6px] flex items-center pr-[10px] bg-gray-100">
                     <input
-                      type="text"
+                      type="number"
                       className="w-full h-full bg-transparent outline-none px-[10px] flex items-center"
                       value={isNumPercent}
                       disabled
@@ -209,9 +230,15 @@ function AdminEditPromotionMain() {
           <span className="font-prompt font-medium text-[16px] text-gray-700">
             โควต้าการใช้
           </span>
-          <div className="w-full max-w-[433px] h-full max-h-[45px] border-[1px] border-gray-300 rounded-[8px] flex items-center pr-[16px]">
+          <div
+            className={`w-full max-w-[433px] h-full max-h-[45px] rounded-[8px] flex items-center pr-[16px] ${
+              isFocusedUsage
+                ? "border-[1px] border-blue-600"
+                : "border-[1px] border-gray-300"
+            }`}
+          >
             <input
-              type="text"
+              type="number"
               className="w-full h-full outline-none bg-transparent pl-[16px] py-[10px] text-black font-prompt font-medium text-[16px]"
               value={isOnePromotion.usage_limit}
               onChange={(e) => {
@@ -220,6 +247,8 @@ function AdminEditPromotionMain() {
                   usage_limit: e.target.value,
                 });
               }}
+              onFocus={() => setIsFocusedUsage(true)}
+              onBlur={() => setIsFocusedUsage(false)}
             />
             <span className="font-prompt text-[16px] text-gray-500 ml-[10px]">
               ครั้ง
@@ -234,7 +263,13 @@ function AdminEditPromotionMain() {
           </span>
           <div className="w-full max-w-[433px] h-full max-h-[45px] flex justify-between ">
             {/** Date Start */}
-            <div className="w-full max-w-[205px] h-full rounded-[8px] border-[1px] border-gray-300">
+            <div
+              className={`w-full max-w-[205px] h-full max-h-[45px] rounded-[8px] ${
+                isFocusedExpiryDate
+                  ? "border-[1px] border-blue-600"
+                  : "border-[1px] border-gray-300"
+              }`}
+            >
               <input
                 type="date"
                 className="w-full max-w-[205px] h-full max-h-[45px] px-[10px] py-[10px] text-black bg-transparent outline-none font-prompt text-[16px]"
@@ -248,10 +283,18 @@ function AdminEditPromotionMain() {
                     expiry_date: e.target.value,
                   });
                 }}
+                onFocus={() => setIsFocusedExpiryDate(true)}
+                onBlur={() => setIsFocusedExpiryDate(false)}
               />
             </div>
             {/** Time Start */}
-            <div className="w-full max-w-[205px] h-full rounded-[8px] border-[1px] border-gray-300">
+            <div
+              className={`w-full max-w-[205px] h-full max-h-[45px] rounded-[8px] ${
+                isFocusedExpiryTime
+                  ? "border-[1px] border-blue-600"
+                  : "border-[1px] border-gray-300"
+              }`}
+            >
               <input
                 type="time"
                 className="w-full max-w-[205px] h-full max-h-[45x] px-[10px] py-[10px] text-black bg-transparent outline-none font-prompt text-[16px]"
@@ -262,6 +305,8 @@ function AdminEditPromotionMain() {
                     expiry_time: e.target.value,
                   });
                 }}
+                onFocus={() => setIsFocusedExpiryTime(true)}
+                onBlur={() => setIsFocusedExpiryTime(false)}
               />
             </div>
           </div>
@@ -289,7 +334,7 @@ function AdminEditPromotionMain() {
           </div>
         </div>
       </form>
-      <div className="mt-[24px] flex justify-end">
+      <div className="mt-[10px] 2xl:mt-[24px] flex justify-end">
         <button
           className="flex gap-[8px]"
           onClick={() => {

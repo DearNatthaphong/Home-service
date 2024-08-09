@@ -5,16 +5,19 @@ import { usePromotion } from "../../context/promotion-context";
 function AdminPromotionHeader() {
   const navigate = useNavigate();
   const { isSearchPromotion, setIsSearchPromotion } = usePromotion();
-
+  const [isFocused, setIsFocused] = useState(false);
   return (
     <div className="w-full h-full max-h-[80px] border-b-[1px] border-gray-300 flex items-center bg-white px-[40px] justify-between">
       <span className="font-prompt text-[20px] font-medium text-black">
         Promotion Code
       </span>
       <div className="flex w-full max-w-[615px] h-full max-h-[45px] justify-between">
-        <form
-          action=""
-          className="w-full max-w-[350px] h-full max-h-[45px] rounded-[8px] border-[1px] border-gray-300 px-[16px] py-[10px] gap-[10px] flex items-center"
+        <div
+          className={`w-full max-w-[350px] h-full max-h-[45px] rounded-[8px] px-[16px] py-[10px] gap-[10px] flex items-center ${
+            isFocused
+              ? "border-[1px] border-blue-600"
+              : "border-[1px] border-gray-300"
+          }`}
         >
           <div className="flex items-center justify-center w-[24px] h-[24px]">
             <img
@@ -31,8 +34,11 @@ function AdminPromotionHeader() {
             onChange={(e) => {
               setIsSearchPromotion(e.target.value);
             }}
+            onFocus={() => setIsFocused(true)}
+            onBlur={() => setIsFocused(false)}
           />
-        </form>
+        </div>
+
         <button
           className="w-full h-full max-w-[240px] max-h-[45px] rounded-[8px] bg-blue-600 flex items-center justify-center gap-[8px] hover:bg-blue-500 active:bg-blue-800"
           onClick={() => {
