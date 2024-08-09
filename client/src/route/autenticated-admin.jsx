@@ -53,7 +53,11 @@ function AutenticatedAdmin() {
           path="/admin/category/edit-category/:id"
           element={<AdminEditCategoryPage />}
         />
-        <Route path="/admin/category/:id" element={<AdminViewCategoryPage />} />
+        <Route
+          path="/admin/category/:category_id"
+          element={<AdminViewCategoryPage />}
+        />
+        <Route path="/" element={<AdminCategoryPage />} />
       </Routes>
     </div>
   );

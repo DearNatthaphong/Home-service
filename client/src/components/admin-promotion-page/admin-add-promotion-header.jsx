@@ -1,10 +1,25 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { usePromotion } from "../../context/promotion-context";
+import { adminPromotionValidate } from "../../validations/admin-promotion-validations";
+import { toast } from "react-toastify";
 
 function AdminAddPromotionHeader() {
   const navigate = useNavigate();
-  const { createPromotion } = usePromotion();
+  const { createPromotion, isNumPercent } = usePromotion();
+
+  const handlePromotionSubmit = (e) => {
+    e.preventDefault();
+
+    const newErrors = adminPromotionValidate(isNumPercent);
+
+    if (Object.keys(newErrors).length === 0) {
+      createPromotion();
+    } else {
+      toast.error(Object.values(newErrors)[0]);
+    }
+  };
+
   return (
     <div className="w-full h-full max-h-[80px] border-b-[1px] border-gray-300 flex items-center bg-white px-[40px] justify-between">
       <span className="font-prompt text-[20px] font-medium text-black">
@@ -24,9 +39,7 @@ function AdminAddPromotionHeader() {
         <button
           className="w-full h-full max-w-[112px] max-h-[45px] rounded-[8px] bg-blue-600 flex items-center justify-center"
           type="submit"
-          onClick={() => {
-            createPromotion();
-          }}
+          onClick={handlePromotionSubmit}
         >
           <span className="font-prompt font-medium text-[16px] text-white">
             สร้าง

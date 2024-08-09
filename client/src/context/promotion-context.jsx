@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const adminPromotionContext = createContext();
 
@@ -43,10 +44,15 @@ function PromotionProvider({ children }) {
 
   const createPromotion = async () => {
     try {
-      await axios.post(`http://localhost:4000/promotions`, dataPost);
+      const result = await axios.post(
+        `http://localhost:4000/admin/promotions`,
+        dataPost
+      );
+      toast.success(result.data.message);
       navigate("/admin/promotion");
     } catch (error) {
       console.log(error);
+      toast.error(error.response.data.message);
     }
   };
   /** POST Promotion End */
@@ -58,10 +64,8 @@ function PromotionProvider({ children }) {
   /** GET All Promotion Start */
   const [isAllPromotion, setIsAllPromotion] = useState([]);
 
-  // console.log("Hee");
-  // console.log(isAllPromotion);
   const getAllPromotion = async () => {
-    const result = await axios.get(`http://localhost:4000/promotions`);
+    const result = await axios.get(`http://localhost:4000/admin/promotions`);
     setIsAllPromotion(result.data.data);
   };
 
@@ -85,12 +89,15 @@ function PromotionProvider({ children }) {
   /** DELETE Promotion By Id Start */
   const deletedPromotion = async (promotionId) => {
     try {
-      await axios.delete(`http://localhost:4000/promotions/${promotionId}`);
+      const result = await axios.delete(
+        `http://localhost:4000/admin/promotions/${promotionId}`
+      );
       const newPromotions = isAllPromotion.filter((items) => {
         return items.promotion_id !== promotionId;
       });
       setIsAllPromotion(newPromotions);
       setOpen(false);
+      toast.success(result.data.message);
       navigate("/admin/promotion");
     } catch (error) {
       console.log(error);
@@ -99,19 +106,23 @@ function PromotionProvider({ children }) {
   /** DELETE Promotion By Id End */
 
   /** GET Promotion By Id Start */
-  const [isOnePromotion, setIsOnePromotion] = useState([]);
+  const [isOnePromotion, setIsOnePromotion] = useState({
+    promotion_code: "",
+    discount: "",
+    usage_limit: "",
+    expiry_date: "",
+    expiry_time: "",
+  });
   const [isOldPromotionCode, setIsOldPromotionCode] = useState("");
 
   const getPromotionById = async (promotionId) => {
     try {
       const result = await axios.get(
-        `http://localhost:4000/promotions/${promotionId}`
+        `http://localhost:4000/admin/promotions/${promotionId}`
       );
-      
+
       setIsOnePromotion(result.data.data[0]);
-
       setIsOldPromotionCode(result.data.data[0].promotion_code);
-
       setIsType(result.data.data[0].discount_type);
       if (result.data.data[0].discount_type === "fixed") {
         setIsFixed(true);
@@ -129,13 +140,15 @@ function PromotionProvider({ children }) {
   /** PUT Promotion By Id Start */
   const updatedPromotion = async (promotionId) => {
     try {
-      await axios.put(
-        `http://localhost:4000/promotions/${promotionId}`,
+      const result = await axios.put(
+        `http://localhost:4000/admin/promotions/${promotionId}`,
         isOnePromotion
       );
+      toast.success(result.data.message);
       navigate(`/admin/promotion/${promotionId}`);
     } catch (error) {
       console.log(error);
+      toast.error(error.response.data.message);
     }
   };
   /** PUT Promotion By Id End */
