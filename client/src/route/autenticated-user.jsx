@@ -20,10 +20,6 @@ function AutenticatedUser() {
         <Route path="/servicedetail/:id" element={<ServiceDetailPage />} />
         <Route path="/service/information/orders/:id/appointments" element={<ServiceInformation />} />
         {/* ม่อน */}
-        <Route
-          path="/service/information/orders/:id/appointments"
-          element={<ServiceInformation />}
-        />
         {/* เดียร์ */}
         <Route path="/payment/:id" element={<ServicePayment />} />
         <Route path="/payment/:id/success" element={<PaymentSuccess />} />

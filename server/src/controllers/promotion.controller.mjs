@@ -179,7 +179,6 @@ export const createPromotionUsage = async (req, res) => {
     });
   }
 };
-import connectionPool from '../utils/db.mjs';
 
 /** POST Promotion Start */
 export const postPromotion = async (req, res) => {

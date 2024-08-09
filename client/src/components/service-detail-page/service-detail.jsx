@@ -22,10 +22,6 @@ function ServiceDetail() {
     navigate("/servicelist");
   };
 
-  const goToServiceInform = () => {
-    navigate("/service/information");
-  };
-
   const getServiceItems = async () => {
     try {
       const result = await axios.get(
