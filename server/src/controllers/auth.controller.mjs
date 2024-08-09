@@ -52,7 +52,7 @@ export const adminLogin = async (req, res) => {
     },
     process.env.SECRET_KEY,
     {
-      expiresIn: '90000'
+      expiresIn: '1d'
     }
   );
 
@@ -128,6 +128,11 @@ export const register = async (req, res) => {
       'insert into users (email,password) values ($1,$2) returning user_id',
       [email, password]
     );
+
+    if (!result.rows.length) {
+      return res.status(404).json({ message: 'ไม่สามารถลงทะเบียนได้' });
+    }
+
     let userId = result.rows[0].user_id;
 
     await connectionPool.query(

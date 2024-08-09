@@ -1,6 +1,11 @@
-import React from "react";
+import React, { useEffect } from 'react';
+import { useCategory } from '../../context/category-context';
+import { formatDate } from '../../utils/admin-promotion-date-time-format';
 
 function AdminEditCategoryMain() {
+  const { category, categoryName, setCategoryName, setOpen, setKeepId } =
+    useCategory();
+
   return (
     <div className="w-full h-full p-[40px] flex flex-col">
       <form
@@ -14,6 +19,9 @@ function AdminEditCategoryMain() {
           <input
             type="text"
             className="w-full max-w-[435px] h-full border-[1px] border-gray-300 rounded-[8px] bg-transparent outline-none px-[16px] py-[10px] font-prompt font-medium text-[16px] text-black"
+            // name={category.category_name}
+            value={categoryName}
+            onChange={(e) => setCategoryName(e.target.value)}
           />
         </div>
         <hr className="w-full border-[1px] border-gray-300 my-[40px]" />
@@ -24,7 +32,7 @@ function AdminEditCategoryMain() {
             </span>
             <span className="font-prompt text-[16px] text-gray-900">
               {/** ด้านล่างนี้ แสดง Created_at */}
-              {/* {formatDate(isOnePromotion.created_at)} */}
+              {formatDate(category.created_at)}
               {/** ด้านบนนี้ แสดง Created_at */}
             </span>
           </div>
@@ -34,12 +42,28 @@ function AdminEditCategoryMain() {
             </span>
             <span className="font-prompt text-[16px] text-gray-900">
               {/** ด้านล่างนี้แสดง Updated_at */}
-              {/* {formatDate(isOnePromotion.updated_at)} */}
+              {formatDate(category.updated_at)}
               {/** ด้านบนนี้แสดง Updated_at */}
             </span>
           </div>
         </div>
       </form>
+      <div className="mt-[24px] flex justify-end">
+        <button
+          className="flex gap-[8px]"
+          onClick={() => {
+            setOpen(true);
+            setKeepId(category.service_category_id);
+          }}
+        >
+          <div className="w-[24px] h-[24px] flex items-center justify-center">
+            <img src="/icons/trash-icon.png" alt="" />
+          </div>
+          <span className="font-prompt font-semibold text-[16px] text-gray-600">
+            ลบ Promotion Code
+          </span>
+        </button>
+      </div>
     </div>
   );
 }
