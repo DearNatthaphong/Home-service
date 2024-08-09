@@ -10,11 +10,7 @@ import {
 
 function AdminPromotionMain() {
   const navigate = useNavigate();
-  const {
-    setKeepId,
-    setOpen,
-    filterPromotion,
-  } = usePromotion();
+  const { setKeepId, setOpen, filterPromotion } = usePromotion();
 
   return (
     <div className="w-full h-full p-[40px] flex justify-center relative">
@@ -33,65 +29,65 @@ function AdminPromotionMain() {
               </tr>
             </thead>
             {filterPromotion.length !== 0 ? (
-              filterPromotion.map((items, id) => {
-                return (
-                  <tbody key={id}>
-                    <tr className="w-full h-[90px] border-gray-200 ">
-                      <td className="font-prompt text-[16px] font-light text-black px-[24px] pt-[10px]">
-                        {items.promotion_code}
-                      </td>
-                      <td className="font-prompt text-[16px] font-light text-black px-[24px] pt-[10px]">
-                        {items.discount_type[0].toUpperCase() +
-                          items.discount_type.slice(1)}
-                      </td>
-                      <td className="font-prompt text-[16px] font-light text-black px-[24px] pt-[10px]">
-                        <span>0</span>
-                        <span className="mx-[2px]">/</span>
-                        {items.usage_limit}
-                      </td>
-                      <td className="font-prompt text-[16px] font-light text-red px-[24px] pt-[10px]">
-                        <span className="mr-[2px]">-</span>
-                        {items.discount}
-                        {items.discount_type === "fixed" ? (
-                          <span className="ml-[2px]">฿</span>
-                        ) : (
-                          <span className="ml-[2px]">%</span>
-                        )}
-                      </td>
-                      <td className="font-prompt text-[16px] font-light text-black px-[24px] pt-[10px]">
-                        {formatDate(items.created_at)}
-                      </td>
-                      <td className="font-prompt text-[16px] font-light text-black px-[24px] pt-[10px]">
-                        {formatExpiryDate(items.expiry_date)}{" "}
-                        {formatExpiryTime(items.expiry_time)}
-                      </td>
-                      <td className="flex gap-[10px] w-full h-full mt-[20px]">
-                        <button
-                          className="w-[24px] h-[24px] flex items-center justify-center"
-                          onClick={() => {
-                            setOpen(true);
-                            setKeepId(items.promotion_id);
-                          }}
-                        >
-                          <img src="/icons/bin-icon.png" alt="" />
-                        </button>
-                        <button
-                          className="w-[24px] h-[24px] flex items-center justify-center"
-                          onClick={() => {
-                            navigate(`edit-promotion/${items.promotion_id}`);
-                          }}
-                        >
-                          <img src="/icons/modify-icon.png" alt="" />
-                        </button>
-                      </td>
-                    </tr>
-                  </tbody>
-                );
-              })
+              filterPromotion.map((items, id) => (
+                <tbody key={id}>
+                  <tr className="w-full h-[90px] border-gray-200">
+                    <td className="font-prompt text-[16px] font-light text-black px-[24px] pt-[10px]">
+                      {items.promotion_code}
+                    </td>
+                    <td className="font-prompt text-[16px] font-light text-black px-[24px] pt-[10px]">
+                      {items.discount_type[0].toUpperCase() +
+                        items.discount_type.slice(1)}
+                    </td>
+                    <td className="font-prompt text-[16px] font-light text-black px-[24px] pt-[10px]">
+                      <span>0</span>
+                      <span className="mx-[2px]">/</span>
+                      {items.usage_limit}
+                    </td>
+                    <td className="font-prompt text-[16px] font-light text-red px-[24px] pt-[10px]">
+                      <span className="mr-[2px]">-</span>
+                      {items.discount}
+                      {items.discount_type === "fixed" ? (
+                        <span className="ml-[2px]">฿</span>
+                      ) : (
+                        <span className="ml-[2px]">%</span>
+                      )}
+                    </td>
+                    <td className="font-prompt text-[16px] font-light text-black px-[24px] pt-[10px]">
+                      {formatDate(items.created_at)}
+                    </td>
+                    <td className="font-prompt text-[16px] font-light text-black px-[24px] pt-[10px]">
+                      {formatExpiryDate(items.expiry_date)}{" "}
+                      {formatExpiryTime(items.expiry_time)}
+                    </td>
+                    <td className="flex gap-[10px] w-full h-full mt-[20px]">
+                      <button
+                        className="w-[24px] h-[24px] flex items-center justify-center"
+                        onClick={() => {
+                          setOpen(true);
+                          setKeepId(items.promotion_id);
+                        }}
+                      >
+                        <img src="/icons/bin-icon.png" alt="" />
+                      </button>
+                      <button
+                        className="w-[24px] h-[24px] flex items-center justify-center"
+                        onClick={() => {
+                          navigate(`edit-promotion/${items.promotion_id}`);
+                        }}
+                      >
+                        <img src="/icons/modify-icon.png" alt="" />
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              ))
             ) : (
               <tbody>
-                <tr className="w-full h-[50px] flex items-center font-prompt text-[16px] font-medium text-black px-[24px] pt-[10px] border-none">
-                  ไม่พบ Promotion ที่ค้นหา
+                <tr className="w-full h-[50px] font-prompt text-[16px] font-medium text-black border-none">
+                  <td className="px-[24px] pt-[10px] text-center" colSpan="7">
+                    ไม่พบ Promotion ที่ค้นหา
+                  </td>
                 </tr>
               </tbody>
             )}

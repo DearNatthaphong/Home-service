@@ -27,7 +27,6 @@ function AdminEditPromotionMain() {
     setKeepId,
   } = usePromotion();
 
-
   function handleClickFixed(e) {
     e.preventDefault();
     setIsFixed(!isFixed);
@@ -86,60 +85,62 @@ function AdminEditPromotionMain() {
           </span>
           <div className="flex 2xl:flex-col gap-[12px] w-full max-w-[568px] 2xl:max-w-[268px] h-full justify-between">
             {/** Type Fixed Section Start */}
-            {isFixed ? (
-              <div className="w-full max-w-[268px] h-full max-h-[45px] flex items-center justify-between">
-                <div className="w-full max-w-[69px] h-full max-h-[21px] flex items-center justify-between">
-                  <button
-                    className="w-[20px] h-[20px] rounded-full bg-blue-600 flex items-center justify-center"
-                    onClick={handleClickFixed}
-                  >
-                    <div className="w-[6px] h-[6px] bg-white rounded-full"></div>
-                  </button>
-                  <span className="font-prompt text-[14px] text-black">
-                    Fixed
-                  </span>
+            <div className="w-full max-w-[268px] h-full max-h-[45px]">
+              {isFixed ? (
+                <div className="w-full max-w-[268px] h-full max-h-[45px] flex items-center justify-between">
+                  <div className="w-full max-w-[69px] h-full max-h-[21px] flex items-center justify-between">
+                    <button
+                      className="w-[20px] h-[20px] rounded-full bg-blue-600 flex items-center justify-center"
+                      onClick={handleClickFixed}
+                    >
+                      <div className="w-[6px] h-[6px] bg-white rounded-full"></div>
+                    </button>
+                    <span className="font-prompt text-[14px] text-black">
+                      Fixed
+                    </span>
+                  </div>
+                  <div className="w-full max-w-[140px] h-full max-h-[45px] border-[1px] border-gray-300 rounded-[6px] flex items-center pr-[10px]">
+                    <input
+                      type="text"
+                      className="w-full h-full bg-transparent outline-none px-[10px] flex items-center font-prompt text-black"
+                      value={isOnePromotion.discount}
+                      onChange={(e) => {
+                        setIsOnePromotion({
+                          ...isOnePromotion,
+                          discount: e.target.value,
+                        });
+                      }}
+                    />
+                    <span className="font-prompt text-[16px] text-gray-500 ml-[10px]">
+                      ฿
+                    </span>
+                  </div>
                 </div>
-                <div className="w-full max-w-[140px] h-full max-h-[45px] border-[1px] border-gray-300 rounded-[6px] flex items-center pr-[10px]">
-                  <input
-                    type="text"
-                    className="w-full h-full bg-transparent outline-none px-[10px] flex items-center text-black font-prompt"
-                    value={isOnePromotion.discount}
-                    onChange={(e) => {
-                      setIsOnePromotion({
-                        ...isOnePromotion,
-                        discount: e.target.value,
-                      });
-                    }}
-                  />
-                  <span className="font-prompt text-[16px] text-gray-500 ml-[10px]">
-                    ฿
-                  </span>
+              ) : (
+                <div className="w-full max-w-[268px] h-full max-h-[45px] flex items-center justify-between">
+                  <div className="w-full max-w-[69px] h-full max-h-[21px] flex items-center justify-between">
+                    <button
+                      className="w-[20px] h-[20px] rounded-full border-[1px] border-gray-300"
+                      onClick={handleClickFixed}
+                    ></button>
+                    <span className="font-prompt text-[14px] text-gray-700">
+                      Fixed
+                    </span>
+                  </div>
+                  <div className="w-full max-w-[140px] h-full max-h-[45px] border-[1px] border-gray-300 rounded-[6px] flex items-center pr-[10px] bg-gray-100">
+                    <input
+                      type="text"
+                      className="w-full h-full bg-transparent outline-none px-[10px] flex items-center"
+                      value={isNumFixed}
+                      disabled
+                    />
+                    <span className="font-prompt text-[16px] text-gray-500 ml-[10px]">
+                      ฿
+                    </span>
+                  </div>
                 </div>
-              </div>
-            ) : (
-              <div className="w-full max-w-[268px] h-full max-h-[45px] flex items-center justify-between">
-                <div className="w-full max-w-[69px] h-full max-h-[21px] flex items-center justify-between">
-                  <button
-                    className="w-[20px] h-[20px] rounded-full border-[1px] border-gray-300"
-                    onClick={handleClickFixed}
-                  ></button>
-                  <span className="font-prompt text-[14px] text-gray-700">
-                    Fixed
-                  </span>
-                </div>
-                <div className="w-full max-w-[140px] h-full max-h-[45px] border-[1px] border-gray-300 rounded-[6px] flex items-center pr-[10px] bg-gray-100">
-                  <input
-                    type="text"
-                    className="w-full h-full bg-transparent outline-none px-[10px] flex items-center"
-                    value={isNumFixed}
-                    disabled
-                  />
-                  <span className="font-prompt text-[16px] text-gray-500 ml-[10px]">
-                    ฿
-                  </span>
-                </div>
-              </div>
-            )}
+              )}
+            </div>
 
             {/** Type Fixed Section End */}
             {/** Type Percent Section Start */}
@@ -249,6 +250,7 @@ function AdminEditPromotionMain() {
                 }}
               />
             </div>
+            {/** Time Start */}
             <div className="w-full max-w-[205px] h-full rounded-[8px] border-[1px] border-gray-300">
               <input
                 type="time"

@@ -68,6 +68,7 @@ function AdminAddPromotionMain() {
             onChange={(e) => {
               setIsPromotionCode(e.target.value);
             }}
+            required
           />
         </div>
         {/** Promotion Code Section End */}

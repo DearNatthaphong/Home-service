@@ -24,56 +24,54 @@ function AdminViewPromotionMain() {
 
   return (
     <div className="w-full h-full p-[40px]">
-      <section className="w-full h-full max-h-[540px] rounded-[8px] px-[24px] py-[40px] bg-white border-[1px] border-gray-200 flex flex-col gap-[40px]">
+      <div className="w-full h-full max-h-[540px] rounded-[8px] px-[24px] py-[40px] bg-white border-[1px] border-gray-200 flex flex-col gap-[40px]">
         <div className="flex items-center">
           <p className="font-prompt font-medium text-[16px] text-gray-700 w-full max-w-[205px] h-full max-h-[24px] mr-[24px]">
             Promotion Code
           </p>
-          <span className="font-prompt text-[16px] text-black">
+          <div className="font-prompt text-[16px] text-black">
             {isChoosePromotion.promotion_code}
-          </span>
+          </div>
         </div>
-        <div className="flex items-center">
+        <div className="flex items-center font-prompt text-[16px] text-black">
           <p className="font-prompt font-medium text-[16px] text-gray-700 w-full max-w-[205px] h-full max-h-[24px] mr-[24px]">
             ประเภท
           </p>
-          <span className="font-prompt text-[16px] text-black">
-            {isChoosePromotion?.discount_type?.charAt(0).toUpperCase() +
-              isChoosePromotion?.discount_type?.slice(1)}
-          </span>
+          {isChoosePromotion?.discount_type?.charAt(0).toUpperCase() +
+            isChoosePromotion?.discount_type?.slice(1)}
         </div>
         <div className="flex items-center">
           <p className="font-prompt font-medium text-[16px] text-gray-700 w-full max-w-[205px] h-full max-h-[24px] mr-[24px]">
             ราคาที่ลด
           </p>
-          <span className="font-prompt text-[16px] text-red">
-            <span className="mr-[2px]">-</span>
+          <div className="font-prompt text-[16px] text-red flex items-center">
+            <div className="mr-[2px]">-</div>
             {isChoosePromotion.discount}
             {isChoosePromotion?.discount_type === "fixed" ? (
-              <span className="ml-[2px]">฿</span>
+              <p className="ml-[2px]">฿</p>
             ) : (
-              <span className="ml-[2px]">%</span>
+              <p className="ml-[2px]">%</p>
             )}
-          </span>
+          </div>
         </div>
         <div className="flex items-center">
-          <p className="font-prompt font-medium text-[16px] text-gray-700 w-full max-w-[205px] h-full max-h-[24px] mr-[24px]">
+          <span className="font-prompt font-medium text-[16px] text-gray-700 w-full max-w-[205px] h-full max-h-[24px] mr-[24px]">
             ราคาที่ลด
-          </p>
-          <span className="font-prompt text-[16px] text-black">
+          </span>
+          <p className="font-prompt text-[16px] text-black flex items-center">
             <span>0</span>
             <span className="mx-[2px]">/</span>
             {isChoosePromotion.usage_limit}
             <span className="ml-[5px]">ครั้ง</span>
-          </span>
+          </p>
         </div>
         <div className="flex items-center">
           <p className="font-prompt font-medium text-[16px] text-gray-700 w-full max-w-[205px] h-full max-h-[24px] mr-[24px]">
             วันหมดอายุ
           </p>
-          <span className="font-prompt text-[16px] text-black">
+          <p className="font-prompt text-[16px] text-black">
             {formatDate(mergeExp)}
-          </span>
+          </p>
         </div>
         <div className="hidden 2xl:flex 2xl:flex-col">
           <hr className="w-full border-[1px] border-gray-300 mb-[40px]" />
@@ -81,20 +79,20 @@ function AdminViewPromotionMain() {
             <p className="font-prompt font-medium text-[16px] text-gray-700 w-full max-w-[205px] h-full max-h-[24px] mr-[24px]">
               สร้างเมื่อ
             </p>
-            <span className="font-prompt text-[16px] text-black">
+            <p className="font-prompt text-[16px] text-black">
               {formatDate(isChoosePromotion.created_at)}
-            </span>
+            </p>
           </div>
           <div className="flex items-center h-[45px]">
             <p className="font-prompt font-medium text-[16px] text-gray-700 w-full max-w-[205px] h-full max-h-[24px] mr-[24px]">
               แก้ไขล่าสุด
             </p>
-            <span className="font-prompt text-[16px] text-black">
+            <p className="font-prompt text-[16px] text-black">
               {formatDate(isChoosePromotion.updated_at)}
-            </span>
+            </p>
           </div>
         </div>
-      </section>
+      </div>
     </div>
   );
 }
