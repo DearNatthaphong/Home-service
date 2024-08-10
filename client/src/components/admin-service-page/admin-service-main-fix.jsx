@@ -79,7 +79,7 @@ const AdminServiceMainFix = forwardRef((props, ref) => {
       ...prevSubServices,
       {
         service_item_id: Date.now(),
-        service_name: "",
+        service_item_name: "",
         service_price: "",
         service_unit: "",
       },
@@ -105,9 +105,14 @@ const AdminServiceMainFix = forwardRef((props, ref) => {
 
       if (subServices && subServices.length > 0) {
         const subServicesWithId = subServices.map(
-          ({ service_item_id, service_name, service_price, service_unit }) => ({
+          ({
+            service_item_id,
+            service_item_name,
+            service_price,
+            service_unit,
+          }) => ({
             service_item_id: service_item_id || null,
-            service_name,
+            service_item_name,
             service_price,
             service_unit,
           })
@@ -259,11 +264,11 @@ const AdminServiceMainFix = forwardRef((props, ref) => {
                 </div>
                 <input
                   type="text"
-                  value={service.service_name}
+                  value={service.service_item_name}
                   onChange={(e) =>
                     handleSubServiceChange(
                       service.service_item_id,
-                      "service_name",
+                      "service_item_name",
                       e.target.value
                     )
                   }

@@ -9,6 +9,16 @@ import photo from "/icons/add-image-icon.png";
 import photo1 from "/icons/frame-icon.png";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import uuid4 from "uuid4";
+import { createClient } from "@supabase/supabase-js";
+
+// const supabaseUrl = "https://pclzvpjpbppbztdcdjzd.supabase.co";
+// const supabaseKey =
+//   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBjbHp2cGpwYnBwYnp0ZGNkanpkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjA0MDk1NTgsImV4cCI6MjAzNTk4NTU1OH0.IzpCje3Xfa6pio5qFozrkYk0P0qK1s1FxQxVl09nINI";
+const supabase = createClient(
+  `https://pclzvpjpbppbztdcdjzd.supabase.co`,
+  `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBjbHp2cGpwYnBwYnp0ZGNkanpkIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcyMDQwOTU1OCwiZXhwIjoyMDM1OTg1NTU4fQ.fKeVz8_U6CoKio4O7DNJfdJTvn2-D8f_7PNJztRAWSo`
+);
 
 const AdminServiceMain2 = forwardRef((props, ref) => {
   const submitRef = useRef();
@@ -47,13 +57,39 @@ const AdminServiceMain2 = forwardRef((props, ref) => {
     );
   };
 
+  const uploadphoto = async (image) => {
+    const avatarFile = image;
+    console.log(avatarFile);
+    const filename = uuid4();
+    console.log(filename);
+    // const { data, error } = await supabase.from("services").select();
+    const { data, error } = await supabase.storage
+      .from("servicephoto")
+      .upload(`service/${filename}`, avatarFile);
+
+    const { data: url } = supabase.storage
+      .from("servicephoto")
+      .getPublicUrl(`service/${filename}`);
+
+    console.log(data);
+    console.log(error);
+    console.log(url);
+
+    return url.publicUrl;
+  };
+
   const handleSubmit = async () => {
+    // if (!image) {
+    //   return;
+    // }
     try {
       const formData = new FormData();
       formData.append("service_name", serviceName);
       formData.append("category_name", category);
       if (image) {
-        formData.append("service_image", image);
+        const result = await uploadphoto(image);
+        formData.append("service_image", result);
+        console.log(result);
       }
       formData.append(
         "subServices",

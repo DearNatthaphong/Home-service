@@ -70,7 +70,7 @@ export const createService = [
           });
         }
         await client.query(
-          `INSERT INTO service_items (service_id, service_name, service_price, service_unit) VALUES ($1, $2, $3, $4)`,
+          `INSERT INTO service_items (service_id, service_item_name, service_price, service_unit) VALUES ($1, $2, $3, $4)`,
           [serviceId, subService.name, subService.price, subService.unit]
         );
       }
@@ -104,7 +104,7 @@ export const getServiceById = async (req, res) => {
           services.updated_at,
           services.category_name,
           services.service_image,
-          service_items.service_name AS sub_service_name,
+          service_items.service_item_name AS sub_service_name,
           service_items.service_price,
           service_items.service_unit,
           service_items.service_item_id
@@ -131,7 +131,7 @@ export const getServiceById = async (req, res) => {
       sub_services: result.rows
         .filter((row) => row.sub_service_name) // กรองแถวที่มีบริการย่อย
         .map((row) => ({
-          service_name: row.sub_service_name,
+          service_item_name: row.sub_service_name,
           service_price: row.service_price,
           service_unit: row.service_unit,
           service_item_id: row.service_item_id,
@@ -213,10 +213,14 @@ export const updateService = async (req, res) => {
     }
 
     for (const subService of subServices) {
-      const { service_item_id, service_name, service_price, service_unit } =
-        subService;
+      const {
+        service_item_id,
+        service_item_name,
+        service_price,
+        service_unit,
+      } = subService;
 
-      if (!service_name || !service_price || !service_unit) {
+      if (!service_item_name || !service_price || !service_unit) {
         return res.status(400).json({
           message: "ข้อมูลรายการไม่ครบถ้วน",
         });
@@ -225,10 +229,10 @@ export const updateService = async (req, res) => {
       if (service_item_id && existingIds.has(service_item_id.toString())) {
         await connectionPool.query(
           `UPDATE service_items
-                 SET service_name = $1, service_price = $2, service_unit = $3
-                 WHERE service_item_id = $4 AND service_id = $5`,
+           SET service_item_name = $1, service_price = $2, service_unit = $3
+           WHERE service_item_id = $4 AND service_id = $5`,
           [
-            service_name,
+            service_item_name,
             service_price,
             service_unit,
             service_item_id,
@@ -237,9 +241,9 @@ export const updateService = async (req, res) => {
         );
       } else {
         await connectionPool.query(
-          `INSERT INTO service_items (service_id, service_name, service_price, service_unit)
-                 VALUES ($1, $2, $3, $4)`,
-          [serviceId, service_name, service_price, service_unit]
+          `INSERT INTO service_items (service_id, service_item_name, service_price, service_unit)
+           VALUES ($1, $2, $3, $4)`,
+          [serviceId, service_item_name, service_price, service_unit]
         );
       }
     }

@@ -101,7 +101,7 @@ function AdminServiceMainView() {
                   ชื่อรายการ
                 </div>
                 <div className="text-black text-base font-medium 2xl:text-lg">
-                  {service.service_name}
+                  {service.service_item_name}
                 </div>
               </div>
 
