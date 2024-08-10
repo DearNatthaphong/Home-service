@@ -18,16 +18,16 @@ function ServiceListSortDropdown() {
         >
           <option value="">บริการแนะนำ</option>
           <option value="ยอดนิยม">บริการยอดนิยม</option>
-          <option value="น้อย1" className="md:hidden">
+          <option value="less1" className="md:hidden">
             ตามตัวอักษร...
           </option>
-          <option value="มาก1" className="md:hidden">
+          <option value="more1" className="md:hidden">
             ตามตัวอักษร...
           </option>
-          <option value="น้อย2" className="hidden md:flex">
+          <option value="less2" className="hidden md:flex">
             ตามตัวอักษร (Ascending)
           </option>
-          <option value="มาก2" className="hidden md:flex">
+          <option value="more2" className="hidden md:flex">
             ตามตัวอักษร (Descending)
           </option>
         </select>

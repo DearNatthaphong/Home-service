@@ -16,9 +16,9 @@ function ServiceListTypeDropdown() {
         }}
       >
         <option value="">บริการทั้งหมด</option>
-        <option value="ทั่วไป">บริการทั่วไป</option>
-        <option value="ห้องครัว">บริการห้องครัว</option>
-        <option value="ห้องน้ำ">บริการห้องน้ำ</option>
+        <option value="บริการทั่วไป">บริการทั่วไป</option>
+        <option value="บริการห้องครัว">บริการห้องครัว</option>
+        <option value="บริการห้องน้ำ">บริการห้องน้ำ</option>
       </select>
     </div>
   );
