@@ -171,17 +171,15 @@ export const fetchAllOrderItems = async (req, res) => {
       });
     }
 
-    const totalPrice = results.rows[0].total_price;
-    const orderItems = results.rows.map((row) => ({
-      orderItemId: row.order_item_id,
-      serviceItemName: row.service_item_name,
-      quantity: row.quantity
-    }));
-
-    return res.status(200).json({
-      totalPrice,
-      orderItems
-    });
+    const formattedResponse = {
+      totalPrice: results.rows[0].total_price,
+      orderItems: results.rows.map((item) => ({
+        orderItemId: item.service_item_id,
+        serviceItemName: item.service_item_name,
+        quantity: item.quantity
+      }))
+    };
+    return res.status(200).json(formattedResponse);
   } catch (error) {
     console.error(error);
     return res.status(500).json({

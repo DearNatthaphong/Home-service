@@ -9,6 +9,7 @@ import ServiceInformation from '../pages/service-detail-information-page';
 // import ServiceInformation from '../components/service-detail-page/service-detail-information';
 import UserHistoryListPage from '../pages/customer-history-list-page';
 import UserOrderListPage from '../pages/customer-order-list-page';
+import { ServiceProvider } from '../context/service-context';
 import UserServiceDetailPage from '../pages/user-service-detail-page';
 import UserLandingPage from '../pages/user-landing-page';
 import UserNotFoundPage from '../pages/user-not-found-page';
@@ -22,7 +23,14 @@ function AutenticatedUser() {
         {/* เทรน */}
         <Route path="/servicelist" element={<ServiceListPage />} />
         {/* ม่อน */}
-        <Route path="/services/:id" element={<ServiceDetailPage />} />
+        <Route
+          path="/services/:id"
+          element={
+            <ServiceProvider>
+              <ServiceDetailPage />
+            </ServiceProvider>
+          }
+        />
         <Route
           path="/services/orders/:id/appointments"
           element={<ServiceInformation />}

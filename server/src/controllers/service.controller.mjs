@@ -56,6 +56,7 @@ export const getServiceItemsByServiceId = async (req, res) => {
     const results = await connectionPool.query(
       `SELECT 
         s.service_name,
+        s.service_image,
         si.service_item_name,
         si.service_item_id,
         si.service_price,
@@ -76,6 +77,7 @@ export const getServiceItemsByServiceId = async (req, res) => {
     // Format the response as required
     const formattedResponse = {
       serviceName: results.rows[0].service_name,
+      serviceImage: results.rows[0].service_image,
       serviceItems: results.rows.map((item) => ({
         serviceItemId: item.service_item_id,
         serviceItemName: item.service_item_name,
@@ -84,7 +86,7 @@ export const getServiceItemsByServiceId = async (req, res) => {
       }))
     };
 
-    return res.status(200).json({ data: formattedResponse });
+    return res.status(200).json(formattedResponse);
   } catch (error) {
     return res.status(500).json({
       message: 'พบข้อผิดพลาดภายในเซิร์ฟเวอร์'

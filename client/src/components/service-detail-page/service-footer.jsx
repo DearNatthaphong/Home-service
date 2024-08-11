@@ -1,5 +1,3 @@
-import React, { useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
 import {
   Collapse,
   Typography,
@@ -9,27 +7,16 @@ import {
 } from '@mui/material';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { useState } from 'react';
-// import SummaryDetail from './summary-detail.jsx';
-// import SummaryPrice from './summary-price';
-import axios from 'axios';
-// import SummaryPriceMockup from './summary-price-mockup';
+import { useService } from '../../context/service-context';
+import { formatPrice } from '../../utils/price-format';
+import { useNavigate } from 'react-router-dom';
 
 function ServiceFooter() {
   const [open, setOpen] = useState(false);
-  // const navigate = useNavigate();
-  // const [order, setOrder] = useState({});
-  // const params = useParams();
-
-  // const getOrder = async () => {
-  //   const result = await axios(
-  //     `http://localhost:4000/payment/orders/${params.id}`
-  //   );
-  //   setOrder(result.data);
-  // };
-
-  // useEffect(() => {
-  //   getOrder();
-  // }, []);
+  const { orderItems, allServiceItems, totalPrice } = useService();
+  const getServiceItemById = (serviceItemId) =>
+    allServiceItems.find((item) => item.serviceItemId === serviceItemId);
+  const navigate = useNavigate();
 
   return (
     <footer className="w-full h-auto flex flex-col items-center justify-center shadow-shadow fixed z-10 bottom-0 bg-background md:bg-white">
@@ -53,17 +40,32 @@ function ServiceFooter() {
             <Collapse in={open}>
               <CardContent className="overflow-y-auto max-h-auto border-0 py-2">
                 <Typography className="m-0" paragraph>
-                  {/* <SummaryDetail details={order} isSummary={true} /> */}
+                  {orderItems.map((orderItem) => {
+                    const serviceItem = getServiceItemById(
+                      orderItem.serviceItemId
+                    );
+                    return (
+                      <p
+                        className="flex justify-between pb-2 text-gray-700"
+                        key={orderItem.serviceItemId}
+                      >
+                        <span className="text-black font-light">
+                          {serviceItem?.serviceItemName}
+                        </span>
+                        <span className="text-end text-gray-900 font-medium">
+                          {orderItem.quantity} รายการ
+                        </span>
+                      </p>
+                    );
+                  })}
                 </Typography>
               </CardContent>
             </Collapse>
             <CardContent className="py-0 border-b-2 border-gray-300">
-              {/* <SummaryPrice details={order} /> */}
-              {/* <SummaryPriceMockup /> */}
               <div className="text-base flex justify-between gap-x-6 pb-2">
                 <p className="text-gray-700">รวม</p>
                 <p className="text-black font-bold text-lg text-end">
-                  0.00 บาท
+                  {formatPrice(totalPrice)}
                 </p>
               </div>
             </CardContent>
@@ -72,23 +74,26 @@ function ServiceFooter() {
         <div className="w-full h-[70px] bg-white p-3 flex gap-3 md:justify-between">
           <div className="w-1/2 md:w-1/6">
             <button
-              // onClick={goToServiceList}
               type="button"
+              onClick={() => navigate(`/servicelist`)}
               className="btn btn-outline text-blue-600 border-blue-600 hover:bg-white hover:text-blue-400 hover:border-blue-400 focus:text-blue-800 focus:border-blue-800 w-full"
             >
-              <span className="xl:px-4 text-lg">{'< '}ย้อนกลับ</span>
+              <span className="text-lg">{'< '}ย้อนกลับ</span>
             </button>
           </div>
           <div className="w-1/2 md:w-1/6">
             <button
               type="button"
-              // className="btn btn-ghost text-white bg-blue-600  hover:bg-blue-500 hover:text-white focus:bg-blue-800 focus:text-white w-full"
-              // onClick={handleSubmit}
-              className="w-full text-white btn btn-outline-secondary"
-              disabled
+              onClick={() => navigate(`/services/orders/:id/appointments`)}
+              className={
+                totalPrice > 0
+                  ? 'btn btn-ghost text-white bg-blue-600 hover:bg-blue-500 hover:text-white focus:bg-blue-800 focus:text-white w-full'
+                  : 'w-full text-white btn btn-outline-secondary'
+              }
+              disabled={totalPrice === 0}
             >
               {' '}
-              <span className="xl:px-4 text-lg">ดำเนินการต่อ {' >'}</span>
+              <span className="text-lg">ดำเนินการต่อ {' >'}</span>
             </button>
           </div>
         </div>
