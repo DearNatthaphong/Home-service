@@ -1,8 +1,6 @@
 import express from "express";
 import cors from "cors";
 import path from "path";
-import { fileURLToPath } from "url";
-import { dirname } from "path";
 import authRouter from "./src/routes/auth.route.mjs";
 import { protect } from "./src/middlewares/protect.middleware.mjs";
 import dotenv from "dotenv";
@@ -18,13 +16,9 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 8000;
 
-const __filename = fileURLToPath(import.meta.url); //รูป
-const __dirname = dirname(__filename); // รูป
-
 app.use(cors());
 app.use(express.static("public"));
 app.use(express.json());
-app.use("/uploads", express.static(path.join(__dirname, "uploads"))); //รูป
 app.use("/auth", authRouter);
 app.use("/service", serviceRouter);
 app.use(protect);

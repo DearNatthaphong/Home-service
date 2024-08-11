@@ -10,16 +10,39 @@ import { useParams, useNavigate } from "react-router-dom";
 import photo1 from "/icons/frame-icon.png";
 import photo from "/icons/add-image-icon.png";
 import { toast } from "react-toastify";
+import uuid4 from "uuid4";
+import supabase from "./supabase-client";
 
 function getImageUrl(image) {
   if (typeof image === "string" && image.startsWith("http")) {
     return image;
-  } else if (image instanceof File) {
+  } else if (typeof image === "object") {
     return URL.createObjectURL(image);
   } else {
-    return `http://localhost:4000/uploads/${image}`;
+    return null;
   }
 }
+
+const uploadphoto = async (image) => {
+  const avatarFile = image;
+  console.log(avatarFile);
+  const filename = uuid4();
+  console.log(filename);
+  // const { data, error } = await supabase.from("services").select();
+  const { data, error } = await supabase.storage
+    .from("servicephoto")
+    .upload(`service/${filename}`, avatarFile);
+
+  const { data: url } = supabase.storage
+    .from("servicephoto")
+    .getPublicUrl(`service/${filename}`);
+
+  console.log(data);
+  console.log(error);
+  console.log(url);
+
+  return url.publicUrl;
+};
 
 const AdminServiceMainFix = forwardRef((props, ref) => {
   const { id } = useParams();
@@ -99,8 +122,12 @@ const AdminServiceMainFix = forwardRef((props, ref) => {
       const formData = new FormData();
       formData.append("service_name", serviceName);
       formData.append("category_name", category);
-      if (image && typeof image !== "string") {
+      if (image && typeof image === "string") {
         formData.append("service_image", image);
+      } else if (image && typeof image === "object") {
+        const result = await uploadphoto(image);
+        formData.append("service_image", result);
+        console.log(result);
       }
 
       if (subServices && subServices.length > 0) {

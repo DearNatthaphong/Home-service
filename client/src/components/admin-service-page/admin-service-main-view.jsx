@@ -28,6 +28,8 @@ function AdminServiceMainView() {
           `http://localhost:4000/service/auth/${id}`
         );
         const { main_service, sub_services } = response.data;
+        console.log(response.data);
+
         setMainService(main_service);
         setSubServices(sub_services);
       } catch (error) {

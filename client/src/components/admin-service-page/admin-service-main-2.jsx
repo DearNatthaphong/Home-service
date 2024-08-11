@@ -10,15 +10,7 @@ import photo1 from "/icons/frame-icon.png";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import uuid4 from "uuid4";
-import { createClient } from "@supabase/supabase-js";
-
-// const supabaseUrl = "https://pclzvpjpbppbztdcdjzd.supabase.co";
-// const supabaseKey =
-//   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBjbHp2cGpwYnBwYnp0ZGNkanpkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjA0MDk1NTgsImV4cCI6MjAzNTk4NTU1OH0.IzpCje3Xfa6pio5qFozrkYk0P0qK1s1FxQxVl09nINI";
-const supabase = createClient(
-  `https://pclzvpjpbppbztdcdjzd.supabase.co`,
-  `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBjbHp2cGpwYnBwYnp0ZGNkanpkIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcyMDQwOTU1OCwiZXhwIjoyMDM1OTg1NTU4fQ.fKeVz8_U6CoKio4O7DNJfdJTvn2-D8f_7PNJztRAWSo`
-);
+import supabase from "./supabase-client";
 
 const AdminServiceMain2 = forwardRef((props, ref) => {
   const submitRef = useRef();
@@ -95,15 +87,16 @@ const AdminServiceMain2 = forwardRef((props, ref) => {
         "subServices",
         JSON.stringify(subServices.map(({ id, ...rest }) => rest))
       );
+      console.log(formData);
 
       const response = await axios.post(
         "http://localhost:4000/service/auth",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
+        formData
+        // {
+        //   headers: {
+        //     "Content-Type": "multipart/form-data",
+        //   },
+        // }
       );
       toast.success("สร้างบริการสำเร็จ!");
       navigate(`/admin/service`);

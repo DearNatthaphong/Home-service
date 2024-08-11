@@ -25,10 +25,11 @@ export const createService = [
   upload.single("service_image"),
   async (req, res) => {
     console.log("Request Body:", req.body);
-    console.log("Uploaded File:", req.file);
 
-    const { service_name, category_name, subServices } = req.body;
+    const { service_name, category_name, subServices, service_image } =
+      req.body;
     const serviceImage = req.file ? req.file.filename : null;
+    console.log(service_image);
 
     if (typeof subServices !== "string") {
       return res.status(400).json({
@@ -57,7 +58,7 @@ export const createService = [
 
       const result = await client.query(
         `INSERT INTO services (service_name, category_name, service_image) VALUES ($1, $2, $3) RETURNING service_id`,
-        [service_name, category_name, serviceImage]
+        [service_name, category_name, service_image]
       );
 
       const serviceId = result.rows[0].service_id;
@@ -147,9 +148,10 @@ export const getServiceById = async (req, res) => {
 //update
 export const updateService = async (req, res) => {
   const serviceId = req.params.id;
-  const { service_name, category_name } = req.body;
+  const { service_name, category_name, service_image } = req.body;
   let subServices = [];
   let imagePath = req.file ? req.file.filename : null;
+  console.log("doraemon", req.body);
 
   try {
     if (typeof req.body.subServices === "string") {
@@ -185,8 +187,9 @@ export const updateService = async (req, res) => {
       `UPDATE services
              SET service_name = $1, category_name = $2, service_image = $3, updated_at = NOW()
              WHERE service_id = $4`,
-      [service_name, category_name, imagePath || currentImagePath, serviceId]
+      [service_name, category_name, service_image, serviceId]
     );
+    console.log(serviceId);
 
     const existingServiceItems = await connectionPool.query(
       `SELECT service_item_id FROM service_items WHERE service_id = $1`,
