@@ -13,10 +13,22 @@ import { useNavigate } from 'react-router-dom';
 
 function ServiceFooter() {
   const [open, setOpen] = useState(false);
-  const { orderItems, allServiceItems, totalPrice } = useService();
+  const {
+    orderItems,
+    allServiceItems,
+    totalPrice,
+    createOrder,
+    createOrderItems
+  } = useService();
   const getServiceItemById = (serviceItemId) =>
     allServiceItems.find((item) => item.serviceItemId === serviceItemId);
   const navigate = useNavigate();
+
+  const handleClicktoNext = async () => {
+    const orderId = await createOrder(totalPrice);
+    await createOrderItems(orderId, orderItems);
+    navigate(`/services/orders/${orderId}/appointments`);
+  };
 
   return (
     <footer className="w-full h-auto flex flex-col items-center justify-center shadow-shadow fixed z-10 bottom-0 bg-background md:bg-white">
@@ -84,7 +96,7 @@ function ServiceFooter() {
           <div className="w-1/2 md:w-1/6">
             <button
               type="button"
-              onClick={() => navigate(`/services/orders/:id/appointments`)}
+              onClick={handleClicktoNext}
               className={
                 totalPrice > 0
                   ? 'btn btn-ghost text-white bg-blue-600 hover:bg-blue-500 hover:text-white focus:bg-blue-800 focus:text-white w-full'
@@ -92,7 +104,6 @@ function ServiceFooter() {
               }
               disabled={totalPrice === 0}
             >
-              {' '}
               <span className="text-lg">ดำเนินการต่อ {' >'}</span>
             </button>
           </div>

@@ -76,10 +76,35 @@ function ServiceProvider(props) {
   // อัปเดต orderItems เมื่อมีการเปลี่ยน quantity start //
 
   // create a new order start //
+  const createOrder = async (totalPrice) => {
+    try {
+      const result = await axios.post(`http://localhost:4000/orders`, {
+        totalPrice
+      });
+      toast.success(result.data.message);
+      return result.data.orderId;
+    } catch (error) {
+      toast.error(error.response?.data?.message ?? 'พบข้อผิดพลาด');
+    }
+  };
   // create a new order end //
 
   // create all new order items by order id start//
+  const createOrderItems = async (orderId, orderItems) => {
+    try {
+      const result = await axios.post(
+        `http://localhost:4000/orders/${orderId}/order-items`,
+        {
+          orderItems
+        }
+      );
+      toast.success(result.data.message);
+    } catch (error) {
+      toast.error(error.response?.data?.message ?? 'พบข้อผิดพลาด');
+    }
+  };
   // create all new order items by order id end//
+
   return (
     <serviceContext.Provider
       value={{
@@ -88,7 +113,9 @@ function ServiceProvider(props) {
         allServiceItems,
         orderItems,
         updateOrderItems,
-        totalPrice
+        totalPrice,
+        createOrder,
+        createOrderItems
       }}
     >
       {props.children}

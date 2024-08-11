@@ -33,7 +33,7 @@ function AutenticatedUser() {
         />
         <Route
           path="/services/orders/:id/appointments"
-          element={<ServiceInformation />}
+          element={<UserServiceDetailPage />}
         />
         {/* เดียร์ */}
         <Route path="/payment/:id" element={<ServicePayment />} />
