@@ -14,5 +14,6 @@ serviceAuthRouter.put(
   serviceAuthController.updateService
 );
 serviceAuthRouter.delete("/:id", serviceAuthController.deleteService);
+serviceAuthRouter.get("/", serviceAuthController.getServiceCategories);
 
 export default serviceAuthRouter;

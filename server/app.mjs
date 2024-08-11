@@ -26,7 +26,6 @@ app.use("/admin/promotions", adminPromotionRouter);
 app.use("/promotions", promotionRouter);
 app.use("/payment", paymentRouter);
 app.use("/orders", orderRouter);
-// app.use("/uploads", express.static(path.join(__dirname, "uploads"))); //รูป
 app.use("/categories", categoriesRouter);
 app.use("/service/auth", serviceAuthRouter);
 

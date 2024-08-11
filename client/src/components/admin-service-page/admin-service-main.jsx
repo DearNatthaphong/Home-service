@@ -85,7 +85,7 @@ function AdminServiceMain({ searchTerm }) {
               </div>
             </div>
           </div>
-          <div className="w-[150px] flex justify-start">
+          <div className="w-[250px] flex justify-start">
             <div className="text-[#646c80] text-sm 2xl:text-base font-normal px-3">
               หมวดหมู่
             </div>
@@ -137,7 +137,7 @@ function AdminServiceMain({ searchTerm }) {
                   <div className="2xl:text-lg">{service.service_name}</div>
                 </div>
               </div>
-              <div className="w-[150px] flex justify-start">
+              <div className="w-[250px] flex justify-start">
                 <div
                   className={`2xl:text-lg rounded-[8px]  px-3 py-1 ${
                     service.category_name === "บริการทั่วไป"
@@ -146,6 +146,10 @@ function AdminServiceMain({ searchTerm }) {
                       ? "bg-purple-100 text-purple-900"
                       : service.category_name === "บริการห้องครัว"
                       ? "bg-green-100 text-green-900"
+                      : service.category_name === "บริการอุปกรณ์ไฟฟ้า"
+                      ? "bg-yellow-100 text-yellow-900"
+                      : service.category_name === "บริการห้องอเนกประสงค์"
+                      ? "bg-gray-100 text-gray-900"
                       : "bg-blue-100 text-blue-800"
                   }`}
                 >

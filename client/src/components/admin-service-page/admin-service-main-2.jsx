@@ -140,6 +140,8 @@ const AdminServiceMain2 = forwardRef((props, ref) => {
             <option value="บริการทั่วไป">บริการทั่วไป</option>
             <option value="บริการห้องครัว">บริการห้องครัว</option>
             <option value="บริการห้องน้ำ">บริการห้องน้ำ</option>
+            <option value="บริการอุปกรณ์ไฟฟ้า">บริการอุปกรณ์ไฟฟ้า</option>
+            <option value="บริการห้องอเนกประสงค์">บริการห้องอเนกประสงค์</option>
           </select>
         </div>
         <div className="px-8 py-6 flex items-start">

@@ -285,3 +285,24 @@ export const deleteService = async (req, res) => {
     res.status(500).json({ message: "พบข้อผิดพลาดภายในเซิร์ฟเวอร์" });
   }
 };
+//getcategory
+export const getServiceCategories = async (req, res) => {
+  const client = await connectionPool.connect();
+
+  try {
+    const result = await client.query(
+      `SELECT service_category_id, category_name FROM service_categories ORDER BY category_name ASC`
+    );
+
+    const serviceCategories = result.rows;
+
+    return res.status(200).json(serviceCategories);
+  } catch (error) {
+    console.error("Error fetching service categories:", error.message);
+    return res.status(500).json({
+      message: "พบข้อผิดพลาดในการดึงข้อมูลหมวดหมู่บริการ",
+    });
+  } finally {
+    client.release();
+  }
+};
