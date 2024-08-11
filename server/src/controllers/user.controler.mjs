@@ -1,10 +1,10 @@
-import connectionPool from "../utils/db.mjs";
-import generateOrderNumber from "../utils/generate.order.mjs";
+import connectionPool from '../utils/db.mjs';
+import generateOrderNumber from '../utils/generate.order.mjs';
 
 export const postOrders = async (req, res) => {
   if (!req.user || !req.user.id) {
     return res.status(401).json({
-      message: "ผู้ใช้ไม่ได้รับอนุญาต",
+      message: 'ผู้ใช้ไม่ได้รับอนุญาต'
     });
   }
 
@@ -13,12 +13,12 @@ export const postOrders = async (req, res) => {
   const newOrder = {
     ...req.body,
     userId,
-    orderNumber,
+    orderNumber
   };
 
   if (!newOrder.total_price) {
     return res.status(400).json({
-      message: "ข้อมูลไม่ครบหรือไม่ถูกต้อง",
+      message: 'ข้อมูลไม่ครบหรือไม่ถูกต้อง'
     });
   }
 
@@ -30,17 +30,16 @@ export const postOrders = async (req, res) => {
     );
     const orderId = results.rows[0];
     return res.status(201).json({
-      message: "สร้างคำสั่งซ่อมสำเร็จ",
-      data: orderId,
+      message: 'สร้างคำสั่งซ่อมสำเร็จ',
+      data: orderId
     });
   } catch (error) {
     console.error(error);
     return res.status(500).json({
-      message: "พบข้อผิดพลาดภายในเซิร์ฟเวอร์",
+      message: 'พบข้อผิดพลาดภายในเซิร์ฟเวอร์'
     });
   }
 };
-
 
 export const postOrderItems = async (req, res) => {
   const orderId = req.params.id;
@@ -51,22 +50,24 @@ export const postOrderItems = async (req, res) => {
   }
 
   try {
-    const postOrderItems = await Promise.all(orderItems.map(async (item) => {
-      if (!item.service_item_id || !item.quantity) {
-        throw new Error('ข้อมูลไม่ครบหรือไม่ถูกต้อง');
-      }
+    const postOrderItems = await Promise.all(
+      orderItems.map(async (item) => {
+        if (!item.service_item_id || !item.quantity) {
+          throw new Error('ข้อมูลไม่ครบหรือไม่ถูกต้อง');
+        }
 
-      const result = await connectionPool.query(
-        `INSERT INTO order_items (order_id, service_item_id, quantity)
+        const result = await connectionPool.query(
+          `INSERT INTO order_items (order_id, service_item_id, quantity)
          VALUES ($1, $2, $3) RETURNING order_item_id, quantity`,
-        [orderId, item.service_item_id, item.quantity]
-      );
+          [orderId, item.service_item_id, item.quantity]
+        );
 
-      return {
-        order_item_id: result.rows[0].order_item_id,
-        quantity: result.rows[0].quantity
-      };
-    }));
+        return {
+          order_item_id: result.rows[0].order_item_id,
+          quantity: result.rows[0].quantity
+        };
+      })
+    );
 
     res.status(201).json(postOrderItems);
   } catch (error) {
@@ -98,12 +99,12 @@ export const getOrderItems = async (req, res) => {
 
     if (results.rows.length === 0) {
       return res.status(404).json({
-        message: "ไม่พบรายการซ่อม",
+        message: 'ไม่พบรายการซ่อม'
       });
     }
 
     const totalPrice = results.rows[0].total_price;
-    const orderItems = results.rows.map(row => ({
+    const orderItems = results.rows.map((row) => ({
       order_item_id: row.order_item_id,
       service_name: row.service_name,
       quantity: row.quantity
@@ -113,11 +114,10 @@ export const getOrderItems = async (req, res) => {
       total_price: totalPrice,
       order_items: orderItems
     });
-
   } catch (error) {
     console.error(error);
     return res.status(500).json({
-      message: "พบข้อผิดพลาดภายในเซิร์ฟเวอร์",
+      message: 'พบข้อผิดพลาดภายในเซิร์ฟเวอร์'
     });
   }
 };

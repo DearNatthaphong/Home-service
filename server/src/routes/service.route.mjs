@@ -6,6 +6,13 @@ const serviceRouter = Router();
 serviceRouter.get('/', serviceController.getAllService);
 serviceRouter.get('/limit3', serviceController.getSomeService);
 
-serviceRouter.get('/:id', serviceController.getServiceItemsByServiceId);
+serviceRouter
+  .get('/', serviceController.getAllService)
+  //// Dear
+  .get(
+    '/:id/service-items',
+    [protect],
+    serviceController.getServiceItemsByServiceId
+  );
 
 export default serviceRouter;

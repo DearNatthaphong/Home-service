@@ -1,0 +1,44 @@
+import {
+  listIcon,
+  editIcon,
+  cardCheckIcon
+} from '../../assets/icons/icon-service-detail';
+
+function CardProcess() {
+  return (
+    // <div className="w-3/4">
+    <div className="card  bg-white rounded-lg border-[1px] border-gray-300">
+      <div className="card-body p-4 xl:px-[20%]">
+        <div className="flex items-center justify-between relative">
+          <div className="flex flex-col items-center z-10">
+            <div className="bg-white border-2 border-blue-500 text-blue-500 rounded-full p-2">
+              {listIcon}
+            </div>
+            <span className="text-blue-500">รายการ</span>
+          </div>
+          <div className="absolute top-1/3 left-2 w-[50%] transform -translate-y-1/2 flex justify-between items-center">
+            <hr className="border-t-2 border-gray-300 w-full z-8" />
+          </div>
+          <div className="flex flex-col items-center z-10">
+            <div className="bg-white border-2 border-gray-300 text-gray-300 rounded-full p-2">
+              {editIcon}
+            </div>
+            <span className="text-gray-700">กรอกข้อมูลบริการ</span>
+          </div>
+          <div className="absolute top-1/3 right-2 w-[50%] transform -translate-y-1/2 flex justify-between items-center">
+            <hr className="border-t-2 border-gray-300 w-full z-8" />
+          </div>
+          <div className="flex flex-col items-center z-10">
+            <div className="bg-white border-2 border-gray-300 text-gray-300 rounded-full p-2">
+              {cardCheckIcon}
+            </div>
+            <span className="text-gray-700">ชำระเงิน</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    // </div>
+  );
+}
+
+export default CardProcess;

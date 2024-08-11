@@ -41,18 +41,53 @@ export const getSomeService = async (req, res) => {
   }
 };
 
+//// Dear
 export const getServiceItemsByServiceId = async (req, res) => {
   const { id } = req.params;
-  let results;
+
+  // Validate that id is provided
+  if (!id) {
+    return res.status(400).json({
+      message: 'โปรดระบุรหัสการบริการ'
+    });
+  }
+
   try {
-    results = await connectionPool.query(
-      `select * from service_items where service_id = $1`,
+    const results = await connectionPool.query(
+      `SELECT 
+        s.service_name,
+        si.service_item_name,
+        si.service_item_id,
+        si.service_price,
+        si.service_unit
+      FROM services AS s
+      INNER JOIN service_items AS si ON s.service_id = si.service_id
+      WHERE s.service_id = $1`,
       [id]
     );
+
+    // Check if the service items were found
+    if (results.rows.length === 0) {
+      return res.status(404).json({
+        message: 'ไม่พบรายการบริการสำหรับรหัสบริการที่ระบุ'
+      });
+    }
+
+    // Format the response as required
+    const formattedResponse = {
+      serviceName: results.rows[0].service_name,
+      serviceItems: results.rows.map((item) => ({
+        serviceItemId: item.service_item_id,
+        serviceItemName: item.service_item_name,
+        servicePrice: item.service_price,
+        serviceUnit: item.service_unit // Keeping this field in case you need it
+      }))
+    };
+
+    return res.status(200).json({ data: formattedResponse });
   } catch (error) {
     return res.status(500).json({
       message: 'พบข้อผิดพลาดภายในเซิร์ฟเวอร์'
     });
   }
-  return res.status(200).json({ data: results.rows });
 };

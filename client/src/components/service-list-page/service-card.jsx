@@ -1,12 +1,12 @@
-import React, { useEffect, useState, useContext } from "react";
-import axios from "axios";
-import { useFilter } from "../../context/filter-context";
-import { useAuth } from "../../context/authentication";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState, useContext } from 'react';
+import axios from 'axios';
+import { useFilter } from '../../context/filter-context';
+import { useAuth } from '../../context/authentication';
+import { useNavigate } from 'react-router-dom';
 
 function getImageUrl(service_image) {
   // ตรวจสอบว่า service_image เป็น URL หรือชื่อไฟล์
-  if (service_image.startsWith("http")) {
+  if (service_image.startsWith('http')) {
     // ถ้าเป็น URL เต็มรูปแบบ
     return service_image;
   } else {
@@ -18,7 +18,6 @@ function getImageUrl(service_image) {
 function ServiceCard() {
   const { state } = useAuth();
   const navigate = useNavigate();
- 
 
   const [servicePost, setServicePost] = useState([]);
 
@@ -35,33 +34,33 @@ function ServiceCard() {
     searchBySlided2,
 
     /** เอาค่า select dropdown เลือก sort เมื่อกดค้นหามา render */
-    sortByType,
+    sortByType
   } = useFilter();
 
   const getServicePost = async () => {
-    const result = await axios.get("http://localhost:4000/service");
+    const result = await axios.get('http://localhost:4000/service');
     setServicePost(result.data.data);
   };
 
   const filterServices = servicePost
     .filter((items) => {
       const filterSearchText =
-        searchService === "" ||
+        searchService === '' ||
         items.service_name.includes(searchService) ||
         items.category_name.includes(searchService);
       const filterSearchType =
-        searchByType === "" || items.category_name === searchByType;
+        searchByType === '' || items.category_name === searchByType;
       const filterSearchSlide =
-        searchBySlided1 === "" ||
+        searchBySlided1 === '' ||
         (items.service_price >= searchBySlided1 &&
           items.service_price <= searchBySlided2);
       return filterSearchText && filterSearchType && filterSearchSlide;
     })
     .sort((a, b) => {
-      if (sortByType === "less2" || sortByType === "less1") {
-        return a.service_name.localeCompare(b.service_name, "th");
-      } else if (sortByType === "more2" || sortByType === "more1") {
-        return b.service_name.localeCompare(a.service_name, "th");
+      if (sortByType === 'less2' || sortByType === 'less1') {
+        return a.service_name.localeCompare(b.service_name, 'th');
+      } else if (sortByType === 'more2' || sortByType === 'more1') {
+        return b.service_name.localeCompare(a.service_name, 'th');
       }
     });
 
@@ -70,7 +69,7 @@ function ServiceCard() {
   }, []);
 
   const handleSelectService = (id) => {
-    navigate(`/servicedetail/${id}`);
+    navigate(`/services/${id}`);
   };
 
   return (
@@ -122,7 +121,7 @@ function ServiceCard() {
                     <button
                       className="w-[80px] h-[28px] flex items-center justify-center"
                       onClick={() => {
-                        navigate("/login");
+                        navigate('/login');
                       }}
                     >
                       <p className="font-prompt font-semibold text-[16px] text-blue-600 underline underline-offset-1">
