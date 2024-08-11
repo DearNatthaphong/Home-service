@@ -1,0 +1,92 @@
+import React from "react";
+import { useServiceDetail } from "../../context/user-service-detail-context";
+import { formatDateTH } from "../../utils/user-detail-format-date";
+
+function UserServiceSummary() {
+  const {
+    selectedName,
+    setSelectedNameisDate,
+    isDate,
+    setIsDate,
+    isTime,
+    setIsTime,
+    isAddress,
+    setIsAddress,
+    isSpecify,
+    setIsSpecify,
+  } = useServiceDetail();
+  return (
+    <div className="xl:w-1/3">
+      <div
+        tabIndex={0}
+        className="hidden xl:block collapse-open bg-white border border-b-0 xl:border-b-2 border-gray-300 rounded-b-none rounded-t-lg xl:rounded-b-lg pb-0 mb-0 xl:px-3"
+      >
+        <div className="collapse-arrow xl:hidden"></div>
+        <div className="collapse-title text-[16px] xl:text-[20px] font-bold text-gray-700">
+          สรุปรายการ
+        </div>
+        <div className="collapse-content text-[14px]">
+          <div className="w-full h-full flex items-center justify-between font-prompt text-[14px] font-light text-black">
+            <span>9,000 - 18,000 BTU, แบบติดผนัง</span>
+            <span>2 เครื่อง</span>
+          </div>
+          <hr className="my-[24px] border-[1px] border-gray-300" />
+          <div className="w-full h-full">
+            {/** ข้อมูล วัน Start */}
+            {isDate ? (
+              <div className="flex justify-between mb-[24px]">
+                <span className="font-prompt font-light text-[14px] text-gray-700">
+                  วันที่
+                </span>
+                <span className="font-prompt text-[14px] text-black">
+                  {formatDateTH(isDate)}
+                </span>
+              </div>
+            ) : null}
+            {/** ข้อมูล วัน Start */}
+
+            {/** ข้อมูล เวลา Start */}
+            {isTime ? (
+              <div className="flex justify-between mb-[24px]">
+                <span className="font-prompt font-light text-[14px] text-gray-700">
+                  เวลา
+                </span>
+                <span className="font-prompt text-[14px] text-black">
+                  {isTime} น.
+                </span>
+              </div>
+            ) : null}
+            {/** ข้อมูล เวลา End */}
+
+            {/** ข้อมูล สถานที่ Start */}
+            {isAddress || selectedName.province_id ? (
+              <div className="flex justify-between">
+                <span className="font-prompt font-light text-[14px] text-gray-700">
+                  สถานที่
+                </span>
+                <span className="w-full max-w-[190px] text-end font-prompt text-[14px] text-black">
+                  {isAddress} {selectedName.tambon_id} {selectedName.amphure_id}{" "}
+                  {selectedName.province_id}
+                </span>
+              </div>
+            ) : null}
+            {/** ข้อมูล สถานที่ End */}
+          </div>
+          <hr className="my-[24px] border-[1px] border-gray-300" />
+          {/** ข้อมูล รายจ่ายทั้งหมด Start */}
+          <div className="w-full h-full">
+            <div className="flex justify-between">
+              <span className="font-prompt text-[16px] text-gray-700">รวม</span>
+              <span className="font-prompt text-[16px] font-semibold text-black">
+                1,600.00 ฿
+              </span>
+            </div>
+          </div>
+          {/** ข้อมูล รายจ่ายทั้งหมด End */}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default UserServiceSummary;

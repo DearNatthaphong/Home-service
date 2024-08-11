@@ -39,7 +39,6 @@ function ServiceCard() {
 
   const getServicePost = async () => {
     const result = await axios.get("http://localhost:4000/service");
-    console.log(result.data.data);
     setServicePost(result.data.data);
   };
 
@@ -58,14 +57,12 @@ function ServiceCard() {
       return filterSearchText && filterSearchType && filterSearchSlide;
     })
     .sort((a, b) => {
-      if (sortByType === "น้อย2" || sortByType === "น้อย1") {
+      if (sortByType === "less2" || sortByType === "less1") {
         return a.service_name.localeCompare(b.service_name, "th");
-      } else if (sortByType === "มาก2" || sortByType === "มาก1") {
+      } else if (sortByType === "more2" || sortByType === "more1") {
         return b.service_name.localeCompare(a.service_name, "th");
       }
     });
-
-  console.log(filterServices);
 
   useEffect(() => {
     getServicePost();

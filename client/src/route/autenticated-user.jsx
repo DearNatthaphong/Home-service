@@ -8,6 +8,7 @@ import DemoPage from "../pages/demo-page";
 import ServiceInformation from "../components/service-detail-page/service-detail-information";
 import UserHistoryListPage from "../pages/customer-history-list-page";
 import UserOrderListPage from "../pages/customer-order-list-page";
+import UserServiceDetailPage from "../pages/user-service-detail-page";
 
 function AutenticatedUser() {
   return (
@@ -31,6 +32,9 @@ function AutenticatedUser() {
         <Route path="/orderlist" element={<UserOrderListPage />} />
         <Route path="/historylist" element={<UserHistoryListPage />} />
         {/* <Route path="/demo" element={<DemoPage />} /> */}
+
+        {/** Mock Up */}
+        <Route path="/servicedetail" element={<UserServiceDetailPage />} />
       </Routes>
     </div>
   );
