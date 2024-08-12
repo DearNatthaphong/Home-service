@@ -85,7 +85,7 @@ function ServiceCard() {
               <div className="w-full h-[150px] lg:h-[165px] flex flex-col p-[15px]">
                 <div className="w-full h-full justify-between flex-col flex">
                   <div className="w-full h-[82px] lg:h-[89px] flex flex-col justify-between">
-                    <div className="w-[79px] h-[26px] rounded-[8px] bg-blue-100 flex items-center justify-center">
+                    <div className="w-full max-w-[40%] h-[26px] rounded-[8px] bg-blue-100 flex items-center justify-center">
                       <p className="text-[12px] font-prompt text-blue-800 ">
                         {items.category_name}
                       </p>

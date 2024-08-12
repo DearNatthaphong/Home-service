@@ -24,3 +24,19 @@ export const getAllService = async (req, res) => {
     });
   }
 };
+
+export const getSomeService = async (req, res) => {
+  try {
+    const serviceLimit = await connectionPool.query(
+      `select * from services limit 3`
+    );
+    const results = serviceLimit.rows;
+    return res.status(200).json({
+      data: results,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: "พบข้อผิดพลาดภายในเซริฟเวอร์",
+    });
+  }
+};

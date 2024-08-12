@@ -83,7 +83,10 @@ function UserHeader() {
                       </div>
                       {/** Option 1 End */}
                       {/** Option 2 Start */}
-                      <div className="w-full h-[33px] flex items-center hover:bg-gray-100 px-[16px] hover:text-gray-950">
+                      <div
+                        className="w-full h-[33px] flex items-center hover:bg-gray-100 px-[16px] hover:text-gray-950"
+                        onClick={() => navigate("/orderlist")}
+                      >
                         <div className="w-[16px] h-[16px] flex items-center justify-center">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -106,7 +109,10 @@ function UserHeader() {
                       </div>
                       {/** Option 2 End */}
                       {/** Option 3 Start */}
-                      <div className="w-full h-[33px] flex items-center hover:bg-gray-100 px-[16px] hover:text-gray-950">
+                      <div
+                        className="w-full h-[33px] flex items-center hover:bg-gray-100 px-[16px] hover:text-gray-950"
+                        onClick={() => navigate("/historylist")}
+                      >
                         <div className="w-[16px] h-[16px] flex items-center justify-center">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
