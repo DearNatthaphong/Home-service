@@ -120,7 +120,7 @@ const AdminServiceMain2 = forwardRef((props, ref) => {
           </div>
           <input
             type="text"
-            className="border rounded px-2 py-1 max-w-[400px] flex-grow 2xl:max-w-[700px] transition-all duration-500"
+            className="border rounded px-2 py-1 max-w-[400px] flex-grow 2xl:max-w-[700px] transition-all duration-500 bg-white text-black"
             value={serviceName}
             onChange={(e) => setServiceName(e.target.value)}
           />
@@ -132,7 +132,7 @@ const AdminServiceMain2 = forwardRef((props, ref) => {
             </div>
           </div>
           <select
-            className="border rounded px-2 py-1 max-w-[400px] flex-grow 2xl:max-w-[700px] transition-all duration-500"
+            className="border rounded px-2 py-1 max-w-[400px] flex-grow 2xl:max-w-[700px] transition-all duration-500 bg-white text-black"
             value={category}
             onChange={(e) => setCategory(e.target.value)}
           >
@@ -153,7 +153,7 @@ const AdminServiceMain2 = forwardRef((props, ref) => {
           <div className="max-w-[400px] flex-grow 2xl:max-w-[700px] transition-all duration-500">
             <label
               htmlFor="file-upload"
-              className="border-dashed border-[3px] py-6 flex flex-col items-center justify-center cursor-pointer"
+              className="border-dashed border-[3px] py-6 flex flex-col items-center justify-center cursor-pointer bg-white text-black"
             >
               {!image && (
                 <img
@@ -175,7 +175,9 @@ const AdminServiceMain2 = forwardRef((props, ref) => {
                 </div>
               )}
             </label>
-            <div className="py-2">ขนาดภาพที่แนะนำ: 1440 x 225 PX</div>
+            <div className="py-2 bg-white text-black">
+              ขนาดภาพที่แนะนำ: 1440 x 225 PX
+            </div>
             <input
               id="file-upload"
               type="file"
@@ -198,7 +200,7 @@ const AdminServiceMain2 = forwardRef((props, ref) => {
               </div>
               <input
                 type="text"
-                className="border rounded px-2 py-1 min-w-[400px]"
+                className="border rounded px-2 py-1 min-w-[400px] bg-white text-black"
                 value={service.name}
                 onChange={(e) =>
                   handleSubServiceChange(service.id, "name", e.target.value)
@@ -211,7 +213,7 @@ const AdminServiceMain2 = forwardRef((props, ref) => {
               </div>
               <input
                 type="text"
-                className="border rounded px-2 py-1 min-w-[240px]"
+                className="border rounded px-2 py-1 min-w-[240px] bg-white text-black"
                 value={service.price}
                 onChange={(e) =>
                   handleSubServiceChange(service.id, "price", e.target.value)
@@ -224,7 +226,7 @@ const AdminServiceMain2 = forwardRef((props, ref) => {
               </div>
               <input
                 type="text"
-                className="border rounded px-2 py-1 min-w-[240px]"
+                className="border rounded px-2 py-1 min-w-[240px] bg-white text-black"
                 value={service.unit}
                 onChange={(e) =>
                   handleSubServiceChange(service.id, "unit", e.target.value)
