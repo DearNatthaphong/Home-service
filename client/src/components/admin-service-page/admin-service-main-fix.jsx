@@ -183,13 +183,13 @@ const AdminServiceMainFix = forwardRef((props, ref) => {
       <div className="w-full h-full bg-white border rounded-lg flex flex-col overflow-y-scroll">
         <div className="px-8 py-6 flex items-center mt-5">
           <div className="min-w-[250px]">
-            <div className="text-[#646c80] text-base font-medium 2xl:text-lg">
+            <div className="text-[#646c80] text-base font-medium 2xl:text-lg ">
               ชื่อบริการ
             </div>
           </div>
           <input
             type="text"
-            className="border rounded px-2 py-1 max-w-[400px] flex-grow 2xl:max-w-[700px] transition-all duration-500"
+            className="border rounded px-2 py-1 max-w-[400px] flex-grow 2xl:max-w-[700px] transition-all duration-500 bg-white text-black"
             value={serviceName}
             onChange={(e) => setServiceName(e.target.value)}
           />
@@ -201,7 +201,7 @@ const AdminServiceMainFix = forwardRef((props, ref) => {
             </div>
           </div>
           <select
-            className="border rounded px-2 py-1 max-w-[400px] flex-grow 2xl:max-w-[700px] transition-all duration-500"
+            className="border rounded px-2 py-1 max-w-[400px] flex-grow 2xl:max-w-[700px] transition-all duration-500 bg-white text-black"
             value={category}
             onChange={(e) => setCategory(e.target.value)}
           >
@@ -222,7 +222,7 @@ const AdminServiceMainFix = forwardRef((props, ref) => {
           <div className="max-w-[400px] flex-grow 2xl:max-w-[700px] transition-all duration-500">
             <label
               htmlFor="file-upload"
-              className="border-[3px] py-6 flex flex-col items-center justify-center cursor-pointer"
+              className="border-[3px] py-6 flex flex-col items-center justify-center cursor-pointer bg-white text-black"
             >
               {!image ? (
                 <>
@@ -251,7 +251,7 @@ const AdminServiceMainFix = forwardRef((props, ref) => {
               )}
             </label>
 
-            <div className="flex justify-between">
+            <div className="flex justify-between bg-white text-black">
               <div className="py-2">ขนาดภาพที่แนะนำ: 1440 x 225 PX</div>
               {image && typeof image === "string" && (
                 <button
@@ -301,7 +301,7 @@ const AdminServiceMainFix = forwardRef((props, ref) => {
                       e.target.value
                     )
                   }
-                  className="border rounded px-2 py-1 w-[400px] flex-grow 2xl:max-w-[700px] transition-all duration-500"
+                  className="border rounded px-2 py-1 w-[400px] flex-grow 2xl:max-w-[700px] transition-all duration-500 bg-white text-black"
                 />
               </div>
               <div>
@@ -318,7 +318,7 @@ const AdminServiceMainFix = forwardRef((props, ref) => {
                       e.target.value
                     )
                   }
-                  className="border rounded px-2 py-1 max-w-[400px] flex-grow 2xl:max-w-[700px] transition-all duration-500"
+                  className="border rounded px-2 py-1 max-w-[400px] flex-grow 2xl:max-w-[700px] transition-all duration-500 bg-white text-black"
                 />
               </div>
               <div>
@@ -335,7 +335,7 @@ const AdminServiceMainFix = forwardRef((props, ref) => {
                       e.target.value
                     )
                   }
-                  className="border rounded px-2 py-1 max-w-[400px] flex-grow 2xl:max-w-[700px] transition-all duration-500"
+                  className="border rounded px-2 py-1 max-w-[400px] flex-grow 2xl:max-w-[700px] transition-all duration-500 bg-white text-black"
                 />
               </div>
               <button
