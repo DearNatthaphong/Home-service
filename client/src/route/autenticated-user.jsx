@@ -9,13 +9,15 @@ import ServiceInformation from "../components/service-detail-page/service-detail
 import UserHistoryListPage from "../pages/customer-history-list-page";
 import UserOrderListPage from "../pages/customer-order-list-page";
 import UserServiceDetailPage from "../pages/user-service-detail-page";
+import UserLandingPage from "../pages/user-landing-page";
+import UserNotFoundPage from "../pages/user-not-found-page";
 
 function AutenticatedUser() {
   return (
     <div>
       <Routes>
-        <Route path="/" element={<Homepage />} />
-        <Route path="/home" element={<Homepage />} />
+        {/* <Route path="/" element={<Homepage />} /> */}
+        {/* <Route path="/home" element={<Homepage />} /> */}
         {/* เทรน */}
         <Route path="/servicelist" element={<ServiceListPage />} />
         {/* ม่อน */}
@@ -35,6 +37,9 @@ function AutenticatedUser() {
 
         {/** Mock Up */}
         <Route path="/servicedetail" element={<UserServiceDetailPage />} />
+        <Route path="/" element={<UserLandingPage />} />
+        <Route path="/home" element={<UserLandingPage />} />
+        <Route path="*" element={<UserNotFoundPage />} />
       </Routes>
     </div>
   );
