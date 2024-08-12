@@ -80,6 +80,7 @@ const AdminServiceMainFix = forwardRef((props, ref) => {
     const file = event.target.files[0];
     if (file) {
       setImage(file);
+      // setImage(URL.createObjectURL(file));
     }
   };
 
@@ -253,7 +254,7 @@ const AdminServiceMainFix = forwardRef((props, ref) => {
 
             <div className="flex justify-between bg-white text-black">
               <div className="py-2">ขนาดภาพที่แนะนำ: 1440 x 225 PX</div>
-              {image && typeof image === "string" && (
+              {image && (
                 <button
                   type="button"
                   onClick={handleImageRemove}
