@@ -10,16 +10,39 @@ import { useParams, useNavigate } from "react-router-dom";
 import photo1 from "/icons/frame-icon.png";
 import photo from "/icons/add-image-icon.png";
 import { toast } from "react-toastify";
+import uuid4 from "uuid4";
+import supabase from "./supabase-client";
 
 function getImageUrl(image) {
   if (typeof image === "string" && image.startsWith("http")) {
     return image;
-  } else if (image instanceof File) {
+  } else if (typeof image === "object") {
     return URL.createObjectURL(image);
   } else {
-    return `http://localhost:4000/uploads/${image}`;
+    return null;
   }
 }
+
+const uploadphoto = async (image) => {
+  const avatarFile = image;
+  console.log(avatarFile);
+  const filename = uuid4();
+  console.log(filename);
+  // const { data, error } = await supabase.from("services").select();
+  const { data, error } = await supabase.storage
+    .from("servicephoto")
+    .upload(`service/${filename}`, avatarFile);
+
+  const { data: url } = supabase.storage
+    .from("servicephoto")
+    .getPublicUrl(`service/${filename}`);
+
+  console.log(data);
+  console.log(error);
+  console.log(url);
+
+  return url.publicUrl;
+};
 
 const AdminServiceMainFix = forwardRef((props, ref) => {
   const { id } = useParams();
@@ -35,7 +58,9 @@ const AdminServiceMainFix = forwardRef((props, ref) => {
   useEffect(() => {
     const fetchServiceData = async () => {
       try {
-        const response = await axios.get(`http://localhost:4000/service/${id}`);
+        const response = await axios.get(
+          `http://localhost:4000/service/auth/${id}`
+        );
         const { main_service, sub_services } = response.data;
         setMainService(main_service);
         setSubServices(sub_services || []);
@@ -77,7 +102,7 @@ const AdminServiceMainFix = forwardRef((props, ref) => {
       ...prevSubServices,
       {
         service_item_id: Date.now(),
-        service_name: "",
+        service_item_name: "",
         service_price: "",
         service_unit: "",
       },
@@ -97,15 +122,24 @@ const AdminServiceMainFix = forwardRef((props, ref) => {
       const formData = new FormData();
       formData.append("service_name", serviceName);
       formData.append("category_name", category);
-      if (image && typeof image !== "string") {
+      if (image && typeof image === "string") {
         formData.append("service_image", image);
+      } else if (image && typeof image === "object") {
+        const result = await uploadphoto(image);
+        formData.append("service_image", result);
+        console.log(result);
       }
 
       if (subServices && subServices.length > 0) {
         const subServicesWithId = subServices.map(
-          ({ service_item_id, service_name, service_price, service_unit }) => ({
+          ({
+            service_item_id,
+            service_item_name,
+            service_price,
+            service_unit,
+          }) => ({
             service_item_id: service_item_id || null,
-            service_name,
+            service_item_name,
             service_price,
             service_unit,
           })
@@ -117,7 +151,7 @@ const AdminServiceMainFix = forwardRef((props, ref) => {
       }
 
       const response = await axios.put(
-        `http://localhost:4000/service/${id}`,
+        `http://localhost:4000/service/auth/${id}`,
         formData,
         {
           headers: {
@@ -175,6 +209,8 @@ const AdminServiceMainFix = forwardRef((props, ref) => {
             <option value="บริการทั่วไป">บริการทั่วไป</option>
             <option value="บริการห้องครัว">บริการห้องครัว</option>
             <option value="บริการห้องน้ำ">บริการห้องน้ำ</option>
+            <option value="บริการอุปกรณ์ไฟฟ้า">บริการอุปกรณ์ไฟฟ้า</option>
+            <option value="บริการห้องอเนกประสงค์">บริการห้องอเนกประสงค์</option>
           </select>
         </div>
         <div className="px-8 py-6 flex items-start">
@@ -257,11 +293,11 @@ const AdminServiceMainFix = forwardRef((props, ref) => {
                 </div>
                 <input
                   type="text"
-                  value={service.service_name}
+                  value={service.service_item_name}
                   onChange={(e) =>
                     handleSubServiceChange(
                       service.service_item_id,
-                      "service_name",
+                      "service_item_name",
                       e.target.value
                     )
                   }

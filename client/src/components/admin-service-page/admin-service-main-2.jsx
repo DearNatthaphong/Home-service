@@ -9,6 +9,8 @@ import photo from "/icons/add-image-icon.png";
 import photo1 from "/icons/frame-icon.png";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import uuid4 from "uuid4";
+import supabase from "./supabase-client";
 
 const AdminServiceMain2 = forwardRef((props, ref) => {
   const submitRef = useRef();
@@ -47,27 +49,54 @@ const AdminServiceMain2 = forwardRef((props, ref) => {
     );
   };
 
+  const uploadphoto = async (image) => {
+    const avatarFile = image;
+    console.log(avatarFile);
+    const filename = uuid4();
+    console.log(filename);
+    // const { data, error } = await supabase.from("services").select();
+    const { data, error } = await supabase.storage
+      .from("servicephoto")
+      .upload(`service/${filename}`, avatarFile);
+
+    const { data: url } = supabase.storage
+      .from("servicephoto")
+      .getPublicUrl(`service/${filename}`);
+
+    console.log(data);
+    console.log(error);
+    console.log(url);
+
+    return url.publicUrl;
+  };
+
   const handleSubmit = async () => {
+    // if (!image) {
+    //   return;
+    // }
     try {
       const formData = new FormData();
       formData.append("service_name", serviceName);
       formData.append("category_name", category);
       if (image) {
-        formData.append("service_image", image);
+        const result = await uploadphoto(image);
+        formData.append("service_image", result);
+        console.log(result);
       }
       formData.append(
         "subServices",
         JSON.stringify(subServices.map(({ id, ...rest }) => rest))
       );
+      console.log(formData);
 
       const response = await axios.post(
-        "http://localhost:4000/service",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
+        "http://localhost:4000/service/auth",
+        formData
+        // {
+        //   headers: {
+        //     "Content-Type": "multipart/form-data",
+        //   },
+        // }
       );
       toast.success("สร้างบริการสำเร็จ!");
       navigate(`/admin/service`);
@@ -111,6 +140,8 @@ const AdminServiceMain2 = forwardRef((props, ref) => {
             <option value="บริการทั่วไป">บริการทั่วไป</option>
             <option value="บริการห้องครัว">บริการห้องครัว</option>
             <option value="บริการห้องน้ำ">บริการห้องน้ำ</option>
+            <option value="บริการอุปกรณ์ไฟฟ้า">บริการอุปกรณ์ไฟฟ้า</option>
+            <option value="บริการห้องอเนกประสงค์">บริการห้องอเนกประสงค์</option>
           </select>
         </div>
         <div className="px-8 py-6 flex items-start">

@@ -16,7 +16,7 @@ function AdminServiceMain({ searchTerm }) {
 
   const deleteService = async (id) => {
     try {
-      await axios.delete(`http://localhost:4000/service/${id}`);
+      await axios.delete(`http://localhost:4000/service/auth/${id}`);
       setServices((prevServices) =>
         prevServices.filter((service) => service.service_id !== id)
       );
@@ -37,7 +37,7 @@ function AdminServiceMain({ searchTerm }) {
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        const response = await axios.get("http://localhost:4000/service");
+        const response = await axios.get("http://localhost:4000/service/");
         console.log(response);
         setServices(response.data.data);
         setFilteredServices(response.data.data);
@@ -68,7 +68,7 @@ function AdminServiceMain({ searchTerm }) {
 
   return (
     <div className="w-full h-full p-[40px] flex justify-center">
-      <div className="w-full h-full bg-white border rounded-lg">
+      <div className="w-full h-full bg-white border rounded-lg overflow-y-scroll ">
         <div className="w-full h-[41px] bg-gray-100 flex items-center justify-between">
           <div className="flex flex-row gap-3 items-center">
             <div className="h-full w-[56px]">
@@ -85,7 +85,7 @@ function AdminServiceMain({ searchTerm }) {
               </div>
             </div>
           </div>
-          <div className="w-[150px] flex justify-start">
+          <div className="w-[250px] flex justify-start">
             <div className="text-[#646c80] text-sm 2xl:text-base font-normal px-3">
               หมวดหมู่
             </div>
@@ -109,14 +109,14 @@ function AdminServiceMain({ searchTerm }) {
           </div>
         </div>
         {filteredServices.length === 0 ? (
-          <div className="w-full h-[90px] bg-white flex items-center justify-center">
+          <div className="w-full h-[90px] bg-white flex items-center justify-center ">
             ไม่พบรายการเซอร์วิส
           </div>
         ) : (
           filteredServices.map((service, index) => (
             <div
               key={service.id}
-              className="w-full h-[90px] bg-white flex items-center justify-between"
+              className="w-full h-[90px] bg-white flex items-center justify-between "
             >
               <div className="flex flex-row gap-3 items-center">
                 <div className="h-full">
@@ -137,7 +137,7 @@ function AdminServiceMain({ searchTerm }) {
                   <div className="2xl:text-lg">{service.service_name}</div>
                 </div>
               </div>
-              <div className="w-[150px] flex justify-start">
+              <div className="w-[250px] flex justify-start">
                 <div
                   className={`2xl:text-lg rounded-[8px]  px-3 py-1 ${
                     service.category_name === "บริการทั่วไป"
@@ -146,6 +146,10 @@ function AdminServiceMain({ searchTerm }) {
                       ? "bg-purple-100 text-purple-900"
                       : service.category_name === "บริการห้องครัว"
                       ? "bg-green-100 text-green-900"
+                      : service.category_name === "บริการอุปกรณ์ไฟฟ้า"
+                      ? "bg-yellow-100 text-yellow-900"
+                      : service.category_name === "บริการห้องอเนกประสงค์"
+                      ? "bg-gray-100 text-gray-900"
                       : "bg-blue-100 text-blue-800"
                   }`}
                 >
@@ -205,6 +209,7 @@ function AdminServiceMain({ searchTerm }) {
             </div>
           ))
         )}
+        <div className="mb-10"></div>
       </div>
       <DeleteModal
         isOpen={isModalOpen}

@@ -24,8 +24,12 @@ function AdminServiceMainView() {
   useEffect(() => {
     const fetchServiceData = async () => {
       try {
-        const response = await axios.get(`http://localhost:4000/service/${id}`);
+        const response = await axios.get(
+          `http://localhost:4000/service/auth/${id}`
+        );
         const { main_service, sub_services } = response.data;
+        console.log(response.data);
+
         setMainService(main_service);
         setSubServices(sub_services);
       } catch (error) {
@@ -99,7 +103,7 @@ function AdminServiceMainView() {
                   ชื่อรายการ
                 </div>
                 <div className="text-black text-base font-medium 2xl:text-lg">
-                  {service.service_name}
+                  {service.service_item_name}
                 </div>
               </div>
 
