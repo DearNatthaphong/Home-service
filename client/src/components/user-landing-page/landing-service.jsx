@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { useAuth } from "../../context/authentication";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { useAuth } from '../../context/authentication';
+import { useNavigate } from 'react-router-dom';
 
 function LandingService() {
   const [isShowServices, setIsShowServices] = useState([]);
@@ -9,7 +9,7 @@ function LandingService() {
   const navigate = useNavigate();
 
   const getSomeServices = async () => {
-    const result = await axios.get("http://localhost:4000/service/limit3");
+    const result = await axios.get('http://localhost:4000/services/limit3');
     setIsShowServices(result.data.data);
   };
 
@@ -19,7 +19,7 @@ function LandingService() {
 
   function getImageUrl(service_image) {
     // ตรวจสอบว่า service_image เป็น URL หรือชื่อไฟล์
-    if (service_image.startsWith("http")) {
+    if (service_image.startsWith('http')) {
       // ถ้าเป็น URL เต็มรูปแบบ
       return service_image;
     } else {
@@ -69,7 +69,7 @@ function LandingService() {
                     <button
                       className="w-[80px] h-[28px] flex items-center justify-center"
                       onClick={() => {
-                        navigate("/demo");
+                        navigate('/demo');
                       }}
                     >
                       <p className="font-prompt font-semibold text-[16px] text-blue-600 underline underline-offset-1">
@@ -80,7 +80,7 @@ function LandingService() {
                     <button
                       className="w-[80px] h-[28px] flex items-center justify-center"
                       onClick={() => {
-                        navigate("/login");
+                        navigate('/login');
                       }}
                     >
                       <p className="font-prompt font-semibold text-[16px] text-blue-600 underline underline-offset-1">
@@ -95,7 +95,7 @@ function LandingService() {
         </div>
         <button
           className="w-[155px] h-[44px] mt-[24px] lg:mt-[64px] bg-blue-600 rounded-[8px] hover:bg-blue-500 active:bg-blue-800"
-          onClick={() => navigate("/servicelist")}
+          onClick={() => navigate('/servicelist')}
         >
           <span className="font-prompt font-medium text-[16px] text-white">
             ดูบริการทั้งหมด
