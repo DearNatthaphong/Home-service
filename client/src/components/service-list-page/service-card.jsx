@@ -38,8 +38,7 @@ function ServiceCard() {
   } = useFilter();
 
   const getServicePost = async () => {
-    const result = await axios.get('http://localhost:4000/services');
-    console.log(result.data.data);
+    const result = await axios.get("http://localhost:4000/services");
     setServicePost(result.data.data);
   };
 
