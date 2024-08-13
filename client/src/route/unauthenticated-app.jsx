@@ -16,7 +16,7 @@ function UnauthenticatedApp() {
         {/* <Route path="/" element={<Homepage />} /> */}
         <Route path="/admin/login" element={<AdminLoginPage />} />
         <Route path="/servicelist" element={<ServiceListPage />} />
-        <Route path="/admin/login" element={<AdminLoginPage />} />
+        {/* <Route path="/admin/login" element={<AdminLoginPage />} /> */}
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/servicedetail" element={<ServiceDetailPage />} />

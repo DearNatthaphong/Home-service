@@ -22,7 +22,8 @@ function adminJwtInterceptor() {
       const isTokenExp =
         error.response.status === 401 &&
         error.response.statusText === 'Unauthorized' &&
-        error.response.data.message !== 'อีเมลหรือรหัสผ่านไม่ถูกต้อง';
+        error.response.data.message !== 'อีเมลหรือรหัสผ่านไม่ถูกต้อง' &&
+        Boolean(window.localStorage.getItem('token'));
 
       const isWrongPassword =
         error.response.status === 401 &&
@@ -45,5 +46,3 @@ function adminJwtInterceptor() {
 }
 
 export default adminJwtInterceptor;
-
-
