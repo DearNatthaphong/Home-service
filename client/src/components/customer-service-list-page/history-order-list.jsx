@@ -77,7 +77,7 @@ function Historylist() {
           </div>
         </div>
         <div className="lg:absolute lg:top-0 lg:w-full">
-          <div className="w-[343px] h-[46px] px-4 py-2 bg-blue-600 rounded-lg lg:w-full lg:h-[96px] lg:flex lg:justify-center lg:items-center">
+          <div className="w-[343px] h-[46px] px-4 py-2 bg-blue-600 rounded-lg lg:w-full lg:h-[96px] lg:flex lg:justify-center lg:items-center lg:rounded-none">
             <div className="w-[311px] text-center text-white text-xl font-medium leading-[30px] lg:text-[32px] lg:leading-[48px]">
               ประวัติการซ่อม
             </div>
