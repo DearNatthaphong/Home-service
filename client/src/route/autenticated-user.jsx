@@ -13,6 +13,7 @@ import { ServiceProvider } from '../context/service-context';
 import UserServiceDetailPage from '../pages/user-service-detail-page';
 import UserLandingPage from '../pages/user-landing-page';
 import UserNotFoundPage from '../pages/user-not-found-page';
+import { PaymentProvider } from '../context/payment-context';
 
 function AutenticatedUser() {
   return (
@@ -33,11 +34,30 @@ function AutenticatedUser() {
         />
         <Route
           path="/services/orders/:id/appointments"
-          element={<UserServiceDetailPage />}
+          element={
+            // <PaymentProvider>
+            <UserServiceDetailPage />
+            // </PaymentProvider>
+          }
         />
         {/* เดียร์ */}
-        <Route path="/payment/:id" element={<ServicePayment />} />
-        <Route path="/payment/:id/success" element={<PaymentSuccess />} />
+        <Route
+          path="/payment/:id"
+          element={
+            // <PaymentProvider>
+            <ServicePayment />
+            // </PaymentProvider>
+          }
+        />
+        <Route
+          path="/payment/:id/success"
+          element={
+            // <PaymentProvider>
+            <PaymentSuccess />
+            // </PaymentProvider>
+          }
+        />
+
         {/* ป้อง */}
         <Route path="/orderlist" element={<UserOrderListPage />} />
         <Route path="/historylist" element={<UserHistoryListPage />} />

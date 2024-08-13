@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { loadStripe } from '@stripe/stripe-js';
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 
 const PaymentContext = React.createContext();
@@ -64,16 +64,16 @@ function PaymentProvider(props) {
     }
   }
 
-  async function handleClickToPayment(id) {
-    //1.สร้าง client secret 2.ไปที่หน้า payment ตัดบัตร
-    try {
-      await createClientSecret(id);
-      navigate(`/payment/${id}`);
-    } catch (error) {
-      console.log(error);
-      toast.error(error.response.data.message);
-    }
-  }
+  // async function handleClickToPayment(id) {
+  //   //1.สร้าง client secret 2.ไปที่หน้า payment ตัดบัตร
+  //   try {
+  //     await createClientSecret(id);
+  //     navigate(`/payment/${id}`);
+  //   } catch (error) {
+  //     console.log(error);
+  //     toast.error(error.response.data.message);
+  //   }
+  // }
 
   async function handlePaymentSuccess(id) {
     try {
@@ -136,6 +136,24 @@ function PaymentProvider(props) {
     }
   };
 
+  const [order, setOrder] = useState({});
+  const { id } = useParams();
+
+  const fetchOrder = async () => {
+    try {
+      const result = await axios.get(
+        `http://localhost:4000/payment/orders/${id}`
+      );
+      setOrder(result.data);
+    } catch (error) {
+      toast.error(error.response.data.message);
+    }
+  };
+
+  useEffect(() => {
+    fetchOrder();
+  }, []);
+
   return (
     <PaymentContext.Provider
       value={{
@@ -144,7 +162,7 @@ function PaymentProvider(props) {
         clientSecret,
         promotion,
         newTotalPrice,
-        handleClickToPayment,
+        // handleClickToPayment,
         handlePaymentSuccess,
         handlePaymentFail,
         createClientSecret,
@@ -152,7 +170,8 @@ function PaymentProvider(props) {
         updateClientSecret,
         getPromotionByQuery,
         updateTotalPrice,
-        createPromotionUsage
+        createPromotionUsage,
+        order
       }}
     >
       {props.children}

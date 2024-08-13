@@ -4,8 +4,11 @@ import CardProcess from '../components/payment/card-process.jsx';
 import CardBody from '../components/payment/card-body.jsx';
 import CardSummary from '../components/payment/card-summary.jsx';
 import PaymentFooter from '../components/payment/payment-footer.jsx';
+import { usePayment } from '../context/payment-context.jsx';
 
 function ServicePayment() {
+  const { order } = usePayment();
+
   return (
     <section className="w-screen min-h-screen font-prompt text-sm bg-background">
       <ServiceHeader />
@@ -13,7 +16,7 @@ function ServicePayment() {
         <div
           className="absolute top-[53px] left-0 mt-[160px] xl:mt-0 w-full h-[168px] bg-cover bg-center"
           style={{
-            backgroundImage: `url('../../public/images/bg-payment-mobile.png')`
+            backgroundImage: `url(${order.serviceImage})`
           }}
         ></div>
         <div className="w-full min-h-full max-w-[1120px] px-3 xl:px-0 flex flex-col gap-3 overflow-hidden">
