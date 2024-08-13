@@ -71,7 +71,9 @@ function AdminAddPromotionMain() {
             className="w-full max-w-[433px] h-full bg-transparent outline-none border-[1px] border-gray-300 rounded-[8px] px-[16px] py-[10px] text-[16px] font-prompt font-medium text-black focus:border-blue-600"
             value={isPromotionCode}
             onChange={(e) => {
-              setIsPromotionCode(e.target.value);
+              setIsPromotionCode(
+                e.target.value.replace(/\s+/g, "").toUpperCase()
+              );
             }}
             required
           />

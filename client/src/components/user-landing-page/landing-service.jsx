@@ -9,7 +9,7 @@ function LandingService() {
   const navigate = useNavigate();
 
   const getSomeServices = async () => {
-    const result = await axios.get('http://localhost:4000/services/limit3');
+    const result = await axios.get("http://localhost:4000/services/limit3");
     setIsShowServices(result.data.data);
   };
 

@@ -7,7 +7,7 @@ function AdminPromotionHeader() {
   const { isSearchPromotion, setIsSearchPromotion } = usePromotion();
   const [isFocused, setIsFocused] = useState(false);
   return (
-    <div className="w-full h-full max-h-[80px] border-b-[1px] border-gray-300 flex items-center bg-white px-[40px] justify-between">
+    <div className="w-full h-full max-h-[80px] border-b-[1px] border-gray-300 flex items-center bg-white px-[40px] py-[20px] justify-between">
       <span className="font-prompt text-[20px] font-medium text-black">
         Promotion Code
       </span>

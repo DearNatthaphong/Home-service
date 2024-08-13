@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { loadStripe } from '@stripe/stripe-js';
-import { toast } from 'react-toastify';
-import { useNavigate, useParams } from 'react-router-dom';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import { loadStripe } from "@stripe/stripe-js";
+import { toast } from "react-toastify";
+import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
 
 const PaymentContext = React.createContext();
 
@@ -10,16 +10,16 @@ function PaymentProvider(props) {
   const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
   const navigate = useNavigate();
 
-  const [clientSecret, setClientSecret] = useState('');
+  const [clientSecret, setClientSecret] = useState("");
   const [promotion, setPromotion] = useState(null);
   const [newTotalPrice, setNewTotalPrice] = useState(null);
 
   const appearance = {
-    theme: 'stripe'
+    theme: "stripe",
   };
   const options = {
     clientSecret,
-    appearance
+    appearance,
   };
 
   async function createClientSecret(id) {
@@ -93,10 +93,10 @@ function PaymentProvider(props) {
       );
 
       console.log(result);
-      toast.success(result.data?.message || 'การอัพเดตสำเร็จ');
+      toast.success(result.data?.message || "การอัพเดตสำเร็จ");
     } catch (error) {
       console.log(error);
-      toast.error(error.response?.data || error.message || 'เกิดข้อผิดพลาด');
+      toast.error(error.response?.data || error.message || "เกิดข้อผิดพลาด");
     }
   }
 
@@ -175,7 +175,7 @@ function PaymentProvider(props) {
         getPromotionByQuery,
         updateTotalPrice,
         createPromotionUsage,
-        order
+        order,
       }}
     >
       {props.children}

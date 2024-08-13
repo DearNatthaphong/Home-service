@@ -77,7 +77,9 @@ function AdminEditPromotionMain() {
             onChange={(e) => {
               setIsOnePromotion({
                 ...isOnePromotion,
-                promotion_code: e.target.value,
+                promotion_code: e.target.value
+                  .replace(/\s+/g, "")
+                  .toUpperCase(),
               });
             }}
           />
