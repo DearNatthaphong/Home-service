@@ -5,20 +5,25 @@ import axios from 'axios';
 import SummaryDetail from '../components/payment/summary-detail';
 import SummaryPrice from '../components/payment/summary-price';
 import ServiceHeader from '../components/service-list-page/service-header';
+import { usePayment } from '../context/payment-context';
 
 function PaymentSuccess() {
-  const [order, setOrder] = useState({});
-  const { id } = useParams();
   const navigate = useNavigate();
+  // const [order, setOrder] = useState({});
+  // const { id } = useParams();
 
-  const getOrder = async () => {
-    const result = await axios(`http://localhost:4000/payment/orders/${id}`);
-    setOrder(result.data);
-  };
+  // const getOrder = async () => {
+  //   const result = await axios.get(
+  //     `http://localhost:4000/payment/orders/${id}`
+  //   );
+  //   setOrder(result.data);
+  // };
 
-  useEffect(() => {
-    getOrder();
-  }, []);
+  // useEffect(() => {
+  //   getOrder();
+  // }, []);
+
+  const { order } = usePayment();
 
   return (
     <div className="w-screen min-h-screen font-prompt text-sm bg-background">

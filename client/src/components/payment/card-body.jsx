@@ -3,9 +3,11 @@ import { Elements } from '@stripe/react-stripe-js';
 import CheckoutForm from './checkout-form.jsx';
 import { usePayment } from '../../context/payment-context.jsx';
 import { useParams } from 'react-router-dom';
+import { useStripeContext } from '../../context/stripe-context.jsx';
 
 function CardBody() {
-  const { options, stripePromise, getClientSecret } = usePayment();
+  // const { options, stripePromise, getClientSecret } = usePayment();
+  const { options, stripePromise, getClientSecret } = useStripeContext();
   const { id } = useParams();
 
   useEffect(() => {

@@ -1,6 +1,9 @@
-import React from "react";
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function LandingBanner() {
+  const navigate = useNavigate();
+
   return (
     <div className="h-[705px] md:h-[540px] bg-blue-100 flex items-center justify-center px-[16px] pt-[56px] mt-[53px]">
       <div className="w-full max-w-[345px] md:max-w-[1095px] h-full relative">
@@ -15,7 +18,10 @@ function LandingBanner() {
           ทำความสะอาดบ้าน <br />
           โดยพนักงานแม่บ้าน และช่างมืออาชีพ
         </p>
-        <button className="w-full max-w-[191px] h-full max-h-[54px] rounded-[8px] bg-blue-600 flex items-center justify-center mt-[32px] md:mt-[47px]">
+        <button
+          onClick={() => navigate('/servicelist')}
+          className="w-full max-w-[191px] h-full max-h-[54px] rounded-[8px] bg-blue-600 flex items-center justify-center mt-[32px] md:mt-[47px]"
+        >
           <span className="font-prompt font-medium text-[20px] text-white">
             เช็คราคาบริการ
           </span>

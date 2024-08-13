@@ -27,7 +27,7 @@ export const getOrderByQuerry = async (req, res) => {
         FROM orders
         INNER JOIN order_items ON orders.order_id = order_items.order_id
         INNER JOIN service_items ON order_items.service_item_id = service_items.service_item_id
-         WHERE (orders.action_status = $1 OR orders.action_status = $2) AND orders.user_id = $3`,
+         WHERE (orders.action_status = $1 OR orders.action_status = $2) AND orders.user_id = $3 ORDER BY orders.created_at DESC LIMIT 100 `,
         ['รอดำเนินการ', 'กำลังดำเนินการ', userId]
       );
     }
@@ -43,7 +43,7 @@ export const getOrderByQuerry = async (req, res) => {
         FROM orders
         INNER JOIN order_items ON orders.order_id = order_items.order_id
         INNER JOIN service_items ON order_items.service_item_id = service_items.service_item_id
-        WHERE orders.action_status = $1 AND orders.user_id = $2`,
+        WHERE orders.action_status = $1 AND orders.user_id = $2 ORDER BY orders.created_at DESC LIMIT 100`,
         ['ดำเนินการสำเร็จ', userId]
       );
     }

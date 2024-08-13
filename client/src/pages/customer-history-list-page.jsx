@@ -6,7 +6,6 @@ import UserHeader from '../components/user-header';
 function UserHistoryListPage() {
   return (
     <div className="overflow-clip ">
-      {/* <Header /> */}
       <UserHeader />
       <Historylist />
       <Footer />

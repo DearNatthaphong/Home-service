@@ -1,30 +1,29 @@
 import {
   userIcon,
   clockIcon,
-  listPadIcon,
-} from "../../../public/icons/icon-user-2";
-import photo1 from "/images/calender-icon.png";
-import photo2 from "/images/worker-icon.png";
-import { useNavigate } from "react-router-dom";
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+  listPadIcon
+} from '../../../public/icons/icon-user-2';
+import photo1 from '/images/calender-icon.png';
+import photo2 from '/images/worker-icon.png';
+import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { formatPrice } from '../../utils/price-format';
 
 function OrderList() {
   const [orders, setOrders] = useState([]);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
   const goToHistoryList = () => {
-    navigate("/historylist");
+    navigate('/historylist');
   };
 
   useEffect(() => {
     const fetchOrders = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:4000/orders?firstActionStatus=รอดำเนินการ&secondActionStatus=กำลังดำเนินการ"
+          'http://localhost:4000/orders?firstActionStatus=รอดำเนินการ&secondActionStatus=กำลังดำเนินการ'
         );
-
-        console.log(response);
         const orderItemsData = response.data.data;
         setOrders(orderItemsData);
       } catch (error) {
@@ -36,7 +35,7 @@ function OrderList() {
   }, []);
 
   return (
-    <section className="font-prompt flex justify-center bg-gray-100 lg:relative lg:min-h-[942px] mt-14">
+    <section className="font-prompt flex justify-center bg-gray-100 lg:relative lg:min-h-[942px] mt-[53px]">
       <div className="flex flex-col justify-center items-center gap-6 mb-8 lg:flex-row lg:mt-[120px] lg:items-start">
         <div className="w-screen flex justify-center shadow-lg py-2 lg:w-[253px] lg:h-[252px] lg:shadow-none lg:py-0 sticky top-0 bg-gray-100">
           <div className="w-[343px] border border-gray-300 bg-white rounded-lg lg:flex lg:flex-col lg:gap-3 ">
@@ -106,11 +105,11 @@ function OrderList() {
                     </div>
                     <div
                       className={` h-[25px] px-3 py-0.5 rounded-[99px] justify-center items-start gap-2.5 flex ${
-                        order.action_status === "รอดำเนินการ"
-                          ? "bg-gray-200 text-zinc-700"
-                          : order.action_status === "กำลังดำเนินการ"
-                          ? "bg-yellow-100 text-yellow-900"
-                          : "bg-gray-200 text-zinc-700"
+                        order.action_status === 'รอดำเนินการ'
+                          ? 'bg-gray-200 text-zinc-700'
+                          : order.action_status === 'กำลังดำเนินการ'
+                          ? 'bg-yellow-100 text-yellow-900'
+                          : 'bg-gray-200 text-zinc-700'
                       }`}
                     >
                       <div className=" text-sm font-normal leading-[21px]">
@@ -139,7 +138,7 @@ function OrderList() {
                       ราคารวม:
                     </div>
                     <div className="text-zinc-800 text-base font-medium leading-normal">
-                      {order.total_price} ฿
+                      {formatPrice(order.total_price)}
                     </div>
                   </div>
                   <div className="flex gap-6 lg:flex-col lg:gap-1">
