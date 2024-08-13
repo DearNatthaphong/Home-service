@@ -154,13 +154,16 @@ export const fetchAllOrderItems = async (req, res) => {
   try {
     const results = await connectionPool.query(
       `SELECT 
-     o.total_price,
+      s.service_name,
+      s.service_image,
+      o.total_price,
       oi.order_item_id,
       oi.quantity,
       si.service_item_name
       FROM orders AS o
       INNER JOIN order_items AS oi on o.order_id = oi.order_id
       INNER JOIN service_items AS si on oi.service_item_id = si.service_item_id
+      INNER JOIN services AS s on s.service_id = si.service_id
       WHERE o.order_id = $1 `,
       [orderId]
     );
@@ -172,6 +175,8 @@ export const fetchAllOrderItems = async (req, res) => {
     }
 
     const formattedResponse = {
+      serviceName: results.rows[0].service_name,
+      serviceImage: results.rows[0].service_image,
       totalPrice: results.rows[0].total_price,
       orderItems: results.rows.map((item) => ({
         orderItemId: item.service_item_id,

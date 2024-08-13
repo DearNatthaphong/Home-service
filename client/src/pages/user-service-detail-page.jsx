@@ -7,9 +7,11 @@ import UserServiceSummary from '../components/user-service-detail-page/user-serv
 import UserServiceDetailFooter from '../components/user-service-detail-page/user-service-detail-footer';
 import { ServiceDetailProvider } from '../context/user-service-detail-context';
 import PaymentFooter from '../components/payment/payment-footer';
-import { PaymentProvider } from '../context/payment-context';
+import { useAppointment } from '../context/appointment-context';
 
 function UserServiceDetailPage() {
+  const { serviceImage } = useAppointment();
+
   return (
     <ServiceDetailProvider>
       <section className="w-full min-h-screen font-prompt text-sm bg-background">
@@ -18,7 +20,7 @@ function UserServiceDetailPage() {
           <div
             className="absolute top-[53px] left-0 mt-[160px] xl:mt-0 w-full h-[168px] bg-cover bg-center"
             style={{
-              backgroundImage: `url('../../public/images/bg-payment-mobile.png')`
+              backgroundImage: `url(${serviceImage})`
             }}
           ></div>
           <div className="w-full min-h-full max-w-[1120px] px-3 xl:px-0 flex flex-col gap-3 overflow-hidden">
@@ -35,7 +37,6 @@ function UserServiceDetailPage() {
         {/* <PaymentFooter /> */}
         {/* <PaymentProvider> */}
         <UserServiceDetailFooter />
-        {/* </PaymentProvider> */}
       </section>
     </ServiceDetailProvider>
   );

@@ -21,7 +21,7 @@ function ServiceProvider(props) {
       setServiceImage(result.data.serviceImage);
       setAllServiceItems(result.data.serviceItems);
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error(error.response?.data?.message ?? 'พบข้อผิดพลาด');
     }
   };
 

@@ -11,6 +11,7 @@ import UserHistoryListPage from '../pages/customer-history-list-page';
 import UserOrderListPage from '../pages/customer-order-list-page';
 import { ServiceProvider } from '../context/service-context';
 import UserServiceDetailPage from '../pages/user-service-detail-page';
+import { AppointmentProvider } from '../context/appointment-context';
 import UserLandingPage from '../pages/user-landing-page';
 import UserNotFoundPage from '../pages/user-not-found-page';
 import { PaymentProvider } from '../context/payment-context';
@@ -35,9 +36,9 @@ function AutenticatedUser() {
         <Route
           path="/services/orders/:id/appointments"
           element={
-            // <PaymentProvider>
-            <UserServiceDetailPage />
-            // </PaymentProvider>
+            <AppointmentProvider>
+              <UserServiceDetailPage />
+            </AppointmentProvider>
           }
         />
         {/* เดียร์ */}

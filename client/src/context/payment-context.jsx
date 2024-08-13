@@ -141,9 +141,11 @@ function PaymentProvider(props) {
 
   const fetchOrder = async () => {
     try {
+      console.log(id);
       const result = await axios.get(
         `http://localhost:4000/payment/orders/${id}`
       );
+      console.log(result);
       setOrder(result.data);
     } catch (error) {
       toast.error(error.response.data.message);

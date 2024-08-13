@@ -1,7 +1,6 @@
 import LocalOfferOutlinedIcon from '@mui/icons-material/LocalOfferOutlined';
 import { useService } from '../../context/service-context';
 import { formatPrice } from '../../utils/price-format';
-import { useState } from 'react';
 
 function CardBody() {
   const { serviceName, allServiceItems, orderItems, updateOrderItems } =

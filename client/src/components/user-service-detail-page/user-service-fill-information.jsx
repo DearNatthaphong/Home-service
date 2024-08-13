@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { useServiceDetail } from "../../context/user-service-detail-context";
+import React, { useState, useEffect } from 'react';
+import { useServiceDetail } from '../../context/user-service-detail-context';
+import { useAppointment } from '../../context/appointment-context';
 
 function UserServiceFillInformation() {
   const {
@@ -20,13 +21,13 @@ function UserServiceFillInformation() {
     isAddress,
     setIsAddress,
     isSpecify,
-    setIsSpecify,
+    setIsSpecify
   } = useServiceDetail();
 
   useEffect(() => {
     (() => {
       fetch(
-        "https://raw.githubusercontent.com/kongvut/thai-province-data/master/api_province_with_amphure_tambon.json"
+        'https://raw.githubusercontent.com/kongvut/thai-province-data/master/api_province_with_amphure_tambon.json'
       )
         .then((response) => response.json())
         .then((result) => {
@@ -41,7 +42,7 @@ function UserServiceFillInformation() {
     list,
     child,
     childsId = [],
-    setChilds = [],
+    setChilds = []
   }) => {
     const onChangeHandle = (event) => {
       setChilds.forEach((setChild) => setChild([]));
@@ -150,7 +151,7 @@ function UserServiceFillInformation() {
                   id="amphure_id"
                   list={amphures}
                   child="tambon"
-                  childsId={["tambon_id"]}
+                  childsId={['tambon_id']}
                   setChilds={[setTambons]}
                 />
               </div>
@@ -162,7 +163,7 @@ function UserServiceFillInformation() {
                   id="province_id"
                   list={provinces}
                   child="amphure"
-                  childsId={["amphure_id", "tambon_id"]}
+                  childsId={['amphure_id', 'tambon_id']}
                   setChilds={[setAmphures, setTambons]}
                 />
               </div>

@@ -13,6 +13,7 @@ import { useNavigate } from 'react-router-dom';
 
 function ServiceFooter() {
   const [open, setOpen] = useState(false);
+
   const {
     orderItems,
     allServiceItems,
@@ -20,6 +21,7 @@ function ServiceFooter() {
     createOrder,
     createOrderItems
   } = useService();
+
   const getServiceItemById = (serviceItemId) =>
     allServiceItems.find((item) => item.serviceItemId === serviceItemId);
   const navigate = useNavigate();

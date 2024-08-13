@@ -16,7 +16,6 @@ function ServiceDetailPage() {
         <div
           className="absolute top-[53px] left-0 mt-[160px] xl:mt-0 w-full h-[168px] bg-cover bg-center"
           style={{
-            // backgroundImage: `url('../../public/images/bg-payment-desktop.png')`
             backgroundImage: `url(${serviceImage})`
           }}
         ></div>
