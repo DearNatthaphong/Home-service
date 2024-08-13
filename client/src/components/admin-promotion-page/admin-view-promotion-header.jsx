@@ -9,7 +9,7 @@ function AdminViewPromotionHeader() {
 
   const getNamePromotion = async () => {
     const results = await axios.get(
-      `http://localhost:4000/promotions/${params.promotion_id}`
+      `http://localhost:4000/admin/promotions/${params.promotion_id}`
     );
     setIsNameOfPromotion(results.data.data[0]);
   };

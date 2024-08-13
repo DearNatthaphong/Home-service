@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import axios from 'axios';
-import { formatDate } from '../../utils/admin-promotion-date-time-format';
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import { formatDate } from "../../utils/admin-promotion-date-time-format";
 
 function AdminViewPromotionMain() {
   const [isChoosePromotion, setIsChoosePromotion] = useState({});
@@ -47,7 +47,7 @@ function AdminViewPromotionMain() {
           <div className="font-prompt text-[16px] text-red flex items-center">
             <div className="mr-[2px]">-</div>
             {isChoosePromotion.discount}
-            {isChoosePromotion?.discount_type === 'fixed' ? (
+            {isChoosePromotion?.discount_type === "fixed" ? (
               <p className="ml-[2px]">฿</p>
             ) : (
               <p className="ml-[2px]">%</p>
@@ -56,7 +56,7 @@ function AdminViewPromotionMain() {
         </div>
         <div className="flex items-center">
           <span className="font-prompt font-medium text-[16px] text-gray-700 w-full max-w-[205px] h-full max-h-[24px] mr-[24px]">
-            ราคาที่ลด
+            โควต้าการใช้
           </span>
           <p className="font-prompt text-[16px] text-black flex items-center">
             <span>0</span>

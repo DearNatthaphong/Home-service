@@ -34,7 +34,7 @@ function AdminEditPromotionHeader() {
   };
 
   return (
-    <div className="w-full h-full max-h-[80px] border-b-[1px] border-gray-300 flex items-center bg-white px-[40px] justify-between">
+    <div className="w-full h-full max-h-[80px] border-b-[1px] border-gray-300 flex items-center bg-white px-[40px] justify-between py-[20px]">
       <div className="gap-[14px] h-full max-h-[50px] flex items-center">
         <button
           className="w-[40px] h-[40px] flex items-center justify-center"

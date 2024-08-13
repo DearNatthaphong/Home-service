@@ -21,7 +21,7 @@ function AdminAddPromotionHeader() {
   };
 
   return (
-    <div className="w-full h-full max-h-[80px] border-b-[1px] border-gray-300 flex items-center bg-white px-[40px] justify-between">
+    <div className="w-full h-full max-h-[80px] border-b-[1px] border-gray-300 flex items-center bg-white px-[40px] justify-between py-[20px]">
       <span className="font-prompt text-[20px] font-medium text-black">
         เพิ่ม Promotion Code
       </span>
