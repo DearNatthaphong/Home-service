@@ -36,7 +36,7 @@ function OrderList() {
   }, []);
 
   return (
-    <section className="font-prompt flex justify-center bg-gray-100 lg:relative lg:min-h-[942px]">
+    <section className="font-prompt flex justify-center bg-gray-100 lg:relative lg:min-h-[942px] mt-14">
       <div className="flex flex-col justify-center items-center gap-6 mb-8 lg:flex-row lg:mt-[120px] lg:items-start">
         <div className="w-screen flex justify-center shadow-lg py-2 lg:w-[253px] lg:h-[252px] lg:shadow-none lg:py-0 sticky top-0 bg-gray-100">
           <div className="w-[343px] border border-gray-300 bg-white rounded-lg lg:flex lg:flex-col lg:gap-3 ">
