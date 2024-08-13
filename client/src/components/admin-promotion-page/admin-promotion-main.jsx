@@ -46,7 +46,7 @@ function AdminPromotionMain() {
                     </td>
                     <td className="font-prompt text-[16px] font-light text-red px-[24px] pt-[10px]">
                       <span className="mr-[2px]">-</span>
-                      {items.discount}
+                      {Number(items.discount).toFixed(2)}
                       {items.discount_type === "fixed" ? (
                         <span className="ml-[2px]">฿</span>
                       ) : (
