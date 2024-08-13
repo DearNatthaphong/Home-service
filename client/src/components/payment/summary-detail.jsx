@@ -35,7 +35,7 @@ function SummaryDetail({ details, isSummary }) {
             key={item.orderItemId}
             className="flex justify-between pb-2 text-gray-700"
           >
-            <span className="text-black">{item.serviceName}</span>
+            <span className="text-black">{item.serviceItemName}</span>
             <span className="text-end">{item.quantity} รายการ</span>
           </p>
         ))}

@@ -3,21 +3,10 @@ import SummaryDetail from './summary-detail';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import SummaryPrice from './summary-price';
+import { usePayment } from '../../context/payment-context';
 
 function CardSummary() {
-  const [order, setOrder] = useState({});
-  const params = useParams();
-
-  const getOrder = async () => {
-    const result = await axios(
-      `http://localhost:4000/payment/orders/${params.id}`
-    );
-    setOrder(result.data);
-  };
-
-  useEffect(() => {
-    getOrder();
-  }, []);
+  const { order } = usePayment();
 
   return (
     <div className="xl:w-1/3">

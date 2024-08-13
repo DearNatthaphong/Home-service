@@ -20,7 +20,7 @@ function PaymentFooter() {
   const params = useParams();
 
   const getOrder = async () => {
-    const result = await axios(
+    const result = await axios.get(
       `http://localhost:4000/payment/orders/${params.id}`
     );
     setOrder(result.data);

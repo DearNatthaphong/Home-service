@@ -3,20 +3,20 @@ import React, {
   useEffect,
   useRef,
   forwardRef,
-  useImperativeHandle,
-} from "react";
-import axios from "axios";
-import { useParams, useNavigate } from "react-router-dom";
-import photo1 from "/icons/frame-icon.png";
-import photo from "/icons/add-image-icon.png";
-import { toast } from "react-toastify";
-import uuid4 from "uuid4";
-import supabase from "./supabase-client";
+  useImperativeHandle
+} from 'react';
+import axios from 'axios';
+import { useParams, useNavigate } from 'react-router-dom';
+import photo1 from '/icons/frame-icon.png';
+import photo from '/icons/add-image-icon.png';
+import { toast } from 'react-toastify';
+import uuid4 from 'uuid4';
+import supabase from './supabase-client';
 
 function getImageUrl(image) {
-  if (typeof image === "string" && image.startsWith("http")) {
+  if (typeof image === 'string' && image.startsWith('http')) {
     return image;
-  } else if (typeof image === "object") {
+  } else if (typeof image === 'object') {
     return URL.createObjectURL(image);
   } else {
     return null;
@@ -30,11 +30,11 @@ const uploadphoto = async (image) => {
   console.log(filename);
   // const { data, error } = await supabase.from("services").select();
   const { data, error } = await supabase.storage
-    .from("servicephoto")
+    .from('servicephoto')
     .upload(`service/${filename}`, avatarFile);
 
   const { data: url } = supabase.storage
-    .from("servicephoto")
+    .from('servicephoto')
     .getPublicUrl(`service/${filename}`);
 
   console.log(data);
@@ -51,8 +51,8 @@ const AdminServiceMainFix = forwardRef((props, ref) => {
 
   const [mainService, setMainService] = useState(null);
   const [subServices, setSubServices] = useState([]);
-  const [serviceName, setServiceName] = useState("");
-  const [category, setCategory] = useState("");
+  const [serviceName, setServiceName] = useState('');
+  const [category, setCategory] = useState('');
   const [image, setImage] = useState(null);
 
   useEffect(() => {
@@ -64,12 +64,12 @@ const AdminServiceMainFix = forwardRef((props, ref) => {
         const { main_service, sub_services } = response.data;
         setMainService(main_service);
         setSubServices(sub_services || []);
-        console.log("SubServices after fetch:", sub_services);
+        console.log('SubServices after fetch:', sub_services);
         setServiceName(main_service.service_name);
         setCategory(main_service.category_name);
         setImage(main_service.service_image);
       } catch (error) {
-        console.error("Error fetching service data:", error);
+        console.error('Error fetching service data:', error);
       }
     };
 
@@ -103,10 +103,10 @@ const AdminServiceMainFix = forwardRef((props, ref) => {
       ...prevSubServices,
       {
         service_item_id: Date.now(),
-        service_item_name: "",
-        service_price: "",
-        service_unit: "",
-      },
+        service_item_name: '',
+        service_price: '',
+        service_unit: ''
+      }
     ]);
   };
 
@@ -121,13 +121,13 @@ const AdminServiceMainFix = forwardRef((props, ref) => {
   const handleSubmit = async () => {
     try {
       const formData = new FormData();
-      formData.append("service_name", serviceName);
-      formData.append("category_name", category);
-      if (image && typeof image === "string") {
-        formData.append("service_image", image);
-      } else if (image && typeof image === "object") {
+      formData.append('service_name', serviceName);
+      formData.append('category_name', category);
+      if (image && typeof image === 'string') {
+        formData.append('service_image', image);
+      } else if (image && typeof image === 'object') {
         const result = await uploadphoto(image);
-        formData.append("service_image", result);
+        formData.append('service_image', result);
         console.log(result);
       }
 
@@ -137,18 +137,18 @@ const AdminServiceMainFix = forwardRef((props, ref) => {
             service_item_id,
             service_item_name,
             service_price,
-            service_unit,
+            service_unit
           }) => ({
             service_item_id: service_item_id || null,
             service_item_name,
             service_price,
-            service_unit,
+            service_unit
           })
         );
-        formData.append("subServices", JSON.stringify(subServicesWithId));
-        console.log("SubServices before submit:", subServicesWithId);
+        formData.append('subServices', JSON.stringify(subServicesWithId));
+        console.log('SubServices before submit:', subServicesWithId);
       } else {
-        console.error("SubServices is empty or undefined");
+        console.error('SubServices is empty or undefined');
       }
 
       const response = await axios.put(
@@ -156,23 +156,23 @@ const AdminServiceMainFix = forwardRef((props, ref) => {
         formData,
         {
           headers: {
-            "Content-Type": "multipart/form-data",
-          },
+            'Content-Type': 'multipart/form-data'
+          }
         }
       );
-      toast.success("อัปเดตเซอร์วิสสำเร็จ!");
+      toast.success('อัปเดตเซอร์วิสสำเร็จ!');
 
       setMainService(response.data.main_service);
 
       navigate(`/admin/service/view/${id}`);
     } catch (error) {
-      console.error("เกิดข้อผิดพลาดในการอัปเดตบริการ:", error);
-      toast.error("เกิดข้อผิดพลาดในการอัปเดตเซอร์วิส!");
+      console.error('เกิดข้อผิดพลาดในการอัปเดตบริการ:', error);
+      toast.error('เกิดข้อผิดพลาดในการอัปเดตเซอร์วิส!');
     }
   };
 
   useImperativeHandle(ref, () => ({
-    handleSubmit,
+    handleSubmit
   }));
 
   if (!mainService) {
@@ -237,7 +237,7 @@ const AdminServiceMainFix = forwardRef((props, ref) => {
                     PNG, JPG ขนาดไม่เกิน 5MB
                   </div>
                 </>
-              ) : typeof image === "string" && image.startsWith("blob:") ? (
+              ) : typeof image === 'string' && image.startsWith('blob:') ? (
                 <img
                   src={image}
                   alt="Uploaded"
@@ -298,7 +298,7 @@ const AdminServiceMainFix = forwardRef((props, ref) => {
                   onChange={(e) =>
                     handleSubServiceChange(
                       service.service_item_id,
-                      "service_item_name",
+                      'service_item_name',
                       e.target.value
                     )
                   }
@@ -315,7 +315,7 @@ const AdminServiceMainFix = forwardRef((props, ref) => {
                   onChange={(e) =>
                     handleSubServiceChange(
                       service.service_item_id,
-                      "service_price",
+                      'service_price',
                       e.target.value
                     )
                   }
@@ -332,7 +332,7 @@ const AdminServiceMainFix = forwardRef((props, ref) => {
                   onChange={(e) =>
                     handleSubServiceChange(
                       service.service_item_id,
-                      "service_unit",
+                      'service_unit',
                       e.target.value
                     )
                   }
@@ -376,18 +376,18 @@ const AdminServiceMainFix = forwardRef((props, ref) => {
           <div>
             {new Date(mainService.created_at)
               .toLocaleDateString(undefined, {
-                month: "2-digit",
-                day: "2-digit",
-                year: "numeric",
+                month: '2-digit',
+                day: '2-digit',
+                year: 'numeric'
               })
-              .replace(/\//g, "/")}{" "}
+              .replace(/\//g, '/')}{' '}
             {new Date(mainService.updated_at)
               .toLocaleTimeString(undefined, {
-                hour: "2-digit",
-                minute: "2-digit",
-                hour12: true,
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: true
               })
-              .replace(" ", "")}
+              .replace(' ', '')}
           </div>
         </div>
         <div className="px-8 py-3 flex items-center mb-10">
@@ -399,18 +399,18 @@ const AdminServiceMainFix = forwardRef((props, ref) => {
           <div>
             {new Date(mainService.updated_at)
               .toLocaleDateString(undefined, {
-                month: "2-digit",
-                day: "2-digit",
-                year: "numeric",
+                month: '2-digit',
+                day: '2-digit',
+                year: 'numeric'
               })
-              .replace(/\//g, "/")}{" "}
+              .replace(/\//g, '/')}{' '}
             {new Date(mainService.updated_at)
               .toLocaleTimeString(undefined, {
-                hour: "2-digit",
-                minute: "2-digit",
-                hour12: true,
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: true
               })
-              .replace(" ", "")}
+              .replace(' ', '')}
           </div>
         </div>
       </div>

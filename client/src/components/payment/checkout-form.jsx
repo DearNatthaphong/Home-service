@@ -82,7 +82,8 @@ export default function CheckoutForm() {
       console.log('Payment Error:', error);
 
       if (error) {
-        if (error.type === 'card_error' || error.type === 'validation_error') {
+        // if (error.type === 'card_error' || error.type === 'validation_error') {
+        if (error.type === 'card_error') {
           setMessage(error.message);
           await handlePaymentFail(id);
           toast.error(message);
@@ -144,7 +145,11 @@ export default function CheckoutForm() {
         </span>
       </button>
       {/* Show any error or success messages */}
-      {message && <div id="payment-message">{message}</div>}
+      {message && (
+        <div id="payment-message" className="mt-3 text-red text-base">
+          {message}
+        </div>
+      )}
     </form>
   );
 }

@@ -1,11 +1,11 @@
-import React from "react";
-import photo from "/icons/frame-icon.png";
-import photo1 from "/icons/bin-icon.png";
-import photo2 from "/icons/pen-icon.png";
-import { useState, useEffect } from "react";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import DeleteModal from "./delete-modal";
+import React from 'react';
+import photo from '/icons/frame-icon.png';
+import photo1 from '/icons/bin-icon.png';
+import photo2 from '/icons/pen-icon.png';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import DeleteModal from './delete-modal';
 
 function AdminServiceMain({ searchTerm }) {
   const [services, setServices] = useState([]);
@@ -25,7 +25,7 @@ function AdminServiceMain({ searchTerm }) {
       );
       setIsModalOpen(false);
     } catch (error) {
-      console.error("Error deleting service:", error);
+      console.error('Error deleting service:', error);
     }
   };
 
@@ -37,7 +37,7 @@ function AdminServiceMain({ searchTerm }) {
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        const response = await axios.get("http://localhost:4000/service/");
+        const response = await axios.get('http://localhost:4000/services/');
         console.log(response);
         setServices(response.data.data);
         setFilteredServices(response.data.data);
@@ -140,17 +140,17 @@ function AdminServiceMain({ searchTerm }) {
               <div className="w-[250px] flex justify-start">
                 <div
                   className={`2xl:text-lg rounded-[8px]  px-3 py-1 ${
-                    service.category_name === "บริการทั่วไป"
-                      ? "bg-blue-100 text-blue-800"
-                      : service.category_name === "บริการห้องน้ำ"
-                      ? "bg-purple-100 text-purple-900"
-                      : service.category_name === "บริการห้องครัว"
-                      ? "bg-green-100 text-green-900"
-                      : service.category_name === "บริการอุปกรณ์ไฟฟ้า"
-                      ? "bg-yellow-100 text-yellow-900"
-                      : service.category_name === "บริการห้องอเนกประสงค์"
-                      ? "bg-gray-100 text-gray-900"
-                      : "bg-blue-100 text-blue-800"
+                    service.category_name === 'บริการทั่วไป'
+                      ? 'bg-blue-100 text-blue-800'
+                      : service.category_name === 'บริการห้องน้ำ'
+                      ? 'bg-purple-100 text-purple-900'
+                      : service.category_name === 'บริการห้องครัว'
+                      ? 'bg-green-100 text-green-900'
+                      : service.category_name === 'บริการอุปกรณ์ไฟฟ้า'
+                      ? 'bg-yellow-100 text-yellow-900'
+                      : service.category_name === 'บริการห้องอเนกประสงค์'
+                      ? 'bg-gray-100 text-gray-900'
+                      : 'bg-blue-100 text-blue-800'
                   }`}
                 >
                   {service.category_name}
@@ -161,36 +161,36 @@ function AdminServiceMain({ searchTerm }) {
                   <div className="2xl:text-lg">
                     {new Date(service.created_at)
                       .toLocaleDateString(undefined, {
-                        month: "2-digit",
-                        day: "2-digit",
-                        year: "numeric",
+                        month: '2-digit',
+                        day: '2-digit',
+                        year: 'numeric'
                       })
-                      .replace(/\//g, "/")}{" "}
+                      .replace(/\//g, '/')}{' '}
                     {new Date(service.updated_at)
                       .toLocaleTimeString(undefined, {
-                        hour: "2-digit",
-                        minute: "2-digit",
-                        hour12: true,
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        hour12: true
                       })
-                      .replace(" ", "")}
+                      .replace(' ', '')}
                   </div>
                 </div>
                 <div className="w-[240px] px-5">
                   <div className="2xl:text-lg">
                     {new Date(service.updated_at)
                       .toLocaleDateString(undefined, {
-                        month: "2-digit",
-                        day: "2-digit",
-                        year: "numeric",
+                        month: '2-digit',
+                        day: '2-digit',
+                        year: 'numeric'
                       })
-                      .replace(/\//g, "/")}{" "}
+                      .replace(/\//g, '/')}{' '}
                     {new Date(service.updated_at)
                       .toLocaleTimeString(undefined, {
-                        hour: "2-digit",
-                        minute: "2-digit",
-                        hour12: true,
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        hour12: true
                       })
-                      .replace(" ", "")}
+                      .replace(' ', '')}
                   </div>
                 </div>
               </div>

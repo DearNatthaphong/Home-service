@@ -167,6 +167,8 @@ export const getPaymentOrder = async (req, res) => {
   try {
     const result = await connectionPool.query(
       `SELECT
+      s.service_name,
+      s.service_image,
       a.service_date,
       a.service_time,
       a.address,
@@ -176,12 +178,13 @@ export const getPaymentOrder = async (req, res) => {
       o.total_price,
       oi.order_item_id,
       oi.quantity,
-      s.service_name
+      si.service_item_name
     FROM
       appointments AS a
     INNER JOIN orders AS o ON a.order_id = o.order_id
     INNER JOIN order_items AS oi ON o.order_id = oi.order_id
-    INNER JOIN service_items AS s ON oi.service_item_id = s.service_item_id
+    INNER JOIN service_items AS si ON oi.service_item_id = si.service_item_id
+    INNER JOIN services AS s ON s.service_id = si.service_id
     WHERE
       a.order_id = $1 AND o.user_id = $2`,
       [id, userId]
@@ -193,13 +196,10 @@ export const getPaymentOrder = async (req, res) => {
       return res.status(404).json({ message: 'ไม่พบคำสั่งซ่อมในคำขอ' });
     }
 
-    // return res.status(200).json({
-    //   message: 'ดึงข้อมูลรายการซ่อมสำเร็จ',
-    //   data: result.rows[0]
-    // });
-
     // จัดระเบียบข้อมูล
     const orderData = {
+      serviceName: result.rows[0].service_name,
+      serviceImage: result.rows[0].service_image,
       serviceDate: result.rows[0].service_date,
       serviceTime: result.rows[0].service_time,
       address: result.rows[0].address,
@@ -208,7 +208,7 @@ export const getPaymentOrder = async (req, res) => {
       province: result.rows[0].province,
       orderItems: result.rows.map((row) => ({
         orderItemId: row.order_item_id,
-        serviceName: row.service_name,
+        serviceItemName: row.service_item_name,
         quantity: row.quantity
       })),
       totalPrice: result.rows[0].total_price
