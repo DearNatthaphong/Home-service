@@ -23,7 +23,7 @@ export const getOrderByQuerry = async (req, res) => {
         orders.action_status,
         order_items.order_item_id,
         order_items.quantity,
-        service_items.service_name
+        service_items.service_item_name
         FROM orders
         INNER JOIN order_items ON orders.order_id = order_items.order_id
         INNER JOIN service_items ON order_items.service_item_id = service_items.service_item_id
@@ -39,7 +39,7 @@ export const getOrderByQuerry = async (req, res) => {
         orders.action_status,
         order_items.order_item_id,
         order_items.quantity,
-        service_items.service_name
+        service_items.service_item_name
         FROM orders
         INNER JOIN order_items ON orders.order_id = order_items.order_id
         INNER JOIN service_items ON order_items.service_item_id = service_items.service_item_id
