@@ -15,13 +15,12 @@ import { AppointmentProvider } from '../context/appointment-context';
 import UserLandingPage from '../pages/user-landing-page';
 import UserNotFoundPage from '../pages/user-not-found-page';
 import { PaymentProvider } from '../context/payment-context';
+import { StripeProvider } from '../context/stripe-context';
 
 function AutenticatedUser() {
   return (
     <div>
       <Routes>
-        {/* <Route path="/" element={<Homepage />} /> */}
-        {/* <Route path="/home" element={<Homepage />} /> */}
         {/* เทรน */}
         <Route path="/servicelist" element={<ServiceListPage />} />
         {/* ม่อน */}
@@ -37,7 +36,9 @@ function AutenticatedUser() {
           path="/services/orders/:id/appointments"
           element={
             <AppointmentProvider>
-              <UserServiceDetailPage />
+              <StripeProvider>
+                <UserServiceDetailPage />
+              </StripeProvider>
             </AppointmentProvider>
           }
         />
@@ -45,20 +46,21 @@ function AutenticatedUser() {
         <Route
           path="/payment/:id"
           element={
-            // <PaymentProvider>
-            <ServicePayment />
-            // </PaymentProvider>
+            <PaymentProvider>
+              <StripeProvider>
+                <ServicePayment />
+              </StripeProvider>
+            </PaymentProvider>
           }
         />
         <Route
           path="/payment/:id/success"
           element={
-            // <PaymentProvider>
-            <PaymentSuccess />
-            // </PaymentProvider>
+            <PaymentProvider>
+              <PaymentSuccess />
+            </PaymentProvider>
           }
         />
-
         {/* ป้อง */}
         <Route path="/orderlist" element={<UserOrderListPage />} />
         <Route path="/historylist" element={<UserHistoryListPage />} />

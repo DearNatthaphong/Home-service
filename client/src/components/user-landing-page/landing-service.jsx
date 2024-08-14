@@ -69,7 +69,7 @@ function LandingService() {
                     <button
                       className="w-[80px] h-[28px] flex items-center justify-center"
                       onClick={() => {
-                        navigate('/demo');
+                        navigate(`/services/${items.service_id}`);
                       }}
                     >
                       <p className="font-prompt font-semibold text-[16px] text-blue-600 underline underline-offset-1">

@@ -99,11 +99,11 @@ export const deleteCategoryById = async (req, res) => {
 
   try {
     const result = await connectionPool.query(
-      'DELETE FROM service_categories WHERE service_category_id = $1 returning *',
+      'DELETE FROM service_categories WHERE service_category_id = $1',
       [id]
     );
 
-    if (result.rows.length === 0) {
+    if (!result.rowCount) {
       return res.status(404).json({ message: 'ไม่พบหมวดหมู่ที่ระบุ' });
     }
 

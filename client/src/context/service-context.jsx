@@ -81,7 +81,7 @@ function ServiceProvider(props) {
       const result = await axios.post(`http://localhost:4000/orders`, {
         totalPrice
       });
-      toast.success(result.data.message);
+      // toast.success(result.data.message);
       return result.data.orderId;
     } catch (error) {
       toast.error(error.response?.data?.message ?? 'พบข้อผิดพลาด');

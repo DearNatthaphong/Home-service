@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 // import usePromotions from '../../hooks/use-promotions';
 import { useParams } from 'react-router-dom';
 import { usePayment } from '../../context/payment-context';
+import { useStripeContext } from '../../context/stripe-context';
 
 function PromotionForm() {
   const [promotionCodeInput, setPromotionCodeInput] = useState('');
@@ -13,9 +14,11 @@ function PromotionForm() {
   const {
     getPromotionByQuery,
     promotion,
-    updateTotalPrice,
-    updateClientSecret
+    updateTotalPrice
+    // updateClientSecret
   } = usePayment();
+
+  const { updateClientSecret } = useStripeContext();
 
   const handleChange = (e) => setPromotionCodeInput(e.target.value);
 

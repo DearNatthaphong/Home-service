@@ -42,9 +42,13 @@ function CategoryProvider(props) {
 
   const createCategory = async () => {
     try {
-      await axios.post(`http://localhost:4000/categories`, dataPost);
+      const result = await axios.post(
+        `http://localhost:4000/categories`,
+        dataPost
+      );
       setCategoryName('');
       navigate('/admin/category');
+      toast.success(result.data.message);
     } catch (error) {
       toast.error('Error creating a new category:', error);
     }
@@ -82,8 +86,12 @@ function CategoryProvider(props) {
   //   edit a category by id start //
   const updateCategory = async (id) => {
     try {
-      await axios.put(`http://localhost:4000/categories/${id}`, dataPost);
+      const result = await axios.put(
+        `http://localhost:4000/categories/${id}`,
+        dataPost
+      );
       navigate(`/admin/category/${id}`);
+      toast.success(result.data.message);
     } catch (error) {
       toast.error('Error updating the category:', error);
     }
@@ -99,14 +107,18 @@ function CategoryProvider(props) {
   //   delete a category by id start //
   const deleteCategory = async (id) => {
     try {
-      await axios.delete(`http://localhost:4000/categories/${id}`);
+      const result = await axios.delete(
+        `http://localhost:4000/categories/${id}`
+      );
       const newCategories = allCategories.filter((item) => {
         return item.service_category_id !== id;
       });
       setAllCategories(newCategories);
       setOpen(false);
+      toast.success(result.data.message);
       navigate(`/admin/category`);
     } catch (error) {
+      // console.log(error);
       toast.error('Error deleting the category:', error);
     }
   };

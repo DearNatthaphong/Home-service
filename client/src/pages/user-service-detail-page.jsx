@@ -34,8 +34,6 @@ function UserServiceDetailPage() {
             </div>
           </div>
         </div>
-        {/* <PaymentFooter /> */}
-        {/* <PaymentProvider> */}
         <UserServiceDetailFooter />
       </section>
     </ServiceDetailProvider>

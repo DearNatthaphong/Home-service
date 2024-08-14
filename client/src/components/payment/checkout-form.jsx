@@ -8,6 +8,7 @@ import { usePayment } from '../../context/payment-context';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import PromotionForm from './promotion-form';
+import { useStripeContext } from '../../context/stripe-context';
 
 export default function CheckoutForm() {
   const stripe = useStripe();
@@ -19,11 +20,13 @@ export default function CheckoutForm() {
   const {
     handlePaymentSuccess,
     handlePaymentFail,
-    createClientSecret,
-    clientSecret,
+    // createClientSecret,
+    // clientSecret,
     createPromotionUsage,
     promotion
   } = usePayment();
+
+  const { clientSecret, createClientSecret } = useStripeContext();
 
   const { id } = useParams();
   const navigate = useNavigate();
@@ -58,6 +61,23 @@ export default function CheckoutForm() {
     });
   }, [stripe]);
 
+  // Reset message when the user inputs new data
+  // useEffect(() => {
+  //   const inputHandler = () => setMessage('');
+
+  //   const paymentElement = elements.getElement(PaymentElement);
+
+  //   if (paymentElement) {
+  //     paymentElement.on('change', inputHandler);
+  //   }
+
+  //   return () => {
+  //     if (paymentElement) {
+  //       paymentElement.off('change', inputHandler);
+  //     }
+  //   };
+  // }, [elements]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -78,8 +98,8 @@ export default function CheckoutForm() {
         },
         redirect: 'if_required'
       });
-      // การทำ 3D Secure.
-      console.log('Payment Error:', error);
+
+      // console.log('Payment Error:', error);
 
       if (error) {
         // if (error.type === 'card_error' || error.type === 'validation_error') {
@@ -89,10 +109,11 @@ export default function CheckoutForm() {
           toast.error(message);
           await createClientSecret(id);
         } else {
-          setMessage('An unexpected error occurred.');
           toast.error(message);
+          setMessage('An unexpected error occurred.');
         }
       } else {
+        // การทำ 3D Secure.
         if (paymentIntent.status === 'requires_action') {
           const { error: confirmError } = await stripe.confirmCardPayment(
             paymentIntent.client_secret

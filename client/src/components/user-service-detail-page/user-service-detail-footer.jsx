@@ -13,7 +13,7 @@ import UserServiceSummaryMini from './user-service-summary-mini';
 import { formatPrice } from '../../utils/price-format';
 import { useAppointment } from '../../context/appointment-context';
 import { useServiceDetail } from '../../context/user-service-detail-context';
-import { usePayment } from '../../context/payment-context';
+import { useStripeContext } from '../../context/stripe-context';
 
 function UserServiceDetailFooter() {
   const [open, setOpen] = useState(false);
@@ -21,7 +21,7 @@ function UserServiceDetailFooter() {
     useServiceDetail();
 
   const { totalPrice, createAppointment, id } = useAppointment();
-  const { createClientSecret } = usePayment();
+  const { createClientSecret } = useStripeContext();
 
   const navigate = useNavigate();
 
@@ -36,8 +36,8 @@ function UserServiceDetailFooter() {
 
   const handleClickToNext = async () => {
     await createAppointment(id, data);
-    navigate(`/payment/${id}`);
     await createClientSecret(id);
+    navigate(`/payment/${id}`);
   };
 
   // const getOrder = async () => {
@@ -103,9 +103,7 @@ function UserServiceDetailFooter() {
         </div>
         <div className="w-full h-[70px] bg-white p-3 flex justify-between">
           <button
-            onClick={() =>
-              navigate(`/service/orders/${params.id}/appointments`)
-            }
+            onClick={() => navigate(`/servicelist`)}
             className="w-full max-w-[162px] md:w-2/3 btn btn-outline text-blue-600 border-blue-600 hover:bg-white hover:text-blue-400 hover:border-blue-400 focus:text-blue-800 focus:border-blue-800 "
           >{`< ย้อนกลับ`}</button>
           <button

@@ -1,13 +1,14 @@
 import {
   userIcon,
   clockIcon,
-  listPadIcon,
-} from "../../../public/icons/icon-user-2";
-import photo1 from "/public/images/calender-icon.png";
-import photo2 from "/public/images/worker-icon.png";
-import { useNavigate } from "react-router-dom";
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+  listPadIcon
+} from '../../../public/icons/icon-user-2';
+import photo1 from '/public/images/calender-icon.png';
+import photo2 from '/public/images/worker-icon.png';
+import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { formatPrice } from '../../utils/price-format';
 
 function Historylist() {
   const [orders, setOrders] = useState([]);
@@ -15,17 +16,15 @@ function Historylist() {
   const navigate = useNavigate();
 
   const goToOrderList = () => {
-    navigate("/orderlist");
+    navigate('/orderlist');
   };
 
   useEffect(() => {
     const fetchOrders = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:4000/orders?firstActionStatus=ดำเนินการสำเร็จ"
+          'http://localhost:4000/orders?firstActionStatus=ดำเนินการสำเร็จ'
         );
-
-        console.log(response);
         const orderItemsData = response.data.data;
         setOrders(orderItemsData);
       } catch (error) {
@@ -37,7 +36,7 @@ function Historylist() {
   }, []);
 
   return (
-    <section className="font-prompt flex justify-center bg-gray-100 lg:relative lg:min-h-[942px] mt-14">
+    <section className="font-prompt flex justify-center bg-gray-100 lg:relative lg:min-h-[942px] mt-[53px]">
       <div className="flex flex-col justify-center items-center gap-6 mb-8 lg:flex-row lg:mt-[120px] lg:items-start">
         <div className="w-screen flex justify-center shadow-lg py-2 lg:w-[253px] lg:h-[252px] lg:shadow-none lg:py-0 sticky top-0 bg-gray-100">
           <div className="w-[343px] border border-gray-300 bg-white rounded-lg lg:flex lg:flex-col lg:gap-3 ">
@@ -132,7 +131,7 @@ function Historylist() {
                       ราคารวม:
                     </div>
                     <div className="text-zinc-800 text-base font-medium leading-normal">
-                      {order.total_price} ฿
+                      {formatPrice(order.total_price)}
                     </div>
                   </div>
                   <div className="flex gap-6 lg:flex-col lg:gap-1">

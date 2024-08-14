@@ -12,23 +12,25 @@ import { useState } from 'react';
 import SummaryDetail from './summary-detail.jsx';
 import SummaryPrice from './summary-price.jsx';
 import axios from 'axios';
+import { usePayment } from '../../context/payment-context.jsx';
 
 function PaymentFooter() {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
-  const [order, setOrder] = useState({});
-  const params = useParams();
+  const { order, id } = usePayment();
+  // const [order, setOrder] = useState({});
+  // const params = useParams();
 
-  const getOrder = async () => {
-    const result = await axios.get(
-      `http://localhost:4000/payment/orders/${params.id}`
-    );
-    setOrder(result.data);
-  };
+  // const getOrder = async () => {
+  //   const result = await axios.get(
+  //     `http://localhost:4000/payment/orders/${params.id}`
+  //   );
+  //   setOrder(result.data);
+  // };
 
-  useEffect(() => {
-    getOrder();
-  }, []);
+  // useEffect(() => {
+  //   getOrder();
+  // }, []);
 
   return (
     <footer className="w-full h-auto flex flex-col items-center justify-center shadow-shadow fixed z-10 bottom-0 bg-background md:bg-white">
@@ -64,7 +66,7 @@ function PaymentFooter() {
         <div className="w-full h-[70px] bg-white p-3">
           <button
             onClick={() =>
-              navigate(`/service/information/orders/${params.id}/appointments`)
+              navigate(`/service/information/orders/${id}/appointments`)
             }
             className="w-full md:w-2/3 btn btn-outline text-blue-600 border-blue-600 hover:bg-white hover:text-blue-400 hover:border-blue-400 focus:text-blue-800 focus:border-blue-800 "
           >{`< ย้อนกลับ`}</button>
