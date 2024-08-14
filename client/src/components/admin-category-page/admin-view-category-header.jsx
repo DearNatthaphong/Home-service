@@ -9,9 +9,12 @@ function AdminViewCategoryHeader() {
   return (
     <div className="w-full h-full max-h-[80px] border-b-[1px] border-gray-300 flex items-center bg-white px-[40px] justify-between">
       <div className="gap-[14px] h-full max-h-[50px] flex items-center">
-        <div className="w-[40px] h-[40px] flex items-center justify-center">
-          <img src="/icons/left-icon.png" alt="" />
-        </div>
+        <button
+          onClick={() => navigate('/admin/category')}
+          className="w-[40px] h-[40px] flex items-center justify-center cursor-pointer"
+        >
+          <img src="/icons/left-icon.png" alt="icon-left" />
+        </button>
         <div className="flex flex-col justify-between">
           <span className="font-prompt text-[12px] text-gray-700">
             หมวดหมู่
